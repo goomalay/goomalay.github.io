@@ -1,0 +1,34 @@
+---
+layout: default
+title: "404 - Halaman Tidak Ditemukan"
+permalink: /404.html
+---
+
+<section class="error-container">
+    <div class="error-content">
+        <div class="error-icon">
+            <i class="fa-solid fa-tv"></i>
+            <span class="error-badge">404</span>
+        </div>
+        <h1>Waduh! Sinyal Hilang.</h1>
+        <p>Maaf, halaman yang Anda cari tidak ditemukan atau sudah dipindahkan. Silakan kembali ke beranda untuk melanjutkan menonton.</p>
+        
+        <div class="error-actions">
+            <a href="{{ '/' | relative_url }}" class="btn-home">
+                <i class="fa-solid fa-house"></i> Kembali ke Beranda
+            </a>
+            <a href="#" class="btn-secondary">
+                <i class="fa-solid fa-headset"></i> Lapor Masalah
+            </a>
+        </div>
+
+        <div class="error-suggestions">
+            <h3>Mungkin Anda Mencari:</h3>
+            <div class="suggest-links">
+                <a href="{{ '/' | relative_url }}"><i class="fa-solid fa-play"></i> Live TV</a>
+                <a href="#"><i class="fa-solid fa-volleyball"></i> Jadwal Bola</a>
+                <a href="#"><i class="fa-solid fa-layer-group"></i> Kategori</a>
+            </div>
+        </div>
+    </div>
+</section>
