@@ -1,0 +1,18 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  {% seo %} <!-- Otomatis membuat Meta Title, Description, OG Tag, & Twitter Card -->
+
+  <!-- Inlining Critical CSS untuk Fast Loading -->
+  <style>
+    {% capture critical_css %}
+      {% include critical.scss %}
+    {% endcapture %}
+    {{ critical_css | scssify }}
+  </style>
+
+  <!-- Preconnect ke Google Fonts jika pakai, agar lebih cepat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+</head>
