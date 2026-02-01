@@ -1,0 +1,10 @@
+title: TVOnlineMalaysia
+email: info@tvonlinemalaysia.com
+description: Nonton TV Malaysia Online Gratis
+baseurl: "" 
+url: "http://localhost:4000"
+
+# Build settings
+theme: minima # Kita akan override dengan custom CSS
+plugins:
+  - jekyll-feed
