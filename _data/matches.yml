@@ -1,0 +1,179 @@
+- time: "20:00"
+  league: "Champions League"
+  team1: "AS Monaco"
+  team2: "Juventus"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Ajax"
+  team2: "Olympiacos"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Arsenal"
+  team2: "Kairat Almaty"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Athletic Club"
+  team2: "Sporting CP"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Atletico Madrid"
+  team2: "Bodoe/Glimt"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Barcelona"
+  team2: "FC Copenhagen"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Bayer Leverkusen"
+  team2: "Villarreal"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Benfica"
+  team2: "Real Madrid"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Borussia Dortmund"
+  team2: "Inter"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Club Brugge"
+  team2: "Marseille"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Eintracht Frankfurt"
+  team2: "Tottenham Hotspur"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Liverpool"
+  team2: "Qarabag FK"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Manchester City"
+  team2: "Galatasaray"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Napoli"
+  team2: "Chelsea"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "PSV Eindhoven"
+  team2: "Bayern Munich"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Pafos FC"
+  team2: "Slavia Prague"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Paris Saint-Germain"
+  team2: "Newcastle United"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
+
+- time: "20:00"
+  league: "Champions League"
+  team1: "Union St.Gilloise"
+  team2: "Atalanta"
+  icon_class: "fa-solid fa-futbol"
+  channels:
+    - name: "Not yet available"
+      url: "#"
+      quality: "1080p"
