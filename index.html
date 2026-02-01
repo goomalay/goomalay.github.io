@@ -1,42 +1,117 @@
 ---
 layout: default
+title: Halaman Utama
 ---
-<main>
-    <!-- Hero Section: Fokus Keyword Utama -->
-    <section class="hero">
-        <div class="container">
-            <h1>Nonton TV Malaysia Online Gratis & Live Streaming HD</h1>
-            <p>Akses langsung siaran berita, hiburan, dan sukan dari saluran terbaik Malaysia seperti Astro Ria dan TV3.</p>
-            <a href="#channels" class="btn-main" title="Lihat Daftar Saluran">📺 Tonton Sekarang</a>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Nonton TV Online Gratis</h1>
+        <p>{{ site.description }}</p>
+        <a href="#" class="btn-cta"><i class="fa-solid fa-play"></i> Tonton Sekarang</a>
+    </div>
+</section>
+
+<!-- Ads Banner -->
+<div class="ads-banner">ADS 728x90</div>
+
+<!-- Channel Populer Carousel -->
+<section class="section-box">
+    <div class="section-header-carousel">
+        <h2 class="section-title"><i class="fa-solid fa-tv"></i> Channel Populer</h2>
+        <div class="carousel-nav">
+            <button class="nav-btn prev" id="prevBtn"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="nav-btn next" id="nextBtn"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
-    </section>
+    </div>
 
-    <!-- Channel Section -->
-    <section id="channels" class="channels">
-        <div class="container">
-            <div class="section-title">
-                <i class="fa fa-bolt"></i>
-                <h2>Saluran TV Populer Terkini</h2>
+    <div class="carousel-viewport">
+        <div class="carousel-track" id="carouselTrack">
+            {% for post in site.posts %}
+            <div class="carousel-card">
+                <a href="{{ post.url | relative_url }}">
+                    <div class="carousel-img-container">
+                        <img src="{{ post.image | relative_url }}" alt="{{ post.title }}">
+                        <div class="play-overlay"><i class="fa-solid fa-play"></i></div>
+                    </div>
+                    <span class="carousel-ch-name">{{ post.title }}</span>
+                </a>
             </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
-            <div class="grid-channels">
-                {% for channel in site.data.channels %}
-                <article class="card">
-                    <!-- Fitur Fast Loading: Native Lazy Loading -->
-                    <div class="card-logo-area" style="background: {{ channel.color }};">
-                        <img src="{{ site.baseurl }}/assets/images/{{ channel.logo }}" 
-                             alt="Live Streaming {{ channel.name }}" 
-                             loading="lazy" 
-                             width="150" height="80">
-                    </div>
-                    <div class="card-body">
-                        <h3>{{ channel.name }} Live</h3>
-                        <p>{{ channel.description }}</p>
-                        <a href="/tv/{{ channel.name | slugify }}" class="btn-watch" title="Nonton {{ channel.name }} Sekarang">Tonton Live</a>
-                    </div>
-                </article>
+<!-- Kategori -->
+<section class="section-box">
+    <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> Kategori</h2>
+    <div class="category-grid">
+        <div class="cat-item"><i class="fa-solid fa-newspaper"></i> News</div>
+        <div class="cat-item"><i class="fa-solid fa-volleyball"></i> Sport</div>
+        <div class="cat-item"><i class="fa-solid fa-masks-theater"></i> Hiburan</div>
+        <div class="cat-item"><i class="fa-solid fa-face-smile"></i> Kids</div>
+    </div>
+</section>
+
+<section class="theme-agenda-container">
+    <div class="theme-agenda-header">
+        <i class="fa-solid fa-calendar-day"></i> 
+        Agenda - {{ "now" | date: "%A, %d %B %Y" }}
+    </div>
+
+    <ul class="theme-agenda-menu">
+        {% for match in site.data.matches %}
+        <li class="theme-match-entry">
+            <!-- Header Pertandingan -->
+            <a href="javascript:void(0)" class="theme-match-trigger">
+                <span class="theme-match-time">{{ match.time }}</span>
+                <i class="{{ match.icon_class | default: 'fa-solid fa-futbol' }} theme-match-icon"></i>
+                <span class="theme-match-title"><strong>{{ match.league }}:</strong> {{ match.team1 }} vs {{ match.team2 }}</span>
+                <i class="fa-solid fa-chevron-down theme-arrow"></i>
+            </a>
+
+            <!-- Dropdown Channel TV -->
+            <ul class="theme-channel-dropdown">
+                {% for ch in match.channels %}
+                <li>
+                    <a href="{{ ch.url | relative_url }}" class="theme-channel-link">
+                        <div class="theme-ch-info">
+                            <i class="fa-solid fa-play-circle"></i>
+                            <span class="theme-ch-name">{{ ch.name }}</span>
+                        </div>
+                        <span class="theme-ch-quality">Calidad {{ ch.quality }}</span>
+                    </a>
+                </li>
                 {% endfor %}
-            </div>
-        </div>
-    </section>
-</main>
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+    
+    <div class="theme-agenda-footer">
+        <p><i class="fa-solid fa-circle-info"></i> Jadwal dapat berubah sewaktu-waktu - WIB - Admin <i class="fa-solid fa-check-circle"></i></p>
+    </div>
+</section>
+
+<!-- Script jQuery Tetap Sama -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+$(function() {
+    var menu_ul = $('.theme-channel-dropdown'),
+        menu_a = $('.theme-match-trigger');
+    menu_ul.hide();
+    menu_a.click(function(e) {
+        e.preventDefault();
+        if(!$(this).hasClass('active')) {
+            menu_a.removeClass('active');
+            menu_ul.filter(':visible').slideUp('fast');
+            $(this).addClass('active').next().stop(true,true).slideDown('fast');
+        } else {
+            $(this).removeClass('active');
+            $(this).next().stop(true,true).slideUp('fast');
+        }
+    });
+});
+</script>
+
+<div class="ads-banner">ADS 728x90</div>
