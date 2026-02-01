@@ -1,0 +1,131 @@
+/* ==========================================================================
+   8. ERROR 404 PAGE STYLES
+   ========================================================================== */
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh; /* Agar konten berada di tengah secara vertikal */
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.error-content {
+    max-width: 600px;
+}
+
+.error-icon {
+    position: relative;
+    font-size: 80px;
+    color: #1e293b; /* Warna gelap redup */
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.error-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ef4444; /* Merah untuk tanda error */
+    color: #fff;
+    font-size: 18px;
+    font-weight: 800;
+    padding: 5px 12px;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.error-content h1 {
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.error-content p {
+    color: #94a3b8;
+    font-size: 15px;
+    margin-bottom: 30px;
+}
+
+/* Tombol Aksi */
+.error-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.btn-home {
+    background: #2563eb;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-home:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #1e293b;
+    color: #cbd5e1;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.btn-secondary:hover {
+    background: #334155;
+    color: #fff;
+}
+
+/* Link Saran */
+.error-suggestions h3 {
+    font-size: 14px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.suggest-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.suggest-links a {
+    color: #3b82f6;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.suggest-links a:hover {
+    text-decoration: underline;
+}
+
+/* Responsif Mobile */
+@media (max-width: 600px) {
+    .error-actions {
+        flex-direction: column;
+    }
+    .suggest-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
