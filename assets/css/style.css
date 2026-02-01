@@ -1,0 +1,88 @@
+:root {
+    --bg-dark: #0b0e1b;
+    --glass: rgba(255, 255, 255, 0.05);
+    --gold: #d4af37;
+    --orange: #f39c12;
+    --red: #c0392b;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(circle at top, #1a1f3c 0%, #0b0e1b 100%);
+    color: white;
+    min-height: 100vh;
+}
+
+.container { width: 90%; max-width: 1100px; margin: 0 auto; }
+
+/* Navbar */
+.navbar {
+    padding: 20px 0;
+    display: flex;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+}
+.navbar .container { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 24px; font-weight: bold; }
+.gold { color: var(--gold); }
+nav ul { display: flex; list-style: none; gap: 20px; }
+nav ul li a { color: #ccc; text-decoration: none; font-size: 14px; }
+nav ul li a.active { color: var(--orange); border-bottom: 2px solid var(--orange); }
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 60px 0;
+    background: url('../images/stars-bg.png'); /* Opsional */
+}
+.hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+.hero p { color: #aaa; margin-bottom: 30px; }
+.btn-main {
+    background: linear-gradient(to right, #f39c12, #d35400);
+    padding: 12px 30px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+}
+
+/* Channel Section */
+.section-title { margin: 40px 0 20px; display: flex; align-items: center; gap: 10px; }
+.grid-channels {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+.card {
+    background: var(--glass);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    transition: 0.3s;
+}
+.card:hover { transform: translateY(-5px); border-color: var(--orange); }
+.card-logo-area { height: 120px; display: flex; align-items: center; justify-content: center; background: #eee; }
+.card-body { padding: 15px; }
+.card-body h3 { font-size: 18px; margin: 10px 0; }
+.card-body p { font-size: 12px; color: #aaa; line-height: 1.4; margin-bottom: 15px; }
+.btn-watch {
+    background: #e74c3c;
+    color: white;
+    padding: 8px 0;
+    display: block;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-btn-container { text-align: center; margin: 40px 0; }
+.btn-outline {
+    border: 1px solid var(--orange);
+    color: var(--orange);
+    padding: 10px 40px;
+    border-radius: 5px;
+    text-decoration: none;
+}
