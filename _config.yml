@@ -1,23 +1,63 @@
-title: TV Online Malaysia - Nonton Live Streaming Gratis HD
-description: Platform nonton TV Malaysia online gratis. Streaming Astro Ria, TV3, TV9, dan saluran populer lainnya dengan kualitas HD tanpa buffering.
-url: "https://goomalay.github.io/" # Ganti dengan domain asli Anda
-author: Admin TVOnline
-logo: /assets/images/logo.png
+title: TV Malaysia Online | Tonton Semua Saluran
+seo_title: TV Malaysia Online
+description: Tonton semua saluran TV Malaysia secara online dengan mudah dan percuma. Nikmati siaran langsung saluran tempatan seperti TV3, RTM, Astro dan banyak lagi di satu tempat.
+url: "https://goomalay.github.io"
+baseurl: "" # jika root, atau "/blog" jika di subfolder
+image: /assets/img/logo.webp
+keyword: tv malaysia online, tonton tv online, saluran tv malaysia, tv3 live, rtm online, astro online, siaran langsung tv malaysia, tv percuma malaysia, tonton saluran malaysia, live tv malaysia
+twitter_username: "tvmalaysiahomes"
+author:
+  name: "Admin TVMalaysia"
+  
+permalink: /:year/:title/   # how should we display posts url
 
-# SEO & Social Media
-social:
-  name: TVOnlineMalaysia
-  links:
-    - https://facebook.com/tvonlinemy
-    - https://twitter.com/tvonlinemy
+author: TVMalaysia
 
-# Plugins untuk Kecepatan & SEO
-plugins:
-  - jekyll-seo-tag
-  - jekyll-sitemap
-  - jekyll-feed
-  - jekyll-gist
+# Put your ga tracking code below
+google_analytics: 'G-JQC3CKKM9L'
 
-# Optimasi Sass
-sass:
-  style: compressed # Mengecilkan ukuran file CSS secara otomatis
+# Pagination settings
+paginate: 5                           # number of posts to show per page
+paginate_path: "/articles/page:num/"  # link scheme for articles, should be letf as is
+
+# Navigation settings
+# Used to define the navigation menu items
+# > Title is the tile of the navigation item, url the url and desc is the tooltip
+#  navigation:
+#   - title: Articles
+#     url: /articles/
+#     desc: Stuffs I write about
+#   - title: Projects
+#     url: /projects/
+#     desc: Stuffs I like to do
+#   - title: Work
+#     url: /work/
+#     desc: Stuffs I hate to do
+#   - title: About
+#     url: /about/
+#     desc: Learn about me
+
+# Used by Jekyll to recognize what is a post and what is a page
+defaults:
+  -
+    scope:
+      path: ''
+      type: posts
+    values:
+      layout: post
+
+# Markdown parser settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false          # you can change this if you feel like it
+  parse_block_html: true    # allow parsing html inside markdown
+
+# Build settings
+include:
+  - _pages                  # all your pages can be put inside pages (except articles)
+exclude:
+  - README.md
+  - vendor
+gems:
+  - jekyll-paginate
