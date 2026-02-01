@@ -3,7 +3,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   {% seo %} <!-- Otomatis membuat Meta Title, Description, OG Tag, & Twitter Card -->
-
+  
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ site.title }}",
+  "url": "{{ site.url }}",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ site.url }}/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+  
   <!-- Inlining Critical CSS untuk Fast Loading -->
   <style>
     {% capture critical_css %}
