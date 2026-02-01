@@ -1,0 +1,6 @@
+@media (max-width: 768px) {
+    .carousel-card { min-width: calc(50% - 10px); }
+    .category-grid { grid-template-columns: repeat(2, 1fr); }
+    .channel-container { flex-direction: column; }
+    .footer-main-bar { flex-direction: column; gap: 20px; text-align: center; }
+}

@@ -1,0 +1,16 @@
+.section-header-carousel { display: flex; justify-content: space-between; align-items: center; margin: 30px 0 20px; }
+.section-title { font-size: 18px; display: flex; align-items: center; gap: 10px; color: #fff; }
+.carousel-nav { display: flex; gap: 10px; }
+.nav-btn { background: #1e293b; border: 1px solid rgba(255,255,255,0.1); color: #fff; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.nav-btn:hover { background: #2563eb; border-color: #2563eb; }
+
+.carousel-viewport { overflow: hidden; width: 100%; padding: 10px 0; }
+.carousel-track { display: flex; gap: 20px; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); will-change: transform; }
+.carousel-card { min-width: calc(25% - 15px); flex-shrink: 0; text-align: center; }
+
+.carousel-img-container { background: #111a2e; height: 140px; border-radius: 12px; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; padding: 20px; transition: 0.3s; }
+.carousel-img-container img { max-width: 100%; max-height: 100%; object-fit: contain; transition: 0.5s; }
+.carousel-card:hover .carousel-img-container { border-color: #2563eb; transform: scale(1.03); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+.play-overlay { position: absolute; inset: 0; background: rgba(37, 99, 235, 0.2); display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.3s; }
+.carousel-card:hover .play-overlay { opacity: 1; }
+.carousel-ch-name { display: block; margin-top: 12px; color: #94a3b8; font-size: 14px; font-weight: 600; }
