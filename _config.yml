@@ -2,7 +2,7 @@ title: TV Malaysia Online | Tonton Semua Saluran
 seo_title: TV Malaysia Online
 description: Tonton semua saluran TV Malaysia secara online dengan mudah dan percuma. Nikmati siaran langsung saluran tempatan seperti TV3, RTM, Astro dan banyak lagi di satu tempat.
 url: ""
-baseurl: "/blog1" # jika root, atau "/blog" jika di subfolder
+baseurl: "" # jika root, atau "/blog" jika di subfolder
 image: /assets/img/logo.webp
 keyword: tv malaysia online, tonton tv online, saluran tv malaysia, tv3 live, rtm online, astro online, siaran langsung tv malaysia, tv percuma malaysia, tonton saluran malaysia, live tv malaysia
 twitter_username: "tvmalaysiahomes"
