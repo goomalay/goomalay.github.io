@@ -1,0 +1,12 @@
+- name: RCTI
+  image: "/assets/img/Astro-Awani.webp"
+  url: "/channels/rcti"
+- name: SCTV
+  image: "https://upload.wikimedia.org/wikipedia/id/thumb/e/e0/SCTV_logo_2005.svg/1200px-SCTV_logo_2005.svg.png"
+  url: "/channels/sctv"
+- name: Indosiar
+  image: "https://upload.wikimedia.org/wikipedia/id/thumb/d/d4/Indosiar_logo_2012.svg/1200px-Indosiar_logo_2012.svg.png"
+  url: "/channels/indosiar"
+- name: ANTV
+  image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Antv_logo_2009.svg/2560px-Antv_logo_2009.svg.png"
+  url: "/channels/antv"
