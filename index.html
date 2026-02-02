@@ -1,14 +1,11 @@
 ---
 layout: default
 ---
+<!-- Hero tetap sama -->
 <section class="hero">
     <div class="container">
-        <h1>Nonton TV Malaysia Online Gratis</h1>
+        <h1>{{ site.description }}</h1>
         <p>Streaming siaran TV Malaysia kualiti HD, stabil, dan lancar.</p>
-        <div class="ads-container">
-            <div class="ads-label">ADVERTISEMENT</div>
-            <!-- Slot Iklan AdSense -->
-        </div>
     </div>
 </section>
 
@@ -20,9 +17,9 @@ layout: default
         </div>
     </div>
 
-    <!-- Container Grid Utama -->
+    <!-- Grid Awal (Hanya menampilkan 8 post pertama agar loading ngebut) -->
     <div class="post-grid" id="post-container">
-        {% for post in site.posts limit: 6 %}
+        {% for post in site.posts limit: 8 %}
         <article class="post-card animate-in">
             <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
                 <div class="thumb-container">
@@ -38,10 +35,10 @@ layout: default
         {% endfor %}
     </div>
 
-    <!-- AREA PEMICU SCROLL -->
-    <div id="infinite-scroll-trigger" style="text-align: center; padding: 50px 0; min-height: 100px; width: 100%;">
-        <div id="loading-indicator" style="display: none; color: #f59e0b; font-weight: 600;">
-            <i class="fa fa-sync-alt fa-spin"></i> Memuat saluran lainnya...
+    <!-- Trigger Scroll dengan Indikator Loading -->
+    <div id="infinite-scroll-trigger" style="text-align: center; padding: 50px 0; min-height: 120px; width: 100%;">
+        <div id="loading-indicator" style="display: none; color: #f59e0b; font-weight: 700;">
+            <i class="fa fa-sync-alt fa-spin"></i> Memuat lebih banyak saluran...
         </div>
     </div>
 </section>
@@ -54,44 +51,36 @@ document.addEventListener("DOMContentLoaded", function() {
     
     let allPosts = [];
     let isLoading = false;
-    const postsPerLoad = 6;
+    const postsPerLoad = 8; // Berapa post yang ditambah setiap scroll
 
-    // 1. Ambil data dari posts.json
+    // 1. Ambil data dari posts.json (Menggunakan path absolut GitHub)
     fetch('/posts.json')
         .then(res => res.json())
         .then(data => {
             allPosts = data;
-            console.log("Total postingan di database:", allPosts.length);
-            
-            // Hitung berapa yang sudah tampil di layar (dari Liquid)
-            let currentDisplayed = document.querySelectorAll('.post-card').length;
-            console.log("Postingan awal di layar:", currentDisplayed);
+            console.log("✅ JSON Terdeteksi! Total saluran:", allPosts.length);
 
-            // Jika masih ada sisa postingan yang belum tampil, aktifkan scroll
-            if (allPosts.length > currentDisplayed) {
-                const observer = new IntersectionObserver((entries) => {
-                    // Jika trigger terlihat di layar DAN tidak sedang loading
-                    if (entries[0].isIntersecting && !isLoading) {
-                        loadMore();
-                    }
-                }, { 
-                    rootMargin: '100px', // Mulai load 100px sebelum sampai bawah
-                    threshold: 0.1 
-                });
-                
-                observer.observe(trigger);
+            // Cek berapa post yang sudah ada di layar sekarang
+            let initialCount = document.querySelectorAll('.post-card').length;
+            
+            if (allPosts.length > initialCount) {
+                initInfiniteScroll();
             } else {
                 trigger.style.display = 'none';
             }
         })
-        .catch(err => console.error("Gagal ambil data:", err));
+        .catch(err => {
+            console.error("❌ Gagal memuat data:", err);
+            trigger.innerHTML = "<small style='color:gray'>Gagal mengambil data saluran</small>";
+        });
 
-    // 2. Fungsi memuat postingan tambahan
     function loadMore() {
-        // Hitung ulang jumlah kartu yang ada di layar sekarang
-        let postsShown = document.querySelectorAll('.post-card').length;
+        if (isLoading) return;
+
+        // Hitung jumlah post di layar SEKARANG
+        let currentCount = document.querySelectorAll('.post-card').length;
         
-        if (postsShown >= allPosts.length) {
+        if (currentCount >= allPosts.length) {
             trigger.innerHTML = "<small style='color:gray'>Semua saluran telah ditampilkan</small>";
             return;
         }
@@ -99,8 +88,9 @@ document.addEventListener("DOMContentLoaded", function() {
         isLoading = true;
         loading.style.display = 'block';
 
+        // Beri delay 0.5 detik agar animasi loading terlihat profesional
         setTimeout(() => {
-            const nextBatch = allPosts.slice(postsShown, postsShown + postsPerLoad);
+            const nextBatch = allPosts.slice(currentCount, currentCount + postsPerLoad);
             
             nextBatch.forEach(post => {
                 const article = document.createElement('article');
@@ -122,13 +112,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
             isLoading = false;
             loading.style.display = 'none';
-            console.log("Post baru ditambahkan. Total sekarang:", document.querySelectorAll('.post-card').length);
+            console.log("✨ Berhasil memuat " + nextBatch.length + " saluran baru.");
 
-            // Sembunyikan loading jika sudah habis
             if (document.querySelectorAll('.post-card').length >= allPosts.length) {
                 trigger.innerHTML = "<small style='color:gray'>Semua saluran telah ditampilkan</small>";
             }
-        }, 600);
+        }, 500);
+    }
+
+    function initInfiniteScroll() {
+        // Observer untuk mendeteksi kapan trigger masuk layar
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !isLoading) {
+                loadMore();
+            }
+        }, { 
+            rootMargin: '300px', // Mulai muat 300px sebelum sampai bawah agar terasa instan
+            threshold: 0.1 
+        });
+        
+        observer.observe(trigger);
     }
 });
 </script>
