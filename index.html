@@ -1,21 +1,15 @@
 ---
 layout: default
 ---
-<!-- HERO SECTION -->
+<!-- 1. HERO SECTION -->
 <section class="hero">
     <div class="container">
         <h1>{{ site.title }}</h1>
         <p>{{ site.description }}</p>
-        
-        <!-- ADS SLOT 1 (728x90) -->
-        <div class="ads-container">
-            <div class="ads-label">ADVERTISEMENT</div>
-            <!-- Masukkan Kode AdSense di sini -->
-        </div>
     </div>
 </section>
 
-<!-- MAIN CONTENT SECTION -->
+<!-- 2. MAIN CONTENT -->
 <section id="channels" class="container main-section">
     <div class="section-header">
         <div class="title-wrapper">
@@ -24,10 +18,10 @@ layout: default
         </div>
     </div>
 
-    <!-- Container Grid Utama -->
+    <!-- PENTING: ID 'post-container' harus ada di sini -->
     <div class="post-grid" id="post-container">
         {% for post in paginator.posts %}
-        <article class="post-card animate-in">
+        <article class="post-card">
             <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
                 <div class="thumb-container">
                     <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
@@ -42,99 +36,91 @@ layout: default
         {% endfor %}
     </div>
 
-<!-- TRIGGER SECTION (Pemicu Scroll) -->
-<div id="infinite-scroll-trigger" style="text-align: center; padding: 50px 0; min-height: 150px; width: 100%; clear: both;">
-    {% if paginator.next_page %}
-        <div id="pagination-nav">
-            <!-- Gunakan filter relative_url agar jalur di GitHub Pages aman -->
-            <a class="next-page" href="{{ paginator.next_page_path | relative_url }}" style="display: none;">Next</a>
-            
-            <div id="loading-indicator" style="display: none; color: #f59e0b; font-weight: 700;">
-                <i class="fa fa-sync-alt fa-spin"></i> Memuat saluran lainnya...
+    <!-- 3. TRIGGER SECTION (Copy-Paste Bagian Ini Saja Jika Ingin Update) -->
+    <div id="infinite-scroll-trigger" style="text-align: center; padding: 50px 0; min-height: 100px; width: 100%;">
+        {% if paginator.next_page %}
+            <div id="pagination-nav">
+                <!-- WAJIB menggunakan Liquid tag {{ paginator.next_page_path | relative_url }} -->
+                <a class="next-page" href="{{ paginator.next_page_path | relative_url }}" style="display: none;">Next</a>
+                
+                <div id="loading-indicator" style="display: none; color: #f59e0b; font-weight: 700;">
+                    <i class="fa fa-sync-alt fa-spin"></i> Memuat saluran lainnya...
+                </div>
             </div>
-        </div>
-    {% else %}
-        <div style="color: #666; font-size: 0.8rem; padding: 20px;">Semua saluran telah ditampilkan</div>
-    {% endif %}
-</div>
+        {% else %}
+            <div style="color: #666; font-size: 0.8rem;">Semua saluran telah ditampilkan</div>
+        {% endif %}
+    </div>
+</section>
 
+<!-- 4. SCRIPT INFINITE SCROLL MODERN -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const container = document.getElementById('post-container');
-    const trigger = document.getElementById('infinite-scroll-trigger');
-    const loading = document.getElementById('loading-indicator');
+    const container = document.querySelector('#post-container');
+    const trigger = document.querySelector('#infinite-scroll-trigger');
+    const loading = document.querySelector('#loading-indicator');
     
     let isLoading = false;
-    // Mencari link next-page secara dinamis
-    let nextPageAnchor = document.querySelector('.next-page');
 
-    if (!nextPageAnchor) {
-        console.log("Sistem: Tidak ada halaman selanjutnya (Page 2 tidak ditemukan).");
-        return;
-    }
-
-    // Fungsi Utama Fetch Data
-    async function fetchNextPage() {
-        if (isLoading || !nextPageAnchor) return;
+    // Fungsi Utama muat halaman selanjutnya
+    async function loadMore() {
+        // Cari link 'next-page' terbaru di dalam dokumen
+        let nextLink = document.querySelector('a.next-page');
+        
+        if (!nextLink || isLoading) return;
 
         isLoading = true;
         loading.style.display = 'block';
         
-        const targetUrl = nextPageAnchor.getAttribute('href');
-        console.log("Sistem: Mencoba memuat konten dari " + targetUrl);
+        const urlToFetch = nextLink.href;
+        console.log("Sistem: Mengambil konten dari " + urlToFetch);
 
         try {
-            const response = await fetch(targetUrl);
-            if (!response.ok) throw new Error("Gagal mengambil halaman");
-            
+            const response = await fetch(urlToFetch);
             const html = await response.text();
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
             
-            // Ambil kartu-kartu baru dari container di halaman tujuan
-            const newItems = doc.querySelectorAll('#post-container .post-card');
+            // Ambil post-card baru dari halaman yang di-fetch
+            const newPosts = doc.querySelectorAll('#post-container .post-card');
             
-            if (newItems.length > 0) {
-                newItems.forEach(item => {
-                    // Pastikan animasi muncul tetap bekerja
-                    item.classList.add('animate-in');
-                    container.appendChild(item);
+            if (newPosts.length > 0) {
+                newPosts.forEach(post => {
+                    post.classList.add('animate-in'); // Tambahkan efek muncul
+                    container.appendChild(post);
                 });
-                console.log("Sistem: Berhasil menambah " + newItems.length + " saluran.");
 
-                // Cari link "Next" di halaman yang baru saja diambil
-                const newerPageAnchor = doc.querySelector('.next-page');
-                if (newerPageAnchor) {
-                    // Update URL link untuk scroll berikutnya (misal ke page3)
-                    nextPageAnchor.setAttribute('href', newerPageAnchor.getAttribute('href'));
-                    console.log("Sistem: Link diperbarui ke " + newerPageAnchor.getAttribute('href'));
+                // Update link 'next-page' dengan link yang ada di halaman baru
+                const newerLink = doc.querySelector('a.next-page');
+                if (newerLink) {
+                    nextLink.href = newerLink.href;
+                    console.log("Sistem: Link diperbarui ke " + newerLink.href);
                 } else {
-                    // Jika tidak ada lagi halaman selanjutnya (Page 3 dst tidak ada)
-                    nextPageAnchor = null;
+                    // Jika sudah tidak ada halaman lagi (Page 3 dst)
                     trigger.innerHTML = "<div style='color: #666; font-size: 0.8rem;'>Semua saluran telah ditampilkan</div>";
                     observer.unobserve(trigger);
                 }
             }
-        } catch (err) {
-            console.error("Sistem Error:", err);
-            // Jika gagal, tampilkan tombol manual agar user bisa klik
-            loading.innerHTML = "<button onclick='window.location.reload()' style='background:none; border:1px solid #f59e0b; color:#f59e0b; padding:5px 15px; border-radius:5px; cursor:pointer;'>Gagal memuat. Segarkan halaman?</button>";
+        } catch (error) {
+            console.error("Sistem Error:", error);
         } finally {
             isLoading = false;
             loading.style.display = 'none';
         }
     }
 
-    // Intersection Observer untuk deteksi otomatis saat scroll
+    // Intersection Observer untuk deteksi scroll otomatis
     const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && !isLoading) {
-            fetchNextPage();
+        if (entries[0].isIntersecting) {
+            loadMore();
         }
     }, { 
-        rootMargin: '400px', // Load konten saat user 400px sebelum sampai bawah (sangat mulus)
+        rootMargin: '300px', // Mulai muat sebelum user sampai bawah
         threshold: 0.1 
     });
 
-    observer.observe(trigger);
+    if (document.querySelector('a.next-page')) {
+        observer.observe(trigger);
+    }
 });
 </script>
