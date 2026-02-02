@@ -42,30 +42,22 @@ layout: default
         {% endfor %}
     </div>
 
-    <!-- TRIGGER SECTION (Pemicu Scroll) -->
-    <div id="infinite-scroll-trigger" style="text-align: center; padding: 50px 0; min-height: 150px; width: 100%; clear: both;">
-        {% if paginator.next_page %}
-            <div id="pagination-nav">
-                <!-- Link Rahasia yang akan diupdate otomatis oleh JS -->
-                <a class="next-page" href="{{ paginator.next_page_path | relative_url }}" style="display: none;">Next</a>
-                
-                <div id="loading-indicator" style="display: none; color: #f59e0b; font-weight: 700;">
-                    <i class="fa fa-sync-alt fa-spin"></i> Memuat saluran lainnya...
-                </div>
+<!-- TRIGGER SECTION (Pemicu Scroll) -->
+<div id="infinite-scroll-trigger" style="text-align: center; padding: 50px 0; min-height: 150px; width: 100%; clear: both;">
+    {% if paginator.next_page %}
+        <div id="pagination-nav">
+            <!-- Gunakan filter relative_url agar jalur di GitHub Pages aman -->
+            <a class="next-page" href="{{ paginator.next_page_path | relative_url }}" style="display: none;">Next</a>
+            
+            <div id="loading-indicator" style="display: none; color: #f59e0b; font-weight: 700;">
+                <i class="fa fa-sync-alt fa-spin"></i> Memuat saluran lainnya...
             </div>
-        {% else %}
-            <div style="color: #666; font-size: 0.8rem; padding: 20px;">Semua saluran telah ditampilkan</div>
-        {% endif %}
-    </div>
+        </div>
+    {% else %}
+        <div style="color: #666; font-size: 0.8rem; padding: 20px;">Semua saluran telah ditampilkan</div>
+    {% endif %}
+</div>
 
-    <!-- ADS SLOT 2 (728x90) -->
-    <div class="ads-container" style="margin-top: 30px;">
-        <div class="ads-label">ADVERTISEMENT</div>
-        <!-- Masukkan Kode AdSense di sini -->
-    </div>
-</section>
-
-<!-- SCRIPT INFINITE SCROLL FINAL -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const container = document.getElementById('post-container');
@@ -73,63 +65,73 @@ document.addEventListener("DOMContentLoaded", function() {
     const loading = document.getElementById('loading-indicator');
     
     let isLoading = false;
-    let nextPageLink = document.querySelector('.next-page');
+    // Mencari link next-page secara dinamis
+    let nextPageAnchor = document.querySelector('.next-page');
 
-    if (!nextPageLink) return;
+    if (!nextPageAnchor) {
+        console.log("Sistem: Tidak ada halaman selanjutnya (Page 2 tidak ditemukan).");
+        return;
+    }
 
-    // Fungsi Utama Mengambil Konten Halaman Selanjutnya
-    async function loadMoreItems() {
-        if (isLoading || !nextPageLink) return;
+    // Fungsi Utama Fetch Data
+    async function fetchNextPage() {
+        if (isLoading || !nextPageAnchor) return;
 
         isLoading = true;
         loading.style.display = 'block';
         
-        const fetchUrl = nextPageLink.href;
-        console.log("🚀 Menarik data dari:", fetchUrl);
+        const targetUrl = nextPageAnchor.getAttribute('href');
+        console.log("Sistem: Mencoba memuat konten dari " + targetUrl);
 
         try {
-            const response = await fetch(fetchUrl);
-            const htmlText = await response.text();
+            const response = await fetch(targetUrl);
+            if (!response.ok) throw new Error("Gagal mengambil halaman");
             
-            // Parsing HTML hasil Fetch
+            const html = await response.text();
             const parser = new DOMParser();
-            const nextDoc = parser.parseFromString(htmlText, 'text/html');
+            const doc = parser.parseFromString(html, 'text/html');
             
-            // Ambil Post Card baru
-            const newPosts = nextDoc.querySelectorAll('#post-container .post-card');
+            // Ambil kartu-kartu baru dari container di halaman tujuan
+            const newItems = doc.querySelectorAll('#post-container .post-card');
             
-            if (newPosts.length > 0) {
-                newPosts.forEach(post => {
-                    post.classList.add('animate-in'); // Tambahkan animasi
-                    container.appendChild(post);
+            if (newItems.length > 0) {
+                newItems.forEach(item => {
+                    // Pastikan animasi muncul tetap bekerja
+                    item.classList.add('animate-in');
+                    container.appendChild(item);
                 });
+                console.log("Sistem: Berhasil menambah " + newItems.length + " saluran.");
 
-                // Update Link Next Page untuk scroll berikutnya (Page 3, 4, dst)
-                const newerLink = nextDoc.querySelector('.next-page');
-                if (newerLink) {
-                    nextPageLink.href = newerLink.href;
-                    console.log("✅ Next page diperbarui ke:", newerLink.href);
+                // Cari link "Next" di halaman yang baru saja diambil
+                const newerPageAnchor = doc.querySelector('.next-page');
+                if (newerPageAnchor) {
+                    // Update URL link untuk scroll berikutnya (misal ke page3)
+                    nextPageAnchor.setAttribute('href', newerPageAnchor.getAttribute('href'));
+                    console.log("Sistem: Link diperbarui ke " + newerPageAnchor.getAttribute('href'));
                 } else {
-                    nextPageLink = null;
+                    // Jika tidak ada lagi halaman selanjutnya (Page 3 dst tidak ada)
+                    nextPageAnchor = null;
                     trigger.innerHTML = "<div style='color: #666; font-size: 0.8rem;'>Semua saluran telah ditampilkan</div>";
                     observer.unobserve(trigger);
                 }
             }
-        } catch (error) {
-            console.error("❌ Terjadi kesalahan:", error);
+        } catch (err) {
+            console.error("Sistem Error:", err);
+            // Jika gagal, tampilkan tombol manual agar user bisa klik
+            loading.innerHTML = "<button onclick='window.location.reload()' style='background:none; border:1px solid #f59e0b; color:#f59e0b; padding:5px 15px; border-radius:5px; cursor:pointer;'>Gagal memuat. Segarkan halaman?</button>";
         } finally {
             isLoading = false;
             loading.style.display = 'none';
         }
     }
 
-    // Intersection Observer untuk deteksi Scroll
+    // Intersection Observer untuk deteksi otomatis saat scroll
     const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-            loadMoreItems();
+        if (entries[0].isIntersecting && !isLoading) {
+            fetchNextPage();
         }
     }, { 
-        rootMargin: '400px', // Load 400px sebelum sampai bawah agar mulus
+        rootMargin: '400px', // Load konten saat user 400px sebelum sampai bawah (sangat mulus)
         threshold: 0.1 
     });
 
