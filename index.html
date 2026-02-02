@@ -3,8 +3,8 @@ layout: default
 ---
 <section class="hero">
     <div class="container">
-        <h1>Nonton TV Malaysia Online Gratis</h1>
-        <p>Streaming siaran TV Malaysia kualiti HD, stabil, dan lancar.</p>
+        <h1>{{ site.title }}</h1>
+        <p>{{ site.description }}</p>
     </div>
 </section>
 
@@ -16,10 +16,10 @@ layout: default
         </div>
     </div>
 
-    <!-- Grid Saluran (Menggunakan Paginator) -->
-    <div class="post-grid">
+    <!-- Container Grid Utama -->
+    <div class="post-grid" id="post-container">
         {% for post in paginator.posts %}
-        <article class="post-card">
+        <article class="post-card animate-in">
             <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
                 <div class="thumb-container">
                     <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
@@ -34,20 +34,88 @@ layout: default
         {% endfor %}
     </div>
 
-    <!-- Navigasi Halaman (Alternatif Load More yang Stabil) -->
-    <div class="pagination-nav" style="text-align: center; margin-top: 50px;">
-        {% if paginator.total_pages > 1 %}
-            <div class="pager">
-                {% if paginator.previous_page %}
-                    <a href="{{ paginator.previous_page_path | relative_url }}" class="btn-page">« Sebelumnya</a>
-                {% endif %}
-
-                <span class="page-number">Halaman {{ paginator.page }} dari {{ paginator.total_pages }}</span>
-
-                {% if paginator.next_page %}
-                    <a href="{{ paginator.next_page_path | relative_url }}" class="btn-page">Lihat Saluran Lainnya »</a>
-                {% endif %}
+    <!-- Bagian Pemicu (Trigger) -->
+    <div id="pagination-trigger" style="text-align: center; padding: 50px 0; min-height: 100px;">
+        {% if paginator.next_page %}
+            <!-- Link rahasia yang akan dibaca oleh JavaScript -->
+            <a id="next-page-link" href="{{ paginator.next_page_path | relative_url }}" style="display: none;">Next</a>
+            
+            <div id="loading-animation" style="display: none; color: #f59e0b; font-weight: 700;">
+                <i class="fa fa-sync-alt fa-spin"></i> Memuat saluran lainnya...
             </div>
+        {% else %}
+            <small style="color: gray;">Semua saluran telah ditampilkan</small>
         {% endif %}
     </div>
 </section>
+
+<!-- SCRIPT AUTO-SCROLL HYBRID -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    let nextPageLink = document.getElementById('next-page-link');
+    const container = document.getElementById('post-container');
+    const loading = document.getElementById('loading-animation');
+    const trigger = document.getElementById('pagination-trigger');
+    
+    let isLoading = false;
+
+    if (!nextPageLink) return; // Berhenti jika tidak ada halaman selanjutnya
+
+    const loadNextPage = async () => {
+        if (isLoading || !nextPageLink) return;
+        
+        isLoading = true;
+        loading.style.display = 'block';
+        
+        const nextUrl = nextPageLink.href;
+        console.log("Mencoba mengambil konten dari:", nextUrl);
+
+        try {
+            const response = await fetch(nextUrl);
+            const html = await response.text();
+            
+            // Buat dokumen virtual untuk memproses HTML yang diambil
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            
+            // Ambil semua post-card dari halaman selanjutnya
+            const newPosts = doc.querySelectorAll('#post-container .post-card');
+            
+            // Masukkan post baru ke grid saat ini
+            newPosts.forEach(post => {
+                post.classList.add('animate-in'); // Tambahkan animasi muncul
+                container.appendChild(post);
+            });
+
+            // Cari link halaman selanjutnya yang baru dari dokumen virtual
+            const newNextPageLink = doc.getElementById('next-page-link');
+            
+            if (newNextPageLink) {
+                nextPageLink.href = newNextPageLink.href; // Update URL untuk scroll berikutnya
+            } else {
+                nextPageLink = null; // Habis, tidak ada halaman lagi
+                trigger.innerHTML = "<small style='color: gray;'>Semua saluran telah ditampilkan</small>";
+            }
+
+            console.log("✨ Berhasil memuat " + newPosts.length + " saluran baru.");
+        } catch (error) {
+            console.error("Gagal memuat halaman selanjutnya:", error);
+        } finally {
+            isLoading = false;
+            loading.style.display = 'none';
+        }
+    };
+
+    // Deteksi Scroll menggunakan Intersection Observer (Lebih Ringan)
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            loadNextPage();
+        }
+    }, { 
+        rootMargin: '400px', // Mulai muat saat user 400px sebelum mentok bawah
+        threshold: 0.1 
+    });
+
+    observer.observe(trigger);
+});
+</script>
