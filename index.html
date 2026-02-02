@@ -11,6 +11,7 @@ title: Halaman Utama
     </div>
 </section>
 
+<!-- Section Postingan (Saluran Populer) -->
 <section id="main-content" class="container">
     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
         <span style="width: 8px; height: 24px; background: var(--accent); border-radius: 4px;"></span>
@@ -18,27 +19,40 @@ title: Halaman Utama
     </div>
 
     <div class="channel-grid">
-        {% for channel in site.data.channels %}
+        {% for post in site.posts limit: 6 %}
         <article class="channel-card">
-            <!-- Placeholder Image: Ganti dengan logo channel asli -->
-            <div style="background: {{ channel.color }};" class="card-image">
-                <div style="height:100%; display:grid; place-items:center; font-weight:800; font-size:1.5rem;">
-                    {{ channel.name }}
+            <a href="{{ post.url | relative_url }}" class="card-link" aria-label="Nonton {{ post.title }}">
+                <div class="card-image-wrapper">
+                    {% if post.thumbnail %}
+                        <img src="{{ post.thumbnail | relative_url }}" 
+                             alt="Streaming {{ post.title }}" 
+                             loading="lazy" 
+                             class="card-image-file">
+                    {% else %}
+                        <!-- Fallback jika lupa isi thumbnail -->
+                        <div class="card-image-placeholder">
+                            {{ post.title }}
+                        </div>
+                    {% endif %}
+                    <span class="badge-live">LIVE</span>
                 </div>
-            </div>
+            </a>
             
             <div class="card-content">
-                <h3>{{ channel.name }} Live</h3>
-                <p>{{ channel.description | truncate: 80 }}</p>
-                <a href="/tv/{{ channel.name | slugify }}" class="btn-watch">Tonton Sekarang</a>
+                <span class="category-tag">{{ post.category }}</span>
+                <h3><a href="{{ post.url | relative_url }}" style="color: inherit; text-decoration: none;">{{ post.title }}</a></h3>
+                <p>{{ post.description | truncate: 75 }}</p>
+                <a href="{{ post.url | relative_url }}" class="btn-watch">Tonton Sekarang</a>
             </div>
         </article>
         {% endfor %}
     </div>
 
+    {% if site.posts.size > 6 %}
     <div style="text-align: center; margin-top: 50px;">
-        <a href="#" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem; border: 1px solid var(--glass-border); padding: 10px 20px; border-radius: 30px;">
-            Lihat Semua Kategori <i class="fas fa-chevron-right"></i>
+        <a href="/all-channels" class="btn-outline-more">
+            Lihat Semua Saluran <i class="fas fa-arrow-right"></i>
         </a>
     </div>
+    {% endif %}
 </section>
