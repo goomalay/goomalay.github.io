@@ -1,10 +1,12 @@
-<footer style="text-align: center; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.05); font-size: 12px; color: #666;">
+<footer>
     <div class="container">
-        <p>© {{ "now" | date: "%Y" }} TV Online Malaysia. All Rights Reserved.</p>
-        <div class="social-icons" style="margin-top: 10px; font-size: 16px;">
-            <i class="fab fa-facebook" style="margin: 0 10px;"></i>
-            <i class="fab fa-instagram" style="margin: 0 10px;"></i>
-            <i class="fab fa-youtube" style="margin: 0 10px;"></i>
+        <div class="footer-logo">TVOnline<span>Malaysia</span></div>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
         </div>
+        <p class="copyright">© {{ "now" | date: "%Y" }} {{ site.title }} - Semua Hak Terpelihara.</p>
     </div>
 </footer>
