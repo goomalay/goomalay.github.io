@@ -1,25 +1,17 @@
-<header class="main-header">
-    <nav class="container nav-wrapper">
-        <!-- Logo -->
-        <div class="site-branding">
-            <a href="{{ '/' | relative_url }}">
-                <img src="{{ '/assets/img/tvmalaysia.webp' | relative_url }}" alt="{{ site.title }}" class="site-logo">
-            </a>
+<header class="navbar">
+    <div class="container nav-content">
+        <a href="/" class="logo">TVOnline<span>Malaysia</span></a>
+        <nav class="desktop-nav">
+            <ul>
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="#">Live TV</a></li>
+                <li><a href="#">Kategori</a></li>
+                <li><a href="#">Favorit</a></li>
+            </ul>
+        </nav>
+        <div class="nav-right">
+            <i class="fa fa-search"></i>
+            <a href="#" class="btn-reg">Regeser</a>
         </div>
-
-        <!-- Menu Navigasi -->
-        <ul class="nav-links">
-            <li><a href="{{ '/' | relative_url }}" class="nav-item {% if page.url == '/' %}active{% endif %}">Home</a></li>
-            <li><a href="#" class="nav-item">Live TV</a></li>
-            <li><a href="#" class="nav-item">Kategori</a></li>
-            <li><a href="#" class="nav-item">Favorit</a></li>
-        </ul>
-
-        <!-- Tombol Registrasi -->
-        <div class="nav-auth">
-            <a href="#" class="btn-register">
-                <i class="fa-solid fa-user-lock"></i> Registrasi
-            </a>
-        </div>
-    </nav>
+    </div>
 </header>
