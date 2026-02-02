@@ -13,14 +13,7 @@ layout: default
 </section>
 
 <section id="channels" class="container main-section">
-    <div class="section-header">
-        <div class="title-wrapper">
-            <span class="live-dot"></span>
-            <h2>Channel Populer</h2>
-        </div>
-    </div>
-
-    <!-- Area Grid -->
+    <!-- Grid Utama (Tampil awal 6 post) -->
     <div class="post-grid" id="post-container">
         {% for post in site.posts limit: 6 %}
         <article class="post-card animate-in">
@@ -38,7 +31,7 @@ layout: default
         {% endfor %}
     </div>
 
-    <!-- Area Loading -->
+    <!-- Pemicu Scroll -->
     <div id="infinite-scroll-trigger" style="text-align: center; padding: 40px 0; min-height: 100px;">
         <div id="loading-indicator" style="display: none; color: #f59e0b; font-weight: 600;">
             <i class="fa fa-sync-alt fa-spin"></i> Memuat saluran lainnya...
@@ -48,46 +41,48 @@ layout: default
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // VARIABEL UTAMA
-    let postsShown = 6;      // Samakan dengan limit di Liquid di atas
-    const postsPerLoad = 6;  // Berapa post yang muncul tiap scroll
-    let allPosts = [];
-    let isLoading = false;
-    
     const container = document.getElementById('post-container');
     const trigger = document.getElementById('infinite-scroll-trigger');
     const loading = document.getElementById('loading-indicator');
+    
+    let allPosts = [];
+    let postsShown = 6; // Harus sama dengan limit di atas
+    const postsPerLoad = 6;
+    let isLoading = false;
 
-    // 1. Ambil Data JSON (Menggunakan absolute path untuk GitHub Pages)
-    fetch('/posts.json')
+    // 1. Ambil data JSON secara dinamis
+    fetch('{{ "/posts.json" | relative_url }}')
         .then(response => {
-            if (!response.ok) throw new Error("File posts.json tidak ditemukan!");
+            if (!response.ok) throw new Error("File posts.json tidak ditemukan atau path salah!");
             return response.json();
         })
         .then(data => {
             allPosts = data;
-            console.log("Sistem Ready: " + allPosts.length + " total saluran ditemukan.");
-            
-            // Hanya aktifkan observer jika ada sisa postingan yang belum tampil
+            console.log("Berhasil memuat " + allPosts.length + " data dari posts.json");
+
+            // Jika jumlah post lebih dari yang ditampilkan, aktifkan observer
             if (allPosts.length > postsShown) {
-                initObserver();
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting && !isLoading) {
+                        loadMore();
+                    }
+                }, { rootMargin: '200px' });
+                observer.observe(trigger);
             } else {
                 trigger.style.display = 'none';
             }
         })
-        .catch(err => {
-            console.error("Infinite Scroll Error:", err);
-            trigger.innerHTML = "<small style='color:gray'>Semua saluran telah ditampilkan</small>";
+        .catch(error => {
+            console.error("Infinite Scroll Error:", error);
         });
 
     // 2. Fungsi Load More
     function loadMore() {
-        if (isLoading || postsShown >= allPosts.length) return;
+        if (postsShown >= allPosts.length) return;
         
         isLoading = true;
         loading.style.display = 'block';
 
-        // Beri jeda sedikit agar loading terlihat halus
         setTimeout(() => {
             const nextPosts = allPosts.slice(postsShown, postsShown + postsPerLoad);
             
@@ -113,25 +108,10 @@ document.addEventListener("DOMContentLoaded", function() {
             isLoading = false;
             loading.style.display = 'none';
 
-            console.log("Post ditampilkan: " + postsShown + "/" + allPosts.length);
-
             if (postsShown >= allPosts.length) {
-                trigger.innerHTML = "<small style='color:gray'>Selesai. Tidak ada lagi saluran.</small>";
-                observer.unobserve(trigger);
+                trigger.innerHTML = "<small style='color:gray'>Semua saluran telah ditampilkan</small>";
             }
-        }, 800);
-    }
-
-    // 3. Observer Sistem
-    let observer;
-    function initObserver() {
-        observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && !isLoading) {
-                loadMore();
-            }
-        }, { rootMargin: '300px' }); // Load saat 300px sebelum mentok bawah
-        
-        observer.observe(trigger);
+        }, 800); // Jeda 0.8 detik agar loading terasa
     }
 });
 </script>
