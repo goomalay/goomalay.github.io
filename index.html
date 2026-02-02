@@ -5,42 +5,44 @@ title: Halaman Utama
 
 <section class="hero">
     <div class="container">
-        <h1>{{ site.title }}</h1>
-        <p>Platform streaming TV Malaysia terlengkap dengan kualitas HD. Tonton drama, berita, dan sukan kegemaran anda secara percuma.</p>
-        <div class="hero-stats">
-            <span><i class="fas fa-bolt"></i> Fast Loading</span>
-            <span><i class="fas fa-check-circle"></i> HD Quality</span>
-            <span><i class="fas fa-mobile-alt"></i> Responsive</span>
+        <h1>Nonton TV Malaysia Online Gratis</h1>
+        <p>Tonton Siaran TV Malaysia, Berita, dan Hiburan Secara Langsung dengan Kualiti HD.</p>
+        <a href="#channels" class="btn-main">📺 Tonton Sekarang</a>
+        <div class="hero-badges">
+            <span><i class="fa fa-bolt"></i> Fast Loading</span>
+            <span><i class="fa fa-shield-alt"></i> Safe & Secure</span>
         </div>
     </div>
 </section>
 
-<main class="container" id="main-content">
+<section id="channels" class="container main-section">
     <div class="section-header">
-        <div class="section-title">
-            <span class="dot"></span>
-            <h2>Saluran Populer Hari Ini</h2>
+        <div class="title-wrapper">
+            <span class="live-dot"></span>
+            <h2>Channel Populer</h2>
         </div>
     </div>
 
-    <div class="channel-grid">
+    <div class="post-grid">
         {% for post in site.posts %}
-        <article class="card">
-            <a href="{{ post.url | relative_url }}" class="card-thumb">
-                <img src="{{ post.image | relative_url }}" alt="{{ post.seo_title }}" loading="lazy">
-                <span class="badge-live">LIVE</span>
+        <article class="post-card">
+            <a href="{{ post.url | relative_url }}" class="thumb-link">
+                <div class="thumb-container">
+                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                    <span class="live-tag">LIVE</span>
+                </div>
             </a>
-            <div class="card-info">
+            <div class="post-info">
                 <span class="category">{{ post.category }}</span>
                 <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-                <p class="program-text">{{ post.program | truncate: 60 }}</p>
-                <div class="card-footer">
-                    <a href="{{ post.url | relative_url }}" class="btn-play">
-                        <i class="fas fa-play"></i> Tonton Sekarang
-                    </a>
-                </div>
+                <p>{{ post.program | truncate: 70 }}</p>
+                <a href="{{ post.url | relative_url }}" class="btn-card-watch">Tonton Sekarang</a>
             </div>
         </article>
         {% endfor %}
     </div>
-</main>
+
+    <div class="load-more">
+        <a href="#" class="btn-outline">Lihat Semua Channel <i class="fa fa-chevron-right"></i></a>
+    </div>
+</section>
