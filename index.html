@@ -1,10 +1,9 @@
 ---
 layout: default
 ---
-<!-- Hero tetap sama -->
 <section class="hero">
     <div class="container">
-        <h1>{{ site.description }}</h1>
+        <h1>Nonton TV Malaysia Online Gratis</h1>
         <p>Streaming siaran TV Malaysia kualiti HD, stabil, dan lancar.</p>
     </div>
 </section>
@@ -17,93 +16,38 @@ layout: default
         </div>
     </div>
 
-<!-- Grid Utama -->
-<div class="post-grid" id="post-container">
-    {% for post in site.posts limit: 8 %}
-    <article class="post-card animate-in">
-        <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
-            <div class="thumb-container">
-                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                <span class="live-tag">LIVE</span>
-            </div>
-            <div class="post-info">
-                <span class="category">{{ post.category }}</span>
-                <h3>{{ post.title }}</h3>
-            </div>
-        </a>
-    </article>
-    {% endfor %}
-</div>
-
-<!-- Area Tombol (Pagination Modern) -->
-<div id="pagination-area" style="text-align: center; padding: 40px 0;">
-    <button id="load-more-btn" style="background: #f59e0b; color: #000; border: none; padding: 12px 30px; border-radius: 50px; font-weight: 800; cursor: pointer; display: none; font-size: 14px; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);">
-        TAMPILKAN LEBIH BANYAK SALURAN
-    </button>
-    <div id="loading-spinner" style="display: none; color: #f59e0b; font-weight: 600;">
-        <i class="fa fa-sync-alt fa-spin"></i> Memuat...
+    <!-- Grid Saluran (Menggunakan Paginator) -->
+    <div class="post-grid">
+        {% for post in paginator.posts %}
+        <article class="post-card">
+            <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
+                <div class="thumb-container">
+                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                    <span class="live-tag">LIVE</span>
+                </div>
+                <div class="post-info">
+                    <span class="category">{{ post.category }}</span>
+                    <h3>{{ post.title }}</h3>
+                </div>
+            </a>
+        </article>
+        {% endfor %}
     </div>
-</div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const btn = document.getElementById('load-more-btn');
-    const container = document.getElementById('post-container');
-    const spinner = document.getElementById('loading-spinner');
-    
-    let allPosts = [];
-    let postsShown = 8; // Samakan dengan limit di Liquid atas
-    const postsPerLoad = 8;
+    <!-- Navigasi Halaman (Alternatif Load More yang Stabil) -->
+    <div class="pagination-nav" style="text-align: center; margin-top: 50px;">
+        {% if paginator.total_pages > 1 %}
+            <div class="pager">
+                {% if paginator.previous_page %}
+                    <a href="{{ paginator.previous_page_path | relative_url }}" class="btn-page">« Sebelumnya</a>
+                {% endif %}
 
-    // Ambil data JSON
-    fetch('{{ "/posts.json" | relative_url }}')
-        .then(res => res.json())
-        .then(data => {
-            allPosts = data;
-            console.log("Data JSON siap:", allPosts.length);
-            
-            // Munculkan tombol jika ada sisa post
-            if (allPosts.length > postsShown) {
-                btn.style.display = 'inline-block';
-            }
-        })
-        .catch(err => console.error("Gagal load JSON:", err));
+                <span class="page-number">Halaman {{ paginator.page }} dari {{ paginator.total_pages }}</span>
 
-    // Logika saat tombol diklik
-    btn.addEventListener('click', function() {
-        btn.style.display = 'none';
-        spinner.style.display = 'block';
-
-        setTimeout(() => {
-            const nextBatch = allPosts.slice(postsShown, postsShown + postsPerLoad);
-            
-            nextBatch.forEach(post => {
-                const article = document.createElement('article');
-                article.className = 'post-card animate-in';
-                article.innerHTML = `
-                    <a href="${post.url}" class="card-link-wrapper">
-                        <div class="thumb-container">
-                            <img src="${post.image}" alt="${post.title}" loading="lazy">
-                            <span class="live-tag">LIVE</span>
-                        </div>
-                        <div class="post-info">
-                            <span class="category">${post.category}</span>
-                            <h3>${post.title}</h3>
-                        </div>
-                    </a>`;
-                container.appendChild(article);
-            });
-
-            postsShown += nextBatch.length;
-            spinner.style.display = 'none';
-
-            // Cek apakah masih ada sisa
-            if (postsShown < allPosts.length) {
-                btn.style.display = 'inline-block';
-            } else {
-                btn.parentElement.innerHTML = "<small style='color:gray'>Semua saluran telah ditampilkan</small>";
-            }
-        }, 500);
-    });
-});
-</script>
+                {% if paginator.next_page %}
+                    <a href="{{ paginator.next_page_path | relative_url }}" class="btn-page">Lihat Saluran Lainnya »</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</section>
