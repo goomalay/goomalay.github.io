@@ -6,12 +6,12 @@ title: Halaman Utama
 <section class="hero">
     <div class="container">
         <h1>Nonton TV Malaysia Online Gratis</h1>
-        <p>Streaming siaran TV Malaysia kualiti HD.</p>
+        <p>Streaming siaran TV Malaysia kualiti HD, stabil, dan lancar.</p>
         
-        <!-- ADS SLOT HERO -->
+        <!-- ADS SLOT HERO (728x90) -->
         <div class="ads-container">
             <div class="ads-label">ADVERTISEMENT</div>
-            <!-- Pasang kode AdSense di sini -->
+            <!-- Pasang kode AdSense Anda di sini -->
         </div>
     </div>
 </section>
@@ -26,7 +26,7 @@ title: Halaman Utama
 
     <!-- Container Utama Grid -->
     <div class="post-grid" id="post-container">
-        {% for post in site.posts limit: 8 %}
+        {% for post in site.posts limit: 10 %}
         <article class="post-card">
             <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
                 <div class="thumb-container">
@@ -42,45 +42,45 @@ title: Halaman Utama
         {% endfor %}
     </div>
 
-    <!-- Tombol Load More -->
-    <div class="load-more-wrapper">
-        <button id="load-more-btn" class="btn-load-more">
-            <i class="fa fa-sync-alt"></i> Muat Lebih Banyak
-        </button>
+    <!-- Titik Pemicu Scroll (Sentinel) & Loading Indicator -->
+    <div id="infinite-scroll-trigger" style="height: 50px; margin-top: 20px;">
+        <div id="loading-spinner" class="spinner-hidden">
+            <i class="fa fa-sync-alt fa-spin"></i> Memuat saluran lainnya...
+        </div>
     </div>
 
     <!-- ADS SLOT BOTTOM -->
     <div class="ads-container">
         <div class="ads-label">ADVERTISEMENT</div>
-        <!-- Pasang kode AdSense di sini -->
+        <!-- Pasang kode AdSense Anda di sini -->
     </div>
 </section>
 
-<!-- Script Load More -->
+<!-- SCRIPT INFINITE SCROLL -->
 <script>
-let postsShown = 8; // Samakan dengan limit di atas
-const postsPerLoad = 8;
+let postsShown = 10; 
+const postsPerLoad = 6;
 let allPosts = [];
+let isLoading = false;
 
-// Ambil data dari JSON saat halaman dimuat
+// 1. Ambil data lengkap dari JSON secara background
 fetch('{{ "/posts.json" | relative_url }}')
     .then(response => response.json())
     .then(data => {
         allPosts = data;
-        // Sembunyikan tombol jika postingan sedikit
-        if (allPosts.length <= postsShown) {
-            document.getElementById('load-more-btn').style.display = 'none';
-        }
     });
 
-document.getElementById('load-more-btn').addEventListener('click', function() {
-    const btn = this;
-    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Loading...';
+// 2. Fungsi untuk memasukkan konten baru ke Grid
+function loadMorePosts() {
+    if (isLoading || postsShown >= allPosts.length) return;
     
+    isLoading = true;
+    const spinner = document.getElementById('loading-spinner');
+    spinner.classList.remove('spinner-hidden');
+
+    // Beri sedikit delay agar transisi terasa halus (600ms)
     setTimeout(() => {
         const container = document.getElementById('post-container');
-        const fragment = document.createDocumentFragment();
-        
         const nextPosts = allPosts.slice(postsShown, postsShown + postsPerLoad);
         
         nextPosts.forEach(post => {
@@ -98,17 +98,26 @@ document.getElementById('load-more-btn').addEventListener('click', function() {
                     </div>
                 </a>
             `;
-            fragment.appendChild(article);
+            container.appendChild(article);
         });
-        
-        container.appendChild(fragment);
+
         postsShown += nextPosts.length;
+        isLoading = false;
+        spinner.classList.add('spinner-hidden');
         
-        btn.innerHTML = '<i class="fa fa-sync-alt"></i> Muat Lebih Banyak';
-        
+        // Hapus pemicu jika semua post sudah tampil
         if (postsShown >= allPosts.length) {
-            btn.style.display = 'none';
+            document.getElementById('infinite-scroll-trigger').style.display = 'none';
         }
-    }, 500); // Simulasi loading agar halus
-});
+    }, 600);
+}
+
+// 3. Intersection Observer: Deteksi saat user sampai di bawah halaman
+const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+        loadMorePosts();
+    }
+}, { threshold: 0.1 });
+
+observer.observe(document.getElementById('infinite-scroll-trigger'));
 </script>
