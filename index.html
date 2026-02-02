@@ -6,17 +6,12 @@ title: Halaman Utama
 <section class="hero">
     <div class="container">
         <h1>Nonton TV Malaysia Online Gratis</h1>
-        <p>Streaming siaran TV Malaysia, berita, dan hiburan kualiti HD.</p>
+        <p>Streaming siaran TV Malaysia kualiti HD.</p>
         
-        <!-- ADS SLOT: Under Hero (728x90) -->
-        <div class="ads-container ads-hero">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                 data-ad-slot="XXXXXXXXXX"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        <!-- ADS SLOT HERO -->
+        <div class="ads-container">
+            <div class="ads-label">ADVERTISEMENT</div>
+            <!-- Pasang kode AdSense di sini -->
         </div>
     </div>
 </section>
@@ -29,8 +24,9 @@ title: Halaman Utama
         </div>
     </div>
 
-    <div class="post-grid">
-        {% for post in site.posts limit: 12 %}
+    <!-- Container Utama Grid -->
+    <div class="post-grid" id="post-container">
+        {% for post in site.posts limit: 8 %}
         <article class="post-card">
             <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
                 <div class="thumb-container">
@@ -40,24 +36,79 @@ title: Halaman Utama
                 <div class="post-info">
                     <span class="category">{{ post.category }}</span>
                     <h3>{{ post.title }}</h3>
-                    <p>{{ post.program | truncate: 50 }}</p>
                 </div>
             </a>
         </article>
         {% endfor %}
     </div>
 
-    <!-- ADS SLOT: Mid Grid or Bottom (728x90) -->
-    <div class="ads-container ads-bottom">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-             data-ad-slot="XXXXXXXXXX"
-             data-ad-format="auto"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    <!-- Tombol Load More -->
+    <div class="load-more-wrapper">
+        <button id="load-more-btn" class="btn-load-more">
+            <i class="fa fa-sync-alt"></i> Muat Lebih Banyak
+        </button>
     </div>
 
-    <div class="load-more">
-        <a href="{{ '/all-channels/' | relative_url }}" class="btn-outline">Lihat Semua Channel <i class="fa fa-chevron-right"></i></a>
+    <!-- ADS SLOT BOTTOM -->
+    <div class="ads-container">
+        <div class="ads-label">ADVERTISEMENT</div>
+        <!-- Pasang kode AdSense di sini -->
     </div>
 </section>
+
+<!-- Script Load More -->
+<script>
+let postsShown = 8; // Samakan dengan limit di atas
+const postsPerLoad = 8;
+let allPosts = [];
+
+// Ambil data dari JSON saat halaman dimuat
+fetch('{{ "/posts.json" | relative_url }}')
+    .then(response => response.json())
+    .then(data => {
+        allPosts = data;
+        // Sembunyikan tombol jika postingan sedikit
+        if (allPosts.length <= postsShown) {
+            document.getElementById('load-more-btn').style.display = 'none';
+        }
+    });
+
+document.getElementById('load-more-btn').addEventListener('click', function() {
+    const btn = this;
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Loading...';
+    
+    setTimeout(() => {
+        const container = document.getElementById('post-container');
+        const fragment = document.createDocumentFragment();
+        
+        const nextPosts = allPosts.slice(postsShown, postsShown + postsPerLoad);
+        
+        nextPosts.forEach(post => {
+            const article = document.createElement('article');
+            article.className = 'post-card animate-in';
+            article.innerHTML = `
+                <a href="${post.url}" class="card-link-wrapper">
+                    <div class="thumb-container">
+                        <img src="${post.image}" alt="${post.title}" loading="lazy">
+                        <span class="live-tag">LIVE</span>
+                    </div>
+                    <div class="post-info">
+                        <span class="category">${post.category}</span>
+                        <h3>${post.title}</h3>
+                    </div>
+                </a>
+            `;
+            fragment.appendChild(article);
+        });
+        
+        container.appendChild(fragment);
+        postsShown += nextPosts.length;
+        
+        btn.innerHTML = '<i class="fa fa-sync-alt"></i> Muat Lebih Banyak';
+        
+        if (postsShown >= allPosts.length) {
+            btn.style.display = 'none';
+        }
+    }, 500); // Simulasi loading agar halus
+});
+</script>
