@@ -1,17 +1,15 @@
 ---
 layout: default
-title: Halaman Utama
 ---
 
 <section class="hero">
     <div class="container">
         <h1>Nonton TV Malaysia Online Gratis</h1>
         <p>Streaming siaran TV Malaysia kualiti HD, stabil, dan lancar.</p>
-        
-        <!-- ADS SLOT HERO (728x90) -->
+        <!-- ADS SLOT HERO -->
         <div class="ads-container">
             <div class="ads-label">ADVERTISEMENT</div>
-            <!-- Pasang kode AdSense Anda di sini -->
+            <!-- Pasang kode AdSense di sini -->
         </div>
     </div>
 </section>
@@ -24,7 +22,7 @@ title: Halaman Utama
         </div>
     </div>
 
-    <!-- Container Utama Grid -->
+    <!-- Area Grid Utama -->
     <div class="post-grid" id="post-container">
         {% for post in site.posts limit: 10 %}
         <article class="post-card">
@@ -42,82 +40,93 @@ title: Halaman Utama
         {% endfor %}
     </div>
 
-    <!-- Titik Pemicu Scroll (Sentinel) & Loading Indicator -->
-    <div id="infinite-scroll-trigger" style="height: 50px; margin-top: 20px;">
-        <div id="loading-spinner" class="spinner-hidden">
+    <!-- Trigger Scroll & Loading Animasi -->
+    <div id="infinite-scroll-trigger" style="text-align: center; padding: 40px 0;">
+        <div id="loading-indicator" style="display: none; color: var(--primary); font-weight: 600;">
             <i class="fa fa-sync-alt fa-spin"></i> Memuat saluran lainnya...
         </div>
     </div>
-
-    <!-- ADS SLOT BOTTOM -->
-    <div class="ads-container">
-        <div class="ads-label">ADVERTISEMENT</div>
-        <!-- Pasang kode AdSense Anda di sini -->
-    </div>
 </section>
 
-<!-- SCRIPT INFINITE SCROLL -->
 <script>
-let postsShown = 10; 
-const postsPerLoad = 6;
-let allPosts = [];
-let isLoading = false;
-
-// 1. Ambil data lengkap dari JSON secara background
-fetch('{{ "/posts.json" | relative_url }}')
-    .then(response => response.json())
-    .then(data => {
-        allPosts = data;
-    });
-
-// 2. Fungsi untuk memasukkan konten baru ke Grid
-function loadMorePosts() {
-    if (isLoading || postsShown >= allPosts.length) return;
+document.addEventListener("DOMContentLoaded", function() {
+    let postsShown = 10; // Jumlah awal yang tampil di Liquid
+    const postsPerLoad = 6;
+    let allPosts = [];
+    let isLoading = false;
     
-    isLoading = true;
-    const spinner = document.getElementById('loading-spinner');
-    spinner.classList.remove('spinner-hidden');
+    const container = document.getElementById('post-container');
+    const trigger = document.getElementById('infinite-scroll-trigger');
+    const loading = document.getElementById('loading-indicator');
 
-    // Beri sedikit delay agar transisi terasa halus (600ms)
-    setTimeout(() => {
-        const container = document.getElementById('post-container');
-        const nextPosts = allPosts.slice(postsShown, postsShown + postsPerLoad);
+    // 1. Ambil data dari JSON
+    fetch('{{ "/posts.json" | relative_url }}')
+        .then(response => {
+            if (!response.ok) throw new Error("Gagal mengambil data JSON");
+            return response.json();
+        })
+        .then(data => {
+            allPosts = data;
+            console.log("Data berhasil dimuat:", allPosts.length, "saluran ditemukan.");
+            
+            // Aktifkan pengamat (Observer) setelah data siap
+            if (allPosts.length > postsShown) {
+                initObserver();
+            }
+        })
+        .catch(err => console.error("Error Infinite Scroll:", err));
+
+    // 2. Fungsi Load More
+    function loadMore() {
+        if (isLoading || postsShown >= allPosts.length) return;
         
-        nextPosts.forEach(post => {
-            const article = document.createElement('article');
-            article.className = 'post-card animate-in';
-            article.innerHTML = `
-                <a href="${post.url}" class="card-link-wrapper">
-                    <div class="thumb-container">
-                        <img src="${post.image}" alt="${post.title}" loading="lazy">
-                        <span class="live-tag">LIVE</span>
-                    </div>
-                    <div class="post-info">
-                        <span class="category">${post.category}</span>
-                        <h3>${post.title}</h3>
-                    </div>
-                </a>
-            `;
-            container.appendChild(article);
-        });
+        isLoading = true;
+        loading.style.display = 'block';
 
-        postsShown += nextPosts.length;
-        isLoading = false;
-        spinner.classList.add('spinner-hidden');
-        
-        // Hapus pemicu jika semua post sudah tampil
-        if (postsShown >= allPosts.length) {
-            document.getElementById('infinite-scroll-trigger').style.display = 'none';
-        }
-    }, 600);
-}
+        // Simulasi delay biar halus
+        setTimeout(() => {
+            const nextPosts = allPosts.slice(postsShown, postsShown + postsPerLoad);
+            
+            nextPosts.forEach(post => {
+                const article = document.createElement('article');
+                article.className = 'post-card animate-in';
+                article.innerHTML = `
+                    <a href="${post.url}" class="card-link-wrapper">
+                        <div class="thumb-container">
+                            <img src="${post.image}" alt="${post.title}" loading="lazy">
+                            <span class="live-tag">LIVE</span>
+                        </div>
+                        <div class="post-info">
+                            <span class="category">${post.category}</span>
+                            <h3>${post.title}</h3>
+                        </div>
+                    </a>
+                `;
+                container.appendChild(article);
+            });
 
-// 3. Intersection Observer: Deteksi saat user sampai di bawah halaman
-const observer = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-        loadMorePosts();
+            postsShown += nextPosts.length;
+            isLoading = false;
+            loading.style.display = 'none';
+
+            if (postsShown >= allPosts.length) {
+                trigger.style.display = 'none';
+                console.log("Semua konten telah dimuat.");
+            }
+        }, 500);
     }
-}, { threshold: 0.1 });
 
-observer.observe(document.getElementById('infinite-scroll-trigger'));
+    // 3. Sistem Deteksi Scroll (Intersection Observer)
+    function initObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                loadMore();
+            }
+        }, { 
+            rootMargin: '200px' // Mulai muat saat user masih 200px sebelum mentok bawah
+        });
+        
+        observer.observe(trigger);
+    }
+});
 </script>
