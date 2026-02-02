@@ -13,7 +13,14 @@ layout: default
 </section>
 
 <section id="channels" class="container main-section">
-    <!-- Grid Utama (Tampil awal 6 post) -->
+    <div class="section-header">
+        <div class="title-wrapper">
+            <span class="live-dot"></span>
+            <h2>Channel Populer</h2>
+        </div>
+    </div>
+
+    <!-- Container Grid -->
     <div class="post-grid" id="post-container">
         {% for post in site.posts limit: 6 %}
         <article class="post-card animate-in">
@@ -31,11 +38,15 @@ layout: default
         {% endfor %}
     </div>
 
-    <!-- Pemicu Scroll -->
-    <div id="infinite-scroll-trigger" style="text-align: center; padding: 40px 0; min-height: 100px;">
-        <div id="loading-indicator" style="display: none; color: #f59e0b; font-weight: 600;">
+    <!-- TRIGGER SECTION -->
+    <div id="infinite-scroll-trigger" style="text-align: center; padding: 40px 0;">
+        <div id="loading-indicator" style="display: none; color: #f59e0b; font-weight: 600; margin-bottom: 10px;">
             <i class="fa fa-sync-alt fa-spin"></i> Memuat saluran lainnya...
         </div>
+        <!-- Tombol cadangan jika scroll tidak terpicu -->
+        <button id="manual-load-btn" style="display: none; background: transparent; border: 1px solid #f59e0b; color: #f59e0b; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            Lihat Lebih Banyak
+        </button>
     </div>
 </section>
 
@@ -44,49 +55,36 @@ document.addEventListener("DOMContentLoaded", function() {
     const container = document.getElementById('post-container');
     const trigger = document.getElementById('infinite-scroll-trigger');
     const loading = document.getElementById('loading-indicator');
+    const manualBtn = document.getElementById('manual-load-btn');
     
     let allPosts = [];
-    let postsShown = 6; // Harus sama dengan limit di atas
-    const postsPerLoad = 6;
+    let postsShown = 6; // Sesuaikan dengan limit Liquid di atas
     let isLoading = false;
 
-    // 1. Ambil data JSON secara dinamis
+    // 1. Ambil Data
     fetch('{{ "/posts.json" | relative_url }}')
-        .then(response => {
-            if (!response.ok) throw new Error("File posts.json tidak ditemukan atau path salah!");
-            return response.json();
-        })
+        .then(res => res.json())
         .then(data => {
             allPosts = data;
-            console.log("Berhasil memuat " + allPosts.length + " data dari posts.json");
-
-            // Jika jumlah post lebih dari yang ditampilkan, aktifkan observer
+            console.log("Total post tersedia: " + allPosts.length);
+            
             if (allPosts.length > postsShown) {
-                const observer = new IntersectionObserver((entries) => {
-                    if (entries[0].isIntersecting && !isLoading) {
-                        loadMore();
-                    }
-                }, { rootMargin: '200px' });
-                observer.observe(trigger);
+                initInfiniteScroll();
             } else {
                 trigger.style.display = 'none';
             }
         })
-        .catch(error => {
-            console.error("Infinite Scroll Error:", error);
-        });
+        .catch(err => console.error("Gagal memuat posts.json. Pastikan file ada di root."));
 
-    // 2. Fungsi Load More
     function loadMore() {
-        if (postsShown >= allPosts.length) return;
-        
+        if (isLoading || postsShown >= allPosts.length) return;
         isLoading = true;
         loading.style.display = 'block';
+        manualBtn.style.display = 'none';
 
         setTimeout(() => {
-            const nextPosts = allPosts.slice(postsShown, postsShown + postsPerLoad);
-            
-            nextPosts.forEach(post => {
+            const nextBatch = allPosts.slice(postsShown, postsShown + 6);
+            nextBatch.forEach(post => {
                 const article = document.createElement('article');
                 article.className = 'post-card animate-in';
                 article.innerHTML = `
@@ -99,19 +97,32 @@ document.addEventListener("DOMContentLoaded", function() {
                             <span class="category">${post.category}</span>
                             <h3>${post.title}</h3>
                         </div>
-                    </a>
-                `;
+                    </a>`;
                 container.appendChild(article);
             });
-
-            postsShown += nextPosts.length;
+            postsShown += nextBatch.length;
             isLoading = false;
             loading.style.display = 'none';
-
+            
             if (postsShown >= allPosts.length) {
                 trigger.innerHTML = "<small style='color:gray'>Semua saluran telah ditampilkan</small>";
             }
-        }, 800); // Jeda 0.8 detik agar loading terasa
+        }, 500);
+    }
+
+    function initInfiniteScroll() {
+        // Tampilkan tombol manual sebagai cadangan jika observer gagal
+        manualBtn.style.display = 'inline-block';
+        manualBtn.onclick = loadMore;
+
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                console.log("Trigger terlihat, memuat konten...");
+                loadMore();
+            }
+        }, { rootMargin: '200px' });
+        
+        observer.observe(trigger);
     }
 });
 </script>
