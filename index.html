@@ -1,13 +1,21 @@
 ---
 layout: default
 ---
+<!-- HERO SECTION -->
 <section class="hero">
     <div class="container">
         <h1>{{ site.title }}</h1>
         <p>{{ site.description }}</p>
+        
+        <!-- ADS SLOT 1 (728x90) -->
+        <div class="ads-container">
+            <div class="ads-label">ADVERTISEMENT</div>
+            <!-- Masukkan Kode AdSense di sini -->
+        </div>
     </div>
 </section>
 
+<!-- MAIN CONTENT SECTION -->
 <section id="channels" class="container main-section">
     <div class="section-header">
         <div class="title-wrapper">
@@ -34,81 +42,97 @@ layout: default
         {% endfor %}
     </div>
 
-    <!-- Pemicu Scroll -->
-    <div id="infinite-scroll-trigger" style="text-align: center; padding: 50px 0; min-height: 120px; width: 100%;">
+    <!-- TRIGGER SECTION (Pemicu Scroll) -->
+    <div id="infinite-scroll-trigger" style="text-align: center; padding: 50px 0; min-height: 150px; width: 100%; clear: both;">
         {% if paginator.next_page %}
-            <!-- Link ini yang akan dicari oleh JavaScript -->
             <div id="pagination-nav">
+                <!-- Link Rahasia yang akan diupdate otomatis oleh JS -->
                 <a class="next-page" href="{{ paginator.next_page_path | relative_url }}" style="display: none;">Next</a>
-                <div id="loading-indicator" style="color: #f59e0b; font-weight: 700;">
+                
+                <div id="loading-indicator" style="display: none; color: #f59e0b; font-weight: 700;">
                     <i class="fa fa-sync-alt fa-spin"></i> Memuat saluran lainnya...
                 </div>
             </div>
         {% else %}
-            <small style="color: gray;">Semua saluran telah ditampilkan</small>
+            <div style="color: #666; font-size: 0.8rem; padding: 20px;">Semua saluran telah ditampilkan</div>
         {% endif %}
+    </div>
+
+    <!-- ADS SLOT 2 (728x90) -->
+    <div class="ads-container" style="margin-top: 30px;">
+        <div class="ads-label">ADVERTISEMENT</div>
+        <!-- Masukkan Kode AdSense di sini -->
     </div>
 </section>
 
+<!-- SCRIPT INFINITE SCROLL FINAL -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    let container = document.getElementById('post-container');
-    let trigger = document.getElementById('infinite-scroll-trigger');
+    const container = document.getElementById('post-container');
+    const trigger = document.getElementById('infinite-scroll-trigger');
+    const loading = document.getElementById('loading-indicator');
     
     let isLoading = false;
+    let nextPageLink = document.querySelector('.next-page');
 
-    function initInfiniteScroll() {
-        // Cari link halaman berikutnya
-        let nextLink = document.querySelector('a.next-page');
-        if (!nextLink) return;
+    if (!nextPageLink) return;
 
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && !isLoading) {
-                loadMore(nextLink.href);
-            }
-        }, { rootMargin: '400px' });
+    // Fungsi Utama Mengambil Konten Halaman Selanjutnya
+    async function loadMoreItems() {
+        if (isLoading || !nextPageLink) return;
 
-        observer.observe(trigger);
-    }
-
-    async function loadMore(url) {
         isLoading = true;
-        console.log("Mengambil data dari: " + url);
+        loading.style.display = 'block';
+        
+        const fetchUrl = nextPageLink.href;
+        console.log("🚀 Menarik data dari:", fetchUrl);
 
         try {
-            const response = await fetch(url);
-            const text = await response.text();
+            const response = await fetch(fetchUrl);
+            const htmlText = await response.text();
+            
+            // Parsing HTML hasil Fetch
             const parser = new DOMParser();
-            const doc = parser.parseFromString(text, 'text/html');
+            const nextDoc = parser.parseFromString(htmlText, 'text/html');
             
-            // 1. Ambil post baru
-            const newPosts = doc.querySelectorAll('#post-container .post-card');
-            newPosts.forEach(post => {
-                post.classList.add('animate-in');
-                container.appendChild(post);
-            });
+            // Ambil Post Card baru
+            const newPosts = nextDoc.querySelectorAll('#post-container .post-card');
+            
+            if (newPosts.length > 0) {
+                newPosts.forEach(post => {
+                    post.classList.add('animate-in'); // Tambahkan animasi
+                    container.appendChild(post);
+                });
 
-            // 2. Update link "Next" untuk scroll berikutnya
-            const nextLinkInDoc = doc.querySelector('a.next-page');
-            const navWrapper = document.getElementById('pagination-nav');
-            
-            if (nextLinkInDoc) {
-                // Ganti link lama dengan link baru dari halaman yang baru di-fetch
-                let currentNextLink = document.querySelector('a.next-page');
-                currentNextLink.href = nextLinkInDoc.href;
-                isLoading = false;
-                console.log("Next URL diperbarui ke: " + nextLinkInDoc.href);
-            } else {
-                // Jika sudah tidak ada halaman lagi
-                trigger.innerHTML = "<small style='color: gray;'>Semua saluran telah ditampilkan</small>";
-                isLoading = true; // Hentikan sistem
+                // Update Link Next Page untuk scroll berikutnya (Page 3, 4, dst)
+                const newerLink = nextDoc.querySelector('.next-page');
+                if (newerLink) {
+                    nextPageLink.href = newerLink.href;
+                    console.log("✅ Next page diperbarui ke:", newerLink.href);
+                } else {
+                    nextPageLink = null;
+                    trigger.innerHTML = "<div style='color: #666; font-size: 0.8rem;'>Semua saluran telah ditampilkan</div>";
+                    observer.unobserve(trigger);
+                }
             }
-        } catch (err) {
-            console.error("Gagal memuat halaman:", err);
+        } catch (error) {
+            console.error("❌ Terjadi kesalahan:", error);
+        } finally {
             isLoading = false;
+            loading.style.display = 'none';
         }
     }
 
-    initInfiniteScroll();
+    // Intersection Observer untuk deteksi Scroll
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            loadMoreItems();
+        }
+    }, { 
+        rootMargin: '400px', // Load 400px sebelum sampai bawah agar mulus
+        threshold: 0.1 
+    });
+
+    observer.observe(trigger);
 });
 </script>
