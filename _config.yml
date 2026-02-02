@@ -5,13 +5,13 @@ url: ""
 baseurl: "" # jika root, atau "/blog" jika di subfolder
 image: /assets/img/logo.webp
 keyword: tv malaysia online, tonton tv online, saluran tv malaysia, tv3 live, rtm online, astro online, siaran langsung tv malaysia, tv percuma malaysia, tonton saluran malaysia, live tv malaysia
-twitter_username: "tvmalaysiahomes"
-author:
-  name: "Admin TVMalaysia"
+
+# SEO Settings
+author: Admin TV Online
+lang: ms-MY
   
 permalink: /:year/:title/   # how should we display posts url
 
-author: TVMalaysia
 
 # Put your ga tracking code below
 google_analytics: 'G-JQC3CKKM9L'
