@@ -12,13 +12,7 @@ lang: ms-MY
   
 permalink: /:year/:title/   # how should we display posts url
 
-
-# Put your ga tracking code below
 google_analytics: 'G-JQC3CKKM9L'
-
-# Pagination settings
-paginate: 5                           # number of posts to show per page
-paginate_path: "/articles/page:num/"  # link scheme for articles, should be letf as is
 
 # Navigation settings
 # Used to define the navigation menu items
