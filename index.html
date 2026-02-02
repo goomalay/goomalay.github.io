@@ -6,11 +6,17 @@ title: Halaman Utama
 <section class="hero">
     <div class="container">
         <h1>Nonton TV Malaysia Online Gratis</h1>
-        <p>Tonton Siaran TV Malaysia, Berita, dan Hiburan Secara Langsung dengan Kualiti HD.</p>
-        <a href="#channels" class="btn-main">📺 Tonton Sekarang</a>
-        <div class="hero-badges">
-            <span><i class="fa fa-bolt"></i> Fast Loading</span>
-            <span><i class="fa fa-shield-alt"></i> Safe & Secure</span>
+        <p>Streaming siaran TV Malaysia, berita, dan hiburan kualiti HD.</p>
+        
+        <!-- ADS SLOT: Under Hero (728x90) -->
+        <div class="ads-container ads-hero">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
     </div>
 </section>
@@ -24,25 +30,34 @@ title: Halaman Utama
     </div>
 
     <div class="post-grid">
-        {% for post in site.posts %}
+        {% for post in site.posts limit: 12 %}
         <article class="post-card">
-            <a href="{{ post.url | relative_url }}" class="thumb-link">
+            <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
                 <div class="thumb-container">
                     <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
                     <span class="live-tag">LIVE</span>
                 </div>
+                <div class="post-info">
+                    <span class="category">{{ post.category }}</span>
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.program | truncate: 50 }}</p>
+                </div>
             </a>
-            <div class="post-info">
-                <span class="category">{{ post.category }}</span>
-                <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-                <p>{{ post.program | truncate: 70 }}</p>
-                <a href="{{ post.url | relative_url }}" class="btn-card-watch">Tonton Sekarang</a>
-            </div>
         </article>
         {% endfor %}
     </div>
 
+    <!-- ADS SLOT: Mid Grid or Bottom (728x90) -->
+    <div class="ads-container ads-bottom">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
     <div class="load-more">
-        <a href="#" class="btn-outline">Lihat Semua Channel <i class="fa fa-chevron-right"></i></a>
+        <a href="{{ '/all-channels/' | relative_url }}" class="btn-outline">Lihat Semua Channel <i class="fa fa-chevron-right"></i></a>
     </div>
 </section>
