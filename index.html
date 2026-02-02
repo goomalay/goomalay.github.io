@@ -5,54 +5,42 @@ title: Halaman Utama
 
 <section class="hero">
     <div class="container">
-        <h1>{{ site.description }}</h1>
-        <p>Nikmati akses siaran langsung TV Malaysia dengan kualitas High Definition, stabil, dan gratis selamanya.</p>
-        <a href="#main-content" class="btn-primary">Mulai Menonton</a>
+        <h1>{{ site.title }}</h1>
+        <p>Platform streaming TV Malaysia terlengkap dengan kualitas HD. Tonton drama, berita, dan sukan kegemaran anda secara percuma.</p>
+        <div class="hero-stats">
+            <span><i class="fas fa-bolt"></i> Fast Loading</span>
+            <span><i class="fas fa-check-circle"></i> HD Quality</span>
+            <span><i class="fas fa-mobile-alt"></i> Responsive</span>
+        </div>
     </div>
 </section>
 
-<!-- Section Postingan (Saluran Populer) -->
-<section id="main-content" class="container">
-    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
-        <span style="width: 8px; height: 24px; background: var(--accent); border-radius: 4px;"></span>
-        <h2 style="font-size: 1.5rem;">Saluran Populer Hari Ini</h2>
+<main class="container" id="main-content">
+    <div class="section-header">
+        <div class="section-title">
+            <span class="dot"></span>
+            <h2>Saluran Populer Hari Ini</h2>
+        </div>
     </div>
 
     <div class="channel-grid">
-        {% for post in site.posts limit: 6 %}
-        <article class="channel-card">
-            <a href="{{ post.url | relative_url }}" class="card-link" aria-label="Nonton {{ post.title }}">
-                <div class="card-image-wrapper">
-                    {% if post.thumbnail %}
-                        <img src="{{ post.thumbnail | relative_url }}" 
-                             alt="Streaming {{ post.title }}" 
-                             loading="lazy" 
-                             class="card-image-file">
-                    {% else %}
-                        <!-- Fallback jika lupa isi thumbnail -->
-                        <div class="card-image-placeholder">
-                            {{ post.title }}
-                        </div>
-                    {% endif %}
-                    <span class="badge-live">LIVE</span>
-                </div>
+        {% for post in site.posts %}
+        <article class="card">
+            <a href="{{ post.url | relative_url }}" class="card-thumb">
+                <img src="{{ post.image | relative_url }}" alt="{{ post.seo_title }}" loading="lazy">
+                <span class="badge-live">LIVE</span>
             </a>
-            
-            <div class="card-content">
-                <span class="category-tag">{{ post.category }}</span>
-                <h3><a href="{{ post.url | relative_url }}" style="color: inherit; text-decoration: none;">{{ post.title }}</a></h3>
-                <p>{{ post.description | truncate: 75 }}</p>
-                <a href="{{ post.url | relative_url }}" class="btn-watch">Tonton Sekarang</a>
+            <div class="card-info">
+                <span class="category">{{ post.category }}</span>
+                <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+                <p class="program-text">{{ post.program | truncate: 60 }}</p>
+                <div class="card-footer">
+                    <a href="{{ post.url | relative_url }}" class="btn-play">
+                        <i class="fas fa-play"></i> Tonton Sekarang
+                    </a>
+                </div>
             </div>
         </article>
         {% endfor %}
     </div>
-
-    {% if site.posts.size > 6 %}
-    <div style="text-align: center; margin-top: 50px;">
-        <a href="/all-channels" class="btn-outline-more">
-            Lihat Semua Saluran <i class="fas fa-arrow-right"></i>
-        </a>
-    </div>
-    {% endif %}
-</section>
+</main>
