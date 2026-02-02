@@ -7,10 +7,10 @@ layout: default
         <h1>{{ site.title }}</h1>
         <p>{{ site.description }}</p>
         
-        <!-- ADS SLOT HERO -->
+        <!-- ADS SLOT HERO (728x90) -->
         <div class="ads-container">
             <div class="ads-label">ADVERTISEMENT</div>
-            <!-- Pasang Kode Iklan Di Sini -->
+            <!-- Pasang kode AdSense di sini -->
         </div>
     </div>
 </section>
@@ -24,8 +24,8 @@ layout: default
         </div>
     </div>
 
-    <!-- Container Grid Utama -->
-    <div class="post-grid" id="post-container">
+    <!-- GRID SALURAN -->
+    <div class="post-grid">
         {% for post in paginator.posts %}
         <article class="post-card">
             <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
@@ -36,84 +36,33 @@ layout: default
                 <div class="post-info">
                     <span class="category">{{ post.category }}</span>
                     <h3>{{ post.title }}</h3>
+                    <p class="program-desc">{{ post.program | truncate: 60 }}</p>
                 </div>
             </a>
         </article>
         {% endfor %}
     </div>
 
-    <!-- LOAD MORE AREA (Gaya tvmy.online) -->
-    <div id="load-more-section" style="text-align: center; padding: 40px 0;">
-        {% if paginator.next_page %}
-            <!-- Tombol Manual -->
-            <button id="load-more-btn" data-next-url="{{ paginator.next_page_path | relative_url }}" class="btn-load-more">
-                LOAD MORE <i class="fa fa-chevron-down"></i>
-            </button>
-            
-            <!-- Indikator Loading saat diklik -->
-            <div id="load-more-spinner" style="display: none; color: #f59e0b; font-weight: 700;">
-                <i class="fa fa-sync-alt fa-spin"></i> MEMUAT...
+    <!-- PAGINATION NAVIGATION (Versi Final Anda) -->
+    <div class="pagination-nav">
+        {% if paginator.total_pages > 1 %}
+            <div class="pager">
+                {% if paginator.previous_page %}
+                    <a href="{{ paginator.previous_page_path | relative_url }}" class="btn-page">« Sebelumnya</a>
+                {% endif %}
+
+                <span class="page-number">Halaman <strong>{{ paginator.page }}</strong> dari <strong>{{ paginator.total_pages }}</strong></span>
+
+                {% if paginator.next_page %}
+                    <a href="{{ paginator.next_page_path | relative_url }}" class="btn-page">Lihat Saluran Lainnya »</a>
+                {% endif %}
             </div>
-        {% else %}
-            <div style="color: #666; font-size: 0.8rem;">Semua saluran telah ditampilkan</div>
         {% endif %}
     </div>
+
+    <!-- ADS SLOT BOTTOM -->
+    <div class="ads-container" style="margin-top: 40px;">
+        <div class="ads-label">ADVERTISEMENT</div>
+        <!-- Pasang kode AdSense di sini -->
+    </div>
 </section>
-
-<!-- JAVASCRIPT LOAD MORE (AJAX METHOD) -->
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const loadMoreBtn = document.getElementById('load-more-btn');
-    const container = document.getElementById('post-container');
-    const spinner = document.getElementById('load-more-spinner');
-    const section = document.getElementById('load-more-section');
-
-    if (!loadMoreBtn) return;
-
-    loadMoreBtn.addEventListener('click', async function() {
-        const nextUrl = loadMoreBtn.getAttribute('data-next-url');
-        if (!nextUrl) return;
-
-        // Tampilkan loading, sembunyikan tombol
-        loadMoreBtn.style.display = 'none';
-        spinner.style.display = 'block';
-
-        try {
-            const response = await fetch(nextUrl);
-            if (!response.ok) throw new Error("Gagal memuat halaman");
-            
-            const html = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            
-            // Ambil kartu post baru
-            const newPosts = doc.querySelectorAll('#post-container .post-card');
-            
-            if (newPosts.length > 0) {
-                newPosts.forEach(post => {
-                    post.classList.add('animate-in'); // Efek animasi muncul
-                    container.appendChild(post);
-                });
-
-                // Cari link halaman selanjutnya di dokumen baru (misal /page3/)
-                const newerLinkInDoc = doc.getElementById('load-more-btn');
-                
-                if (newerLinkInDoc) {
-                    const newerUrl = newerLinkInDoc.getAttribute('data-next-url');
-                    loadMoreBtn.setAttribute('data-next-url', newerUrl);
-                    loadMoreBtn.style.display = 'inline-block'; // Munculkan tombol lagi
-                } else {
-                    // Jika sudah tidak ada halaman lagi
-                    section.innerHTML = "<div style='color: #666; font-size: 0.8rem;'>Semua saluran telah ditampilkan</div>";
-                }
-            }
-        } catch (error) {
-            console.error("Error Load More:", error);
-            loadMoreBtn.style.display = 'inline-block';
-            alert("Gagal memuat konten. Sila cuba lagi.");
-        } finally {
-            spinner.style.display = 'none';
-        }
-    });
-});
-</script>
