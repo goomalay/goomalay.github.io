@@ -332,3 +332,37 @@ footer {
         grid-template-columns: 1fr; /* 1 kolom saja jika layar sangat sempit */
     }
 }
+
+/* INFINITE SCROLL STYLING */
+#loading-spinner {
+    text-align: center;
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 600;
+    transition: opacity 0.3s;
+    padding: 20px 0;
+}
+
+.spinner-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.fa-spin {
+    margin-right: 8px;
+}
+
+/* Memastikan grid tetap rapi di semua kondisi */
+#post-container {
+    min-height: 400px;
+}
+
+/* Animasi halus saat item baru muncul (Fade In) */
+.animate-in {
+    animation: postFadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes postFadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
