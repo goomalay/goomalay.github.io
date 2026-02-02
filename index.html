@@ -17,10 +17,10 @@ layout: default
         </div>
     </div>
 
-    <!-- Grid Awal (Hanya menampilkan 8 post pertama agar loading ngebut) -->
+    <!-- Grid Awal -->
     <div class="post-grid" id="post-container">
-        {% for post in site.posts limit: 8 %}
-        <article class="post-card animate-in">
+        {% for post in site.posts limit: 10 %}
+        <article class="post-card">
             <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
                 <div class="thumb-container">
                     <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
@@ -35,8 +35,8 @@ layout: default
         {% endfor %}
     </div>
 
-    <!-- Trigger Scroll dengan Indikator Loading -->
-    <div id="infinite-scroll-trigger" style="text-align: center; padding: 50px 0; min-height: 120px; width: 100%;">
+    <!-- TRIGGER -->
+    <div id="infinite-scroll-trigger" style="text-align: center; padding: 50px 0; min-height: 150px; width: 100%; clear: both;">
         <div id="loading-indicator" style="display: none; color: #f59e0b; font-weight: 700;">
             <i class="fa fa-sync-alt fa-spin"></i> Memuat lebih banyak saluran...
         </div>
@@ -51,50 +51,53 @@ document.addEventListener("DOMContentLoaded", function() {
     
     let allPosts = [];
     let isLoading = false;
-    const postsPerLoad = 8; // Berapa post yang ditambah setiap scroll
+    let postsPerLoad = 6;
 
-    // 1. Ambil data dari posts.json (Menggunakan path absolut GitHub)
-    fetch('/posts.json')
+    // Gunakan Liquid untuk mendapatkan URL yang benar otomatis
+    const jsonUrl = '{{ "/posts.json" | relative_url }}';
+
+    console.log("Mencoba mengambil data dari:", jsonUrl);
+
+    fetch(jsonUrl)
         .then(res => res.json())
         .then(data => {
             allPosts = data;
-            console.log("✅ JSON Terdeteksi! Total saluran:", allPosts.length);
-
-            // Cek berapa post yang sudah ada di layar sekarang
-            let initialCount = document.querySelectorAll('.post-card').length;
+            console.log("Data JSON Berhasil Dimuat. Total:", allPosts.length);
             
-            if (allPosts.length > initialCount) {
-                initInfiniteScroll();
+            // Hitung post yang sudah ada di HTML
+            let currentCount = document.querySelectorAll('.post-card').length;
+            
+            if (allPosts.length > currentCount) {
+                // Gunakan Intersection Observer
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting && !isLoading) {
+                        loadMore();
+                    }
+                }, { rootMargin: '400px' }); // Load lebih awal sebelum mentok
+                
+                observer.observe(trigger);
             } else {
                 trigger.style.display = 'none';
             }
         })
         .catch(err => {
-            console.error("❌ Gagal memuat data:", err);
-            trigger.innerHTML = "<small style='color:gray'>Gagal mengambil data saluran</small>";
+            console.error("Gagal Load JSON:", err);
+            trigger.innerHTML = "<small style='color:gray'>Semua saluran sudah tampil</small>";
         });
 
     function loadMore() {
-        if (isLoading) return;
-
-        // Hitung jumlah post di layar SEKARANG
         let currentCount = document.querySelectorAll('.post-card').length;
-        
-        if (currentCount >= allPosts.length) {
-            trigger.innerHTML = "<small style='color:gray'>Semua saluran telah ditampilkan</small>";
-            return;
-        }
+        if (currentCount >= allPosts.length) return;
 
         isLoading = true;
         loading.style.display = 'block';
 
-        // Beri delay 0.5 detik agar animasi loading terlihat profesional
         setTimeout(() => {
             const nextBatch = allPosts.slice(currentCount, currentCount + postsPerLoad);
             
             nextBatch.forEach(post => {
                 const article = document.createElement('article');
-                article.className = 'post-card animate-in';
+                article.className = 'post-card animate-in'; // Tambahkan animasi
                 article.innerHTML = `
                     <a href="${post.url}" class="card-link-wrapper">
                         <div class="thumb-container">
@@ -105,33 +108,18 @@ document.addEventListener("DOMContentLoaded", function() {
                             <span class="category">${post.category}</span>
                             <h3>${post.title}</h3>
                         </div>
-                    </a>
-                `;
+                    </a>`;
                 container.appendChild(article);
             });
 
             isLoading = false;
             loading.style.display = 'none';
-            console.log("✨ Berhasil memuat " + nextBatch.length + " saluran baru.");
+            console.log("Post baru ditambahkan. Total:", document.querySelectorAll('.post-card').length);
 
             if (document.querySelectorAll('.post-card').length >= allPosts.length) {
                 trigger.innerHTML = "<small style='color:gray'>Semua saluran telah ditampilkan</small>";
             }
         }, 500);
-    }
-
-    function initInfiniteScroll() {
-        // Observer untuk mendeteksi kapan trigger masuk layar
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && !isLoading) {
-                loadMore();
-            }
-        }, { 
-            rootMargin: '300px', // Mulai muat 300px sebelum sampai bawah agar terasa instan
-            threshold: 0.1 
-        });
-        
-        observer.observe(trigger);
     }
 });
 </script>
