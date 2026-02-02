@@ -1,21 +1,22 @@
 ---
 layout: post
-title: Tonton Astro Prima Live – Hiburan Keluarga, Drama & Telefilem Melayu
-description: Strim Astro Prima Live secara dalam talian dan nikmati pelbagai drama bersiri, telefilem menarik serta rancangan hiburan keluarga khas untuk rakyat Malaysia.
-image: /assets/img/Astro-Prima.webp
-categories: tv malaysia
-keyword: Astro Prima Live, TV Online Malaysia, Drama Melayu, Astro Prima Streaming, Telefilem Malaysia
-date: 2025-03-23
-permalink: astro-prima
-videoplayID: https://saluranmelayu.blogspot.com/2025/04/astro-prima.html
+title: "Astro Prima Malaysia"
+seo_title: "Tonton Astro Prima Live Streaming Online - Drama, Hiburan & Rancangan Popular"
+description: "Tonton Astro Prima live streaming online secara percuma. Saksikan drama Melayu popular, rancangan hiburan, realiti TV, dokumentari dan program keluarga Malaysia."
+program: "Astro Prima Live - Drama, Hiburan & Program Popular Malaysia"
+video_id: "/shaka/?id=ASTROPRIMA"
+image: "assets/img/Astro-Prima.webp"
+category: "Live TV Malaysia"
+permalink: /astro-prima-live/
 ---
 
-{% include videoplayer.html
-  src=page.videoplayID
-%}
+**Astro Prima Live Streaming** ialah saluran televisyen Malaysia yang menampilkan pelbagai kandungan hiburan termasuk drama Melayu, rancangan realiti, dokumentari, program keluarga dan hiburan popular. Astro Prima menjadi pilihan utama penonton yang menggemari tontonan berkualiti dan menyeronokkan.
 
-**Astro Prima Live** merupakan saluran popular di kalangan penonton Malaysia kerana menyajikan pelbagai drama bersiri, telefilem, rancangan realiti dan program keluarga yang sarat dengan nilai hiburan dan mesej bermakna. Ia sesuai ditonton oleh semua lapisan umur, menjadikannya pilihan utama waktu santai bersama keluarga.
+Melalui **Astro Prima live online**, penonton boleh menonton drama bersiri tempatan, rancangan realiti, bual bicara hiburan, dokumentari, program motivasi dan hiburan keluarga. Saluran ini turut menayangkan episod eksklusif, liputan festival hiburan dan sorotan artis tempatan.
 
-Dengan siaran langsung dalam talian, anda kini boleh mengikuti drama kegemaran atau rancangan Astro Prima di mana sahaja dan pada bila-bila masa.
+Astro Prima dikenali kerana penyampaian kandungan yang kreatif, menarik dan dekat dengan trend hiburan Malaysia. Dengan rancangan yang pelbagai dan berkualiti, **Astro Prima Malaysia Live** sesuai ditonton oleh remaja, dewasa dan keluarga.
 
-Tonton **TV Malaysia Online** melalui Astro Prima Live – drama, hiburan dan nilai kekeluargaan dalam satu saluran.
+Dengan kemudahan penstriman HD dan akses atas talian, **Astro Prima Live Streaming Malaysia** membolehkan anda menonton di mana sahaja dan pada bila-bila masa menggunakan telefon pintar, tablet atau komputer.
+
+Jika anda mencari **saluran TV Malaysia live** yang menawarkan drama Melayu, hiburan, rancangan realiti, dokumentari dan program keluarga, **Astro Prima Live** ialah pilihan terbaik untuk tontonan yang menyeronokkan dan berkualiti.
+
