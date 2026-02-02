@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Astro Awani Malaysia"
+title: "Astro Awani"
 seo_title: "Tonton Astro Awani Live Streaming Online - Berita Terkini & Isu Semasa Malaysia"
 description: "Tonton Astro Awani live streaming online secara percuma. Saksikan berita terkini Malaysia, laporan mendalam, isu semasa, dokumentari dan liputan eksklusif Astro Awani."
 program: "Astro Awani Live - Berita Terkini & Isu Semasa Malaysia"
