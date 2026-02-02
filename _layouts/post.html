@@ -1,90 +1,77 @@
 ---
 layout: default
 ---
-
-<div class="channel-container">
-    <!-- SIDEBAR KIRI: DAFTAR CHANNEL (Persis Gambar) -->
-    <aside class="channel-sidebar">
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="channelSearch" placeholder="Cari Channel..." onkeyup="searchChannel()">
+<div class="player-page-container container">
+    
+    <!-- SIDEBAR: Daftar Saluran (Kiri) -->
+    <aside class="player-sidebar">
+        <div class="sidebar-header">
+            <i class="fa fa-list"></i> Saluran Lainnya
         </div>
-        
-        <div class="sidebar-list" id="channelList">
-            {% assign sorted_posts = site.posts | sort: 'title' %}
-            {% for channel in sorted_posts %}
+        <div class="sidebar-list">
+            {% for channel in site.posts %}
             <a href="{{ channel.url | relative_url }}" class="sidebar-item {% if page.url == channel.url %}active{% endif %}">
-                <div class="sidebar-logo">
-                    <img loading="lazy" src="{{ channel.image | relative_url }}" alt="{{ channel.title }}">
+                <div class="sidebar-thumb">
+                    <img src="{{ channel.image | relative_url }}" alt="{{ channel.title }}">
                 </div>
                 <div class="sidebar-info">
-                    <span class="ch-name">{{ channel.title }}</span>
-                    <span class="ch-tag">{{ channel.category }}</span>
+                    <span class="sidebar-title">{{ channel.title }}</span>
+                    <span class="sidebar-status">LIVE</span>
                 </div>
             </a>
             {% endfor %}
         </div>
     </aside>
 
-    <!-- KONTEN UTAMA: PLAYER IFRAME -->
-    <main class="player-content">
-        <div class="player-header">
-            <div class="live-indicator">
-                <i class="fa-solid fa-circle"></i> <span>LIVE</span>
-            </div>
-            <h2>{{ page.title }}</h2>
+    <!-- MAIN CONTENT: Player & Deskripsi (Kanan) -->
+    <main class="player-main">
+        
+        <!-- IKLAN ATAS (728x90) -->
+        <div class="ads-player-top">
+            <div class="ads-label">ADVERTISEMENT</div>
+            <!-- Slot Iklan AdSense -->
+            <div class="ads-placeholder">ADS 728×90</div>
         </div>
 
-        <!-- Video Player Iframe Area -->
-        <div class="video-wrapper">
-            <div class="iframe-container">
-                <iframe 
-                    src="{{ page.video_id }}" 
-                    allowfullscreen="true" 
-                    webkitallowfullscreen="true" 
-                    mozallowfullscreen="true" 
-                    scrolling="no" 
-                    frameborder="0">
+        <div class="video-container-wrapper">
+            <!-- HEADER VIDEO -->
+            <div class="video-header">
+                <span class="category-badge">{{ page.category }}</span>
+                <h1>{{ page.title }}</h1>
+            </div>
+
+            <!-- VIDEO PLAYER AREA -->
+            <div class="video-screen">
+                <iframe src="{{ page.video_id }}" 
+                        frameborder="0" 
+                        allowfullscreen="true" 
+                        scrolling="no" 
+                        allow="autoplay; encrypted-media">
                 </iframe>
             </div>
-        </div>
 
-        <!-- Info Program (Sesuai Gambar) -->
-        <div class="program-info">
-            <h1 class="program-title">SEGERA, {{ page.program }}</h1>
-            
-            <div class="program-details">
-                <div class="program-brand">
-                    <img src="{{ page.image | relative_url }}" alt="Logo">
-                    <div class="brand-text">
-                        <span class="name">{{ page.title }}</span>
-                        <span class="desc">{{ page.program }}</span>
-                    </div>
+            <!-- VIDEO INFO -->
+            <div class="video-meta">
+                <div class="live-indicator">
+                    <span class="dot-live"></span> SEDANG BERSIARAN LANGSUNG
                 </div>
-                <p class="program-schedule">{{ page.jadwal }} | {{ page.title }}</p>
+                <p class="program-title">{{ page.program }}</p>
             </div>
         </div>
 
-        <!-- Ads Banner -->
-        <div class="ads-banner-player">
-            ADS 728x90
+        <!-- IKLAN BAWAH PLAYER (728x90) -->
+        <div class="ads-player-bottom">
+            <div class="ads-label">ADVERTISEMENT</div>
+            <div class="ads-placeholder">ADS 728×90</div>
         </div>
+
+        <!-- DESKRIPSI KONTEN (SEO) -->
+        <article class="post-description card-glass">
+            <div class="desc-header">Informasi Saluran</div>
+            <div class="content">
+                {{ content }}
+            </div>
+        </article>
+
     </main>
 </div>
-
-<!-- Script Sederhana untuk Fitur Cari di Sidebar -->
-<script>
-function searchChannel() {
-    let input = document.getElementById('channelSearch').value.toUpperCase();
-    let list = document.getElementById('channelList');
-    let items = list.getElementsByClassName('sidebar-item');
-    for (let i = 0; i < items.length; i++) {
-        let name = items[i].getElementsByClassName('ch-name')[0];
-        if (name.innerText.toUpperCase().indexOf(input) > -1) {
-            items[i].style.display = "";
-        } else {
-            items[i].style.display = "none";
-        }
-    }
-}
-</script>
