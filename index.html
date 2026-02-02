@@ -1,15 +1,13 @@
 ---
 layout: default
 ---
-
 <section class="hero">
     <div class="container">
         <h1>Nonton TV Malaysia Online Gratis</h1>
         <p>Streaming siaran TV Malaysia kualiti HD, stabil, dan lancar.</p>
-        <!-- ADS SLOT HERO -->
         <div class="ads-container">
             <div class="ads-label">ADVERTISEMENT</div>
-            <!-- Pasang kode AdSense di sini -->
+            <!-- Slot Iklan AdSense -->
         </div>
     </div>
 </section>
@@ -22,10 +20,10 @@ layout: default
         </div>
     </div>
 
-    <!-- Area Grid Utama -->
+    <!-- Area Grid -->
     <div class="post-grid" id="post-container">
-        {% for post in site.posts limit: 10 %}
-        <article class="post-card">
+        {% for post in site.posts limit: 6 %}
+        <article class="post-card animate-in">
             <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
                 <div class="thumb-container">
                     <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
@@ -40,9 +38,9 @@ layout: default
         {% endfor %}
     </div>
 
-    <!-- Trigger Scroll & Loading Animasi -->
-    <div id="infinite-scroll-trigger" style="text-align: center; padding: 40px 0;">
-        <div id="loading-indicator" style="display: none; color: var(--primary); font-weight: 600;">
+    <!-- Area Loading -->
+    <div id="infinite-scroll-trigger" style="text-align: center; padding: 40px 0; min-height: 100px;">
+        <div id="loading-indicator" style="display: none; color: #f59e0b; font-weight: 600;">
             <i class="fa fa-sync-alt fa-spin"></i> Memuat saluran lainnya...
         </div>
     </div>
@@ -50,8 +48,9 @@ layout: default
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    let postsShown = 10; // Jumlah awal yang tampil di Liquid
-    const postsPerLoad = 6;
+    // VARIABEL UTAMA
+    let postsShown = 6;      // Samakan dengan limit di Liquid di atas
+    const postsPerLoad = 6;  // Berapa post yang muncul tiap scroll
     let allPosts = [];
     let isLoading = false;
     
@@ -59,22 +58,27 @@ document.addEventListener("DOMContentLoaded", function() {
     const trigger = document.getElementById('infinite-scroll-trigger');
     const loading = document.getElementById('loading-indicator');
 
-    // 1. Ambil data dari JSON
-    fetch('{{ "/posts.json" | relative_url }}')
+    // 1. Ambil Data JSON (Menggunakan absolute path untuk GitHub Pages)
+    fetch('/posts.json')
         .then(response => {
-            if (!response.ok) throw new Error("Gagal mengambil data JSON");
+            if (!response.ok) throw new Error("File posts.json tidak ditemukan!");
             return response.json();
         })
         .then(data => {
             allPosts = data;
-            console.log("Data berhasil dimuat:", allPosts.length, "saluran ditemukan.");
+            console.log("Sistem Ready: " + allPosts.length + " total saluran ditemukan.");
             
-            // Aktifkan pengamat (Observer) setelah data siap
+            // Hanya aktifkan observer jika ada sisa postingan yang belum tampil
             if (allPosts.length > postsShown) {
                 initObserver();
+            } else {
+                trigger.style.display = 'none';
             }
         })
-        .catch(err => console.error("Error Infinite Scroll:", err));
+        .catch(err => {
+            console.error("Infinite Scroll Error:", err);
+            trigger.innerHTML = "<small style='color:gray'>Semua saluran telah ditampilkan</small>";
+        });
 
     // 2. Fungsi Load More
     function loadMore() {
@@ -83,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
         isLoading = true;
         loading.style.display = 'block';
 
-        // Simulasi delay biar halus
+        // Beri jeda sedikit agar loading terlihat halus
         setTimeout(() => {
             const nextPosts = allPosts.slice(postsShown, postsShown + postsPerLoad);
             
@@ -109,22 +113,23 @@ document.addEventListener("DOMContentLoaded", function() {
             isLoading = false;
             loading.style.display = 'none';
 
+            console.log("Post ditampilkan: " + postsShown + "/" + allPosts.length);
+
             if (postsShown >= allPosts.length) {
-                trigger.style.display = 'none';
-                console.log("Semua konten telah dimuat.");
+                trigger.innerHTML = "<small style='color:gray'>Selesai. Tidak ada lagi saluran.</small>";
+                observer.unobserve(trigger);
             }
-        }, 500);
+        }, 800);
     }
 
-    // 3. Sistem Deteksi Scroll (Intersection Observer)
+    // 3. Observer Sistem
+    let observer;
     function initObserver() {
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
+        observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !isLoading) {
                 loadMore();
             }
-        }, { 
-            rootMargin: '200px' // Mulai muat saat user masih 200px sebelum mentok bawah
-        });
+        }, { rootMargin: '300px' }); // Load saat 300px sebelum mentok bawah
         
         observer.observe(trigger);
     }
