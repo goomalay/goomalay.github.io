@@ -17,63 +17,60 @@ layout: default
         </div>
     </div>
 
-    <!-- Grid Awal -->
-    <div class="post-grid" id="post-container">
-        {% for post in site.posts limit: 10 %}
-        <article class="post-card">
-            <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
-                <div class="thumb-container">
-                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                    <span class="live-tag">LIVE</span>
-                </div>
-                <div class="post-info">
-                    <span class="category">{{ post.category }}</span>
-                    <h3>{{ post.title }}</h3>
-                </div>
-            </a>
-        </article>
-        {% endfor %}
-    </div>
+<!-- Grid Saluran -->
+<div class="post-grid" id="post-container">
+    {% for post in site.posts limit: 8 %}
+    <article class="post-card animate-in">
+        <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
+            <div class="thumb-container">
+                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                <span class="live-tag">LIVE</span>
+            </div>
+            <div class="post-info">
+                <span class="category">{{ post.category }}</span>
+                <h3>{{ post.title }}</h3>
+            </div>
+        </a>
+    </article>
+    {% endfor %}
+</div>
 
-    <!-- TRIGGER -->
-    <div id="infinite-scroll-trigger" style="text-align: center; padding: 50px 0; min-height: 150px; width: 100%; clear: both;">
-        <div id="loading-indicator" style="display: none; color: #f59e0b; font-weight: 700;">
-            <i class="fa fa-sync-alt fa-spin"></i> Memuat lebih banyak saluran...
-        </div>
+<!-- HTML PEMICU (Trigger) yang Anda berikan -->
+<div id="infinite-scroll-trigger" style="text-align: center; padding: 50px 0; min-height: 150px; width: 100%; clear: both;">
+    <div id="loading-indicator" style="display: none; color: #f59e0b; font-weight: 700;">
+        <i class="fa fa-sync-alt fa-spin"></i> Memuat lebih banyak saluran...
     </div>
-</section>
+</div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+// Gunakan pembungkus window.onload agar memastikan semua elemen & library (seperti FontAwesome) siap
+window.onload = function() {
     const container = document.getElementById('post-container');
     const trigger = document.getElementById('infinite-scroll-trigger');
     const loading = document.getElementById('loading-indicator');
     
     let allPosts = [];
     let isLoading = false;
-    let postsPerLoad = 6;
+    const postsPerLoad = 6;
 
-    // Gunakan Liquid untuk mendapatkan URL yang benar otomatis
-    const jsonUrl = '{{ "/posts.json" | relative_url }}';
-
-    console.log("Mencoba mengambil data dari:", jsonUrl);
-
-    fetch(jsonUrl)
+    // Ambil data JSON (Path absolut untuk GitHub Pages)
+    fetch('{{ "/posts.json" | relative_url }}')
         .then(res => res.json())
         .then(data => {
             allPosts = data;
-            console.log("Data JSON Berhasil Dimuat. Total:", allPosts.length);
-            
-            // Hitung post yang sudah ada di HTML
+            console.log("✅ Data JSON terbaca. Total saluran:", allPosts.length);
+
+            // Cek jumlah post yang sudah ada di layar (Liquid)
             let currentCount = document.querySelectorAll('.post-card').length;
-            
+
             if (allPosts.length > currentCount) {
-                // Gunakan Intersection Observer
+                // Jalankan Observer jika ada sisa post
                 const observer = new IntersectionObserver((entries) => {
                     if (entries[0].isIntersecting && !isLoading) {
+                        console.log("🚀 Trigger terdeteksi di layar!");
                         loadMore();
                     }
-                }, { rootMargin: '400px' }); // Load lebih awal sebelum mentok
+                }, { rootMargin: '300px' }); // Muat 300px sebelum mentok bawah
                 
                 observer.observe(trigger);
             } else {
@@ -81,23 +78,29 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         })
         .catch(err => {
-            console.error("Gagal Load JSON:", err);
-            trigger.innerHTML = "<small style='color:gray'>Semua saluran sudah tampil</small>";
+            console.error("❌ Gagal memuat data dari posts.json:", err);
+            trigger.innerHTML = "<small style='color:gray'>Gagal mengambil data saluran</small>";
         });
 
     function loadMore() {
-        let currentCount = document.querySelectorAll('.post-card').length;
-        if (currentCount >= allPosts.length) return;
+        // Hitung ulang jumlah post di layar sekarang
+        let postsShown = document.querySelectorAll('.post-card').length;
+        
+        if (postsShown >= allPosts.length) {
+            trigger.innerHTML = "<small style='color:gray'>Semua saluran telah ditampilkan</small>";
+            return;
+        }
 
         isLoading = true;
         loading.style.display = 'block';
 
+        // Delay 600ms agar user melihat animasi loading (kesan profesional)
         setTimeout(() => {
-            const nextBatch = allPosts.slice(currentCount, currentCount + postsPerLoad);
+            const nextBatch = allPosts.slice(postsShown, postsShown + postsPerLoad);
             
             nextBatch.forEach(post => {
                 const article = document.createElement('article');
-                article.className = 'post-card animate-in'; // Tambahkan animasi
+                article.className = 'post-card animate-in';
                 article.innerHTML = `
                     <a href="${post.url}" class="card-link-wrapper">
                         <div class="thumb-container">
@@ -114,12 +117,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
             isLoading = false;
             loading.style.display = 'none';
-            console.log("Post baru ditambahkan. Total:", document.querySelectorAll('.post-card').length);
-
+            
+            // Selesai jika sudah semua tampil
             if (document.querySelectorAll('.post-card').length >= allPosts.length) {
                 trigger.innerHTML = "<small style='color:gray'>Semua saluran telah ditampilkan</small>";
             }
-        }, 500);
+        }, 600);
     }
-});
+};
 </script>
