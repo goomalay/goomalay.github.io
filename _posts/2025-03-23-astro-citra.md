@@ -1,21 +1,22 @@
 ---
 layout: post
-title: Tonton Astro Citra Live – Filem Melayu & Telefilem Terbaik Secara Langsung
-description: Strim Astro Citra Live untuk menonton filem Melayu, telefilem eksklusif dan drama menarik dari Malaysia – kini secara dalam talian.
-image: /assets/img/Astro-Citra.webp
-categories: tv malaysia
-keyword: Astro Citra Live, TV Filem Melayu, TV Online Malaysia, Astro Citra Streaming, Tonton Filem Melayu Online
-date: 2025-03-23
-permalink: astro-citra
-videoplayID: https://saluranmelayu.blogspot.com/2025/04/astro-citra.html
+title: "Astro Citra Malaysia"
+seo_title: "Tonton Astro Citra Live Streaming Online - Filem Melayu & Drama Popular"
+description: "Tonton Astro Citra live streaming online secara percuma. Saksikan filem Melayu terkini, drama bersiri popular, program hiburan dan kandungan sinema Malaysia."
+program: "Astro Citra Live - Filem Melayu, Drama & Hiburan Popular Malaysia"
+video_id: "/shaka/?id=ASTROCITRA"
+image: "assets/img/Astro-Citra.webp"
+category: "Live TV Malaysia"
+permalink: /astro-citra-live/
 ---
 
-{% include videoplayer.html
-  src=page.videoplayID
-%}
+**Astro Citra Live Streaming** ialah saluran televisyen Malaysia yang menumpukan kandungan filem Melayu, drama bersiri, rancangan hiburan dan program sinema tempatan yang popular. Astro Citra menjadi pilihan utama penonton yang menggemari filem dan drama Malaysia berkualiti tinggi.
 
-**Astro Citra Live** ialah saluran yang menampilkan barisan filem-filem Melayu terbaik, telefilem eksklusif, drama popular dan karya tempatan yang penuh emosi dan mesej bermakna. Ia menjadi pilihan utama peminat seni layar Malaysia yang menghargai jalan cerita yang menyentuh hati dan lakonan hebat.
+Melalui **Astro Citra live online**, penonton boleh menonton filem Melayu terkini, drama bersiri eksklusif, program bual bicara hiburan, dokumentari sinema dan rancangan istimewa berkaitan dunia perfileman Malaysia. Saluran ini juga menayangkan liputan festival filem, wawancara artis dan sorotan produksi tempatan.
 
-Kini anda boleh menonton **Astro Citra** secara langsung dalam talian, menjadikan pengalaman menonton lebih fleksibel – di rumah atau ketika dalam perjalanan. Nikmati pelbagai genre daripada cinta, keluarga, aksi, hingga kisah kemasyarakatan yang sarat dengan pengajaran.
+Astro Citra dikenali kerana penyampaian kandungan hiburan yang profesional, menarik dan dekat dengan trend sinema tempatan. Dengan rancangan yang pelbagai dan berkualiti, **Astro Citra Malaysia Live** sesuai ditonton oleh remaja, dewasa dan keluarga.
 
-Tonton **TV Malaysia Online** melalui Astro Citra Live – destinasi utama hiburan filem Melayu berkualiti.
+Dengan kemudahan penstriman HD dan akses atas talian, **Astro Citra Live Streaming Malaysia** membolehkan anda menonton di mana sahaja dan pada bila-bila masa menggunakan telefon pintar, tablet atau komputer.
+
+Jika anda mencari **saluran TV Malaysia live** yang menawarkan filem Melayu, drama bersiri, rancangan hiburan dan kandungan sinema tempatan, **Astro Citra Live** ialah pilihan terbaik untuk tontonan yang menyeronokkan dan berkualiti.
+
