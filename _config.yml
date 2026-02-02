@@ -18,7 +18,8 @@ exclude:
   - Gemfile.lock
   - vendor
 
-# Pagination Settings
+paginate: 12
+paginate_path: "/page:num/"
 plugins:
   - jekyll-paginate
   - jekyll-seo-tag
