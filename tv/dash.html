@@ -53,16 +53,37 @@ async function initPlayer(url,keys){
   const controls=ui.getControls();
   const player=controls.getPlayer();
 
-  const config={
-    streaming:{
-      bufferingGoal:15,
-      rebufferingGoal:2,
-      retryParameters:{
-        timeout:10000,
-        maxAttempts:5
-      }
+const config={
+  streaming:{
+    lowLatencyMode:true,
+    bufferingGoal:20,
+    rebufferingGoal:3,
+    bufferBehind:20,
+    ignoreTextStreamFailures:true,
+    retryParameters:{
+      timeout:15000,
+      maxAttempts:6,
+      baseDelay:300,
+      backoffFactor:1.5
     }
-  };
+  },
+  drm:{
+    retryParameters:{
+      timeout:10000,
+      maxAttempts:4
+    }
+  },
+  manifest:{
+    dash:{
+      clockSyncUri:null,
+      ignoreMinBufferTime:true
+    },
+    retryParameters:{
+      timeout:12000,
+      maxAttempts:4
+    }
+  }
+};
 
   if(keys){
     config.drm={clearKeys:keys};
