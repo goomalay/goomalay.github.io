@@ -66,53 +66,41 @@ layout: default
 <!-- LOAD MORE SCRIPT -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const btn = document.getElementById("loadMoreBtn");
-    const container = document.getElementById("post-container");
-    if (!btn || !container) return;
+  const btn = document.getElementById("loadMoreBtn");
+  if (!btn) return;
 
-    btn.addEventListener("click", function () {
-        let nextPage = btn.dataset.next;
-        if (!nextPage || nextPage === "") return;
+  btn.addEventListener("click", function () {
+    let nextPage = btn.dataset.next;
+    if (!nextPage) return;
 
-        // Loading State
-        btn.innerText = "Sedang Memuat...";
-        btn.disabled = true;
+    btn.innerText = "Memuat...";
+    btn.disabled = true;
 
-        fetch(nextPage)
-            .then(res => {
-                if (!res.ok) throw new Error("Gagal mengambil data");
-                return res.text();
-            })
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, "text/html");
+    fetch(nextPage)
+      .then(res => res.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
 
-                // Ambil elemen dari halaman baru
-                const newPosts = doc.querySelector("#post-container");
-                const newBtn = doc.querySelector("#loadMoreBtn");
+        const newPosts = doc.querySelector("#post-container");
+        const newBtn = doc.querySelector("#loadMoreBtn");
 
-                // Masukkan postingan baru ke container saat ini
-                if (newPosts && newPosts.innerHTML.trim() !== "") {
-                    container.insertAdjacentHTML("beforeend", newPosts.innerHTML);
-                }
+        if (newPosts) {
+          document.getElementById("post-container")
+            .insertAdjacentHTML("beforeend", newPosts.innerHTML);
+        }
 
-                // Cek apakah masih ada halaman selanjutnya
-                if (newBtn && newBtn.dataset.next && newBtn.dataset.next !== "") {
-                    btn.dataset.next = newBtn.dataset.next;
-                    btn.innerText = "Lihat Saluran Lainnya »";
-                    btn.disabled = false;
-                } else {
-                    // JIKA POSTINGAN HABIS
-                    btn.innerText = "Semua saluran telah ditampilkan";
-                    btn.disabled = true;
-                    btn.classList.add("btn-finished");
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                btn.innerText = "Gagal Memuat. Coba Lagi?";
-                btn.disabled = false;
-            });
-    });
+        if (newBtn) {
+          btn.dataset.next = newBtn.dataset.next;
+          btn.innerText = "Lihat Saluran Lainnya »";
+          btn.disabled = false;
+        } else {
+          btn.remove();
+        }
+      })
+      .catch(() => {
+        btn.innerText = "Gagal Memuat";
+      });
+  });
 });
 </script>
