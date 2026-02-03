@@ -1,0 +1,209 @@
+---
+layout: null
+permalink: /shaka/
+---
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Channel TV Online</title>
+
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.16.3/controls.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.16.3/shaka-player.compiled.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.16.3/shaka-player.ui.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  width:100%;
+  height:100%;
+  background:#000;
+  overflow:hidden;
+  font-family:system-ui,-apple-system,sans-serif;
+}
+
+.shaka-video-container{
+  position:fixed;
+  inset:0;
+  background:#000;
+}
+
+video{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#000;
+}
+
+/* Hilangkan overlay bayangan */
+.shaka-controls-gradient,
+.shaka-bottom-controls::before,
+.shaka-bottom-controls::after,
+.shaka-controls-container::before,
+.shaka-controls-container::after{
+  display:none!important;
+}
+
+/* Spinner off */
+.shaka-spinner-container,
+.shaka-spinner,
+.shaka-spinner-svg{
+  display:none!important;
+}
+
+/* Hide time & seekbar */
+.shaka-current-time,
+.shaka-duration,
+.shaka-time-separator,
+.shaka-seek-bar-container{
+  display:none!important;
+}
+
+/* Control bar clean */
+.shaka-control-bar{
+  background:rgba(0,0,0,.45)!important;
+  backdrop-filter:blur(6px);
+}
+
+/* LIVE badge */
+.live-indicator{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:13px;
+  font-weight:600;
+  color:#ff2b2b;
+  margin-right:12px;
+}
+.live-dot{
+  width:8px;
+  height:8px;
+  background:#ff2b2b;
+  border-radius:50%;
+  animation:pulse 1.2s infinite;
+}
+@keyframes pulse{
+  0%{opacity:1}
+  50%{opacity:.3}
+  100%{opacity:1}
+}
+
+@media(max-width:768px){
+  video{object-fit:cover}
+}
+</style>
+</head>
+
+<body>
+
+<div class="shaka-video-container" data-shaka-player>
+  <video playsinline preload="metadata"></video>
+</div>
+
+<script>
+const params=new URLSearchParams(location.search);
+const id=params.get('id');
+
+function log(msg){console.log('[TV]',msg)}
+function err(msg){console.error('[TV]',msg)}
+
+async function initShaka(url,clearkeys){
+
+  shaka.polyfill.installAll();
+
+  if(!shaka.Player.isBrowserSupported()){
+    return err('Browser not supported');
+  }
+
+  const video=document.querySelector('video');
+  const player=new shaka.Player();
+  await player.attach(video);
+
+  const ui=new shaka.ui.Overlay(player,document.querySelector('.shaka-video-container'),video);
+
+  ui.configure({
+    controlPanelElements:['play_pause','mute','volume','spacer','quality','fullscreen'],
+    fadeDelay:3000,
+    addBigPlayButton:false,
+    doubleClickForFullscreen:true
+  });
+
+  setTimeout(()=>{
+    const panel=document.querySelector('.shaka-controls-button-panel');
+    if(panel&&!panel.querySelector('.live-indicator')){
+      const live=document.createElement('div');
+      live.className='live-indicator';
+      live.innerHTML='<span class="live-dot"></span>LIVE';
+      panel.prepend(live);
+    }
+  },400);
+
+ 
+  const config={
+    streaming:{
+      lowLatencyMode:true,
+      bufferingGoal:15,
+      rebufferingGoal:2,
+      bufferBehind:15,
+      retryParameters:{
+        timeout:10000,
+        maxAttempts:6,
+        baseDelay:300,
+        backoffFactor:1.3
+      },
+      segmentRequestTimeout:8000,
+      segmentPrefetchLimit:3,
+      useNativeHlsOnSafari:true
+    },
+    manifest:{
+      dash:{clockSyncUri:null},
+      retryParameters:{
+        timeout:8000,
+        maxAttempts:4
+      }
+    }
+  };
+
+  if(clearkeys){
+    config.drm={clearKeys:clearkeys};
+  }
+
+  player.configure(config);
+
+  player.addEventListener('error',e=>err(e.detail));
+
+  try{
+    await player.load(url);
+    log('LIVE STREAM READY');
+  }catch(e){
+    err('LOAD ERROR');
+    console.error(e);
+  }
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+
+  if(!id) return err('Channel ID not found');
+
+  fetch('/tv/json/channels.json')
+    .then(r=>r.json())
+    .then(d=>{
+      const c=d[id.toUpperCase()];
+      if(!c) return err('Channel not registered');
+
+      let k=null;
+      if(c.k1 && c.k2){
+        k={};
+        k[c.k1]=c.k2;
+      }
+
+      initShaka(c.url,k);
+    })
+    .catch(()=>err('Failed to load JSON'));
+});
+</script>
+
+</body>
+</html>
