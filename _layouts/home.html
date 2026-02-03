@@ -2,6 +2,11 @@
 layout: default
 ---
 
+---
+layout: default
+---
+
+<!-- HERO SECTION -->
 <section class="hero">
     <div class="container">
         <h1>{{ site.title }}</h1>
@@ -24,11 +29,11 @@ layout: default
         </div>
     </div>
 
-    <!-- GRID SALURAN -->
+    <!-- PENTING: Jangan hapus id="post-container" -->
     <div id="post-container" class="post-grid">
         {% for post in paginator.posts %}
         <article class="post-card">
-            <a href="{{ post.url | relative_url }}" class="card-link-wrapper" style="text-decoration:none; color:inherit;">
+            <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
                 <div class="thumb-container">
                     <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
                     <span class="live-tag">LIVE</span>
@@ -43,8 +48,8 @@ layout: default
         {% endfor %}
     </div>
 
-    <!-- TOMBOL LOAD MORE -->
-    {% if paginator and paginator.total_pages > 1 %}
+    <!-- PAGINATION AREA -->
+    {% if paginator.next_page %}
     <div class="pagination-nav">
         <button 
             id="loadMoreBtn"
@@ -62,53 +67,60 @@ layout: default
     </div>
 </section>
 
-<!-- FULL JAVASCRIPT LOGIC -->
+<!-- SCRIPT LOAD MORE (VERSI STABIL) -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const btn = document.getElementById("loadMoreBtn");
-    const container = document.getElementById("post-container");
-    if (!btn || !container) return;
+    const postContainer = document.getElementById("post-container");
+
+    if (!btn || !postContainer) {
+        console.error("Elemen pendukung Load More tidak ditemukan!");
+        return;
+    }
 
     btn.addEventListener("click", function () {
-        let nextPage = btn.dataset.next;
-        if (!nextPage || nextPage === "") return;
+        let nextPageUrl = btn.getAttribute("data-next");
+        if (!nextPageUrl) return;
 
-        // Loading State
         btn.innerText = "Sedang Memuat...";
         btn.disabled = true;
 
-        fetch(nextPage)
+        console.log("Mencoba mengambil:", nextPageUrl);
+
+        fetch(nextPageUrl)
             .then(res => {
-                if (!res.ok) throw new Error("Gagal mengambil data");
+                if (!res.ok) throw new Error("Gagal load halaman");
                 return res.text();
             })
             .then(html => {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, "text/html");
 
-                // Ambil elemen dari halaman baru
-                const newPosts = doc.querySelector("#post-container");
-                const newBtn = doc.querySelector("#loadMoreBtn");
+                // Ambil post dari halaman selanjutnya
+                const newPosts = doc.getElementById("post-container");
+                // Ambil tombol dari halaman selanjutnya untuk update URL data-next
+                const nextBtn = doc.getElementById("loadMoreBtn");
 
-                // Masukkan postingan baru ke container saat ini
-                if (newPosts && newPosts.innerHTML.trim() !== "") {
-                    container.insertAdjacentHTML("beforeend", newPosts.innerHTML);
+                if (newPosts) {
+                    // Masukkan konten post baru ke grid utama
+                    postContainer.insertAdjacentHTML("beforeend", newPosts.innerHTML);
+                    console.log("Konten berhasil ditambahkan.");
                 }
 
-                // Cek apakah masih ada halaman selanjutnya
-                if (newBtn && newBtn.dataset.next && newBtn.dataset.next !== "") {
-                    btn.dataset.next = newBtn.dataset.next;
+                if (nextBtn && nextBtn.getAttribute("data-next")) {
+                    // Update URL tombol untuk klik berikutnya (misal dari page2 ke page3)
+                    btn.setAttribute("data-next", nextBtn.getAttribute("data-next"));
                     btn.innerText = "Lihat Saluran Lainnya »";
                     btn.disabled = false;
                 } else {
-                    // JIKA POSTINGAN HABIS
+                    // Jika sudah tidak ada halaman lagi
                     btn.innerText = "Semua saluran telah ditampilkan";
                     btn.disabled = true;
                     btn.classList.add("btn-finished");
                 }
             })
             .catch(err => {
-                console.error(err);
+                console.error("Error Fetch:", err);
                 btn.innerText = "Gagal Memuat. Coba Lagi?";
                 btn.disabled = false;
             });
