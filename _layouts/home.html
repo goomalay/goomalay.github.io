@@ -2,7 +2,6 @@
 layout: default
 ---
 
-<!-- HERO SECTION -->
 <section class="hero">
     <div class="container">
         <h1>{{ site.title }}</h1>
@@ -29,7 +28,7 @@ layout: default
     <div id="post-container" class="post-grid">
         {% for post in paginator.posts %}
         <article class="post-card">
-            <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
+            <a href="{{ post.url | relative_url }}" class="card-link-wrapper" style="text-decoration:none; color:inherit;">
                 <div class="thumb-container">
                     <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
                     <span class="live-tag">LIVE</span>
@@ -44,20 +43,17 @@ layout: default
         {% endfor %}
     </div>
 
-{% if paginator and paginator.total_pages > 1 %}
-<div class="pagination-nav">
-  <button 
-    id="loadMoreBtn"
-    data-next="{{ paginator.next_page_path | relative_url }}"
-    class="btn-page">
-    Lihat Saluran Lainnya »
-  </button>
-
-  <div id="endMessage" class="end-message" style="display:none;">
-    ✅ Semua saluran telah ditampilkan
-  </div>
-</div>
-{% endif %}
+    <!-- TOMBOL LOAD MORE -->
+    {% if paginator and paginator.total_pages > 1 %}
+    <div class="pagination-nav">
+        <button 
+            id="loadMoreBtn"
+            data-next="{{ paginator.next_page_path | relative_url }}"
+            class="btn-page">
+            Lihat Saluran Lainnya »
+        </button>
+    </div>
+    {% endif %}
 
     <!-- ADS SLOT BOTTOM -->
     <div class="ads-container" style="margin-top: 40px;">
@@ -66,54 +62,56 @@ layout: default
     </div>
 </section>
 
-<!-- LOAD MORE SCRIPT -->
+<!-- FULL JAVASCRIPT LOGIC -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const btn = document.getElementById("loadMoreBtn");
-  if (!btn) return;
+    const btn = document.getElementById("loadMoreBtn");
+    const container = document.getElementById("post-container");
+    if (!btn || !container) return;
 
-  btn.addEventListener("click", function () {
-    let nextPage = btn.dataset.next;
-    if (!nextPage) return;
+    btn.addEventListener("click", function () {
+        let nextPage = btn.dataset.next;
+        if (!nextPage || nextPage === "") return;
 
-    btn.innerText = "Memuat...";
-    btn.disabled = true;
+        // Loading State
+        btn.innerText = "Sedang Memuat...";
+        btn.disabled = true;
 
-    fetch(nextPage)
-      .then(res => res.text())
-      .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
+        fetch(nextPage)
+            .then(res => {
+                if (!res.ok) throw new Error("Gagal mengambil data");
+                return res.text();
+            })
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
 
-        const newPosts = doc.querySelector("#post-container");
-        const newBtn = doc.querySelector("#loadMoreBtn");
+                // Ambil elemen dari halaman baru
+                const newPosts = doc.querySelector("#post-container");
+                const newBtn = doc.querySelector("#loadMoreBtn");
 
-        // 👉 INI YANG TADI HILANG (WAJIB ADA)
-        if (newPosts) {
-          document.getElementById("post-container")
-            .insertAdjacentHTML("beforeend", newPosts.innerHTML);
-        }
+                // Masukkan postingan baru ke container saat ini
+                if (newPosts && newPosts.innerHTML.trim() !== "") {
+                    container.insertAdjacentHTML("beforeend", newPosts.innerHTML);
+                }
 
-        if (newBtn && newBtn.dataset.next) {
-          btn.dataset.next = newBtn.dataset.next;
-          btn.innerText = "Lihat Saluran Lainnya »";
-          btn.disabled = false;
-        } else {
-          btn.remove();
-
-          // tampilkan pesan SETELAH load selesai
-          const endMsg = document.getElementById("endMessage");
-          if (endMsg) {
-            setTimeout(() => {
-              endMsg.style.display = "block";
-            }, 300);
-          }
-        }
-      })
-      .catch(() => {
-        btn.innerText = "Gagal Memuat";
-      });
-  });
+                // Cek apakah masih ada halaman selanjutnya
+                if (newBtn && newBtn.dataset.next && newBtn.dataset.next !== "") {
+                    btn.dataset.next = newBtn.dataset.next;
+                    btn.innerText = "Lihat Saluran Lainnya »";
+                    btn.disabled = false;
+                } else {
+                    // JIKA POSTINGAN HABIS
+                    btn.innerText = "Semua saluran telah ditampilkan";
+                    btn.disabled = true;
+                    btn.classList.add("btn-finished");
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                btn.innerText = "Gagal Memuat. Coba Lagi?";
+                btn.disabled = false;
+            });
+    });
 });
 </script>
-
