@@ -46,14 +46,11 @@ layout: default
 
     <!-- PAGINATION AREA -->
     {% if paginator.next_page %}
-    <div class="pagination-nav">
-        <button 
-            id="loadMoreBtn"
-            data-next="{{ paginator.next_page_path | relative_url }}"
-            class="btn-page">
-            Lihat Saluran Lainnya »
-        </button>
-    </div>
+<div class="pagination-nav">
+    <button id="loadMoreBtn" class="btn-page">
+        Lihat Saluran Lainnya »
+    </button>
+</div>
     {% endif %}
 
     <!-- ADS SLOT BOTTOM -->
@@ -63,63 +60,40 @@ layout: default
     </div>
 </section>
 
-<!-- SCRIPT LOAD MORE (VERSI STABIL) -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const btn = document.getElementById("loadMoreBtn");
-    const postContainer = document.getElementById("post-container");
+  const posts = document.querySelectorAll(".post-item");
+  const btn = document.getElementById("loadMoreBtn");
+  const nav = document.querySelector(".pagination-nav");
 
-    if (!btn || !postContainer) {
-        console.error("Elemen pendukung Load More tidak ditemukan!");
-        return;
-    }
+  const perPage = 12;
+  let current = 0;
 
-    btn.addEventListener("click", function () {
-        let nextPageUrl = btn.getAttribute("data-next");
-        if (!nextPageUrl) return;
+  if (!posts.length || !btn) return;
 
-        btn.innerText = "Sedang Memuat...";
-        btn.disabled = true;
+  posts.forEach((post, i) => {
+    post.style.display = i < perPage ? "block" : "none";
+  });
 
-        console.log("Mencoba mengambil:", nextPageUrl);
+  current = perPage;
 
-        fetch(nextPageUrl)
-            .then(res => {
-                if (!res.ok) throw new Error("Gagal load halaman");
-                return res.text();
-            })
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, "text/html");
+  btn.addEventListener("click", function () {
+    let next = current + perPage;
 
-                // Ambil post dari halaman selanjutnya
-                const newPosts = doc.getElementById("post-container");
-                // Ambil tombol dari halaman selanjutnya untuk update URL data-next
-                const nextBtn = doc.getElementById("loadMoreBtn");
-
-                if (newPosts) {
-                    // Masukkan konten post baru ke grid utama
-                    postContainer.insertAdjacentHTML("beforeend", newPosts.innerHTML);
-                    console.log("Konten berhasil ditambahkan.");
-                }
-
-                if (nextBtn && nextBtn.getAttribute("data-next")) {
-                    // Update URL tombol untuk klik berikutnya (misal dari page2 ke page3)
-                    btn.setAttribute("data-next", nextBtn.getAttribute("data-next"));
-                    btn.innerText = "Lihat Saluran Lainnya »";
-                    btn.disabled = false;
-                } else {
-                    // Jika sudah tidak ada halaman lagi
-                    btn.innerText = "Semua saluran telah ditampilkan";
-                    btn.disabled = true;
-                    btn.classList.add("btn-finished");
-                }
-            })
-            .catch(err => {
-                console.error("Error Fetch:", err);
-                btn.innerText = "Gagal Memuat. Coba Lagi?";
-                btn.disabled = false;
-            });
+    posts.forEach((post, i) => {
+      if (i < next) post.style.display = "block";
     });
+
+    current = next;
+
+    if (current >= posts.length) {
+      btn.remove();
+      nav.innerHTML = `
+        <div class="end-post">
+          ✅ Semua saluran telah ditampilkan
+        </div>
+      `;
+    }
+  });
 });
 </script>
