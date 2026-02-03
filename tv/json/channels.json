@@ -4,6 +4,11 @@
     "k1": "ce43641a061a44fb9d95d986cfc9a68f",
     "k2": "3d63855ca5cdfcfb765f306b98bcc646"
   },
+    "TV2": {
+    "url": "https://d25tgymtnqzu8s.cloudfront.net/smil:tv2/manifest.mpd",
+    "k1": "ead0335d60401225727a6d531e9c2710",
+    "k2": "1ee3b252227c5c2ec9378c833d2e14ff"
+  },
   "MSNBC": {
     "url": "https://livehub-voidnet.onrender.com/cluster/streamcore/us/NBC_REDIS.m3u8"
   },
