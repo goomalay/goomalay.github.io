@@ -46,13 +46,12 @@ layout: default
 
 {% if paginator and paginator.total_pages > 1 %}
 <div class="pagination-nav">
-  <a 
+  <button 
     id="loadMoreBtn"
-    href="{{ paginator.next_page_path | relative_url }}"
     data-next="{{ paginator.next_page_path | relative_url }}"
     class="btn-page">
     Lihat Saluran Lainnya »
-  </a>
+  </button>
 </div>
 {% endif %}
 
