@@ -53,80 +53,61 @@ async function initPlayer(url,keys){
   const controls=ui.getControls();
   const player=controls.getPlayer();
 
-const config={
-  streaming:{
-    lowLatencyMode:true,
-    bufferingGoal:20,
-    rebufferingGoal:3,
-    bufferBehind:20,
-    ignoreTextStreamFailures:true,
-    retryParameters:{
-      timeout:15000,
-      maxAttempts:6,
-      baseDelay:300,
-      backoffFactor:1.5
-    }
-  },
-  drm:{
-    retryParameters:{
-      timeout:10000,
-      maxAttempts:4
-    }
-  },
-  manifest:{
-    dash:{
-      clockSyncUri:null,
-      ignoreMinBufferTime:true
+  player.getNetworkingEngine().registerRequestFilter((type,request)=>{
+    request.allowCrossSiteCredentials = false;
+    request.headers['Origin'] = location.origin;
+    request.headers['Referer'] = location.href;
+    request.headers['User-Agent'] = navigator.userAgent;
+  });
+
+  const config={
+    streaming:{
+      lowLatencyMode:true,
+      bufferingGoal:20,
+      rebufferingGoal:3,
+      bufferBehind:20,
+      ignoreTextStreamFailures:true,
+      retryParameters:{
+        timeout:15000,
+        maxAttempts:6,
+        baseDelay:300,
+        backoffFactor:1.5
+      }
     },
-    retryParameters:{
-      timeout:12000,
-      maxAttempts:4
+    drm:{
+      retryParameters:{
+        timeout:10000,
+        maxAttempts:4
+      }
+    },
+    manifest:{
+      dash:{
+        clockSyncUri:null,
+        ignoreMinBufferTime:true
+      },
+      retryParameters:{
+        timeout:12000,
+        maxAttempts:4
+      }
     }
-  }
-};
+  };
 
   if(keys){
-    config.drm={clearKeys:keys};
+    config.drm={
+      clearKeys:keys,
+      retryParameters:{timeout:10000,maxAttempts:4}
+    };
   }
 
   player.configure(config);
 
-  player.addEventListener('error',e=>err(e.detail));
-  controls.addEventListener('error',e=>err(e.detail));
-
   try{
     await player.load(url);
-    log('STREAM READY');
+    console.log('[TV] READY');
   }catch(e){
-    err('LOAD ERROR');
+    console.error('[TV] LOAD ERROR',e);
   }
 }
-
-document.addEventListener('shaka-ui-loaded',()=>{
-
-  if(!id) return err('ID channel kosong');
-
-  fetch('/tv/json/channels.json')
-    .then(r=>r.json())
-    .then(data=>{
-      const c=data[id.toUpperCase()];
-      if(!c) return err('Channel tidak ditemukan');
-
-      let clearkeys=null;
-      if(c.k1 && c.k2){
-        clearkeys={};
-        clearkeys[c.k1]=c.k2;
-      }
-
-      initPlayer(c.url,clearkeys);
-    })
-    .catch(()=>err('Gagal load JSON'));
-
-});
-
-document.addEventListener('shaka-ui-load-failed',()=>{
-  err('UI gagal dimuat');
-});
 </script>
 
 </body>
