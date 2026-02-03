@@ -1,3 +1,7 @@
+apakah script yang saya gunakan tidak memakai json
+
+
+
 ---
 layout: default
 ---
@@ -25,7 +29,7 @@ layout: default
         </div>
     </div>
 
-    <!-- PENTING: Jangan hapus id="post-container" -->
+    <!-- GRID SALURAN -->
     <div id="post-container" class="post-grid">
         {% for post in paginator.posts %}
         <article class="post-card">
@@ -44,20 +48,16 @@ layout: default
         {% endfor %}
     </div>
 
-    <!-- PAGINATION AREA -->
-    {% if paginator.next_page %}
-    <div class="pagination-nav">
-        <button 
-            id="loadMoreBtn"
-            data-next="{{ paginator.next_page_path | relative_url }}"
-            class="btn-page">
-            Lihat Saluran Lainnya »
-        </button>
-        <p id="pageInfo" style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px; display: none;">
-            Memuat halaman...
-        </p>
-    </div>
-    {% endif %}
+{% if paginator and paginator.total_pages > 1 %}
+<div class="pagination-nav">
+  <button 
+    id="loadMoreBtn"
+    data-next="{{ paginator.next_page_path | relative_url }}"
+    class="btn-page">
+    Lihat Saluran Lainnya »
+  </button>
+</div>
+{% endif %}
 
     <!-- ADS SLOT BOTTOM -->
     <div class="ads-container" style="margin-top: 40px;">
@@ -66,159 +66,44 @@ layout: default
     </div>
 </section>
 
-<!-- SCRIPT LOAD MORE (VERSI SIMPLE & BERFUNGSI) -->
+<!-- LOAD MORE SCRIPT -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    const btn = document.getElementById("loadMoreBtn");
-    const postContainer = document.getElementById("post-container");
-    const pageInfo = document.getElementById("pageInfo");
+  const btn = document.getElementById("loadMoreBtn");
+  if (!btn) return;
 
-    // Debug: Cek apakah elemen ditemukan
-    console.log("Load More Button:", btn);
-    console.log("Post Container:", postContainer);
-    
-    if (!btn) {
-        console.log("Tombol Load More tidak ditemukan (mungkin tidak ada halaman lain)");
-        return;
-    }
+  btn.addEventListener("click", function () {
+    let nextPage = btn.dataset.next;
+    if (!nextPage) return;
 
-    btn.addEventListener("click", function () {
-        let nextPageUrl = btn.getAttribute("data-next");
-        
-        // Debug
-        console.log("URL halaman berikutnya:", nextPageUrl);
-        
-        if (!nextPageUrl || nextPageUrl === "null" || nextPageUrl === "") {
-            console.log("Tidak ada URL halaman berikutnya");
-            return;
-        }
+    btn.innerText = "Memuat...";
+    btn.disabled = true;
 
-        // Ubah state tombol
-        const originalText = btn.textContent;
-        btn.innerHTML = '<span class="loading-spinner"></span> Memuat...';
-        btn.disabled = true;
-        
-        // Tampilkan info loading
-        if (pageInfo) {
-            pageInfo.style.display = "block";
-            pageInfo.textContent = "Memuat saluran...";
+    fetch(nextPage)
+      .then(res => res.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        const newPosts = doc.querySelector("#post-container");
+        const newBtn = doc.querySelector("#loadMoreBtn");
+
+        if (newPosts) {
+          document.getElementById("post-container")
+            .insertAdjacentHTML("beforeend", newPosts.innerHTML);
         }
 
-        // Fetch halaman berikutnya
-        fetch(nextPageUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.text();
-            })
-            .then(html => {
-                console.log("Berhasil mendapatkan HTML dari:", nextPageUrl);
-                
-                // Parse HTML response
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, "text/html");
-                
-                // Debug: Cek dokumen yang di-parse
-                console.log("Dokumen yang di-parse:", doc);
-                
-                // Cari container post di halaman baru
-                const newPostContainer = doc.getElementById("post-container");
-                
-                if (newPostContainer) {
-                    console.log("Menemukan post container baru");
-                    
-                    // Ambil hanya article elements (post-card)
-                    const articles = newPostContainer.querySelectorAll(".post-card");
-                    console.log("Jumlah post baru ditemukan:", articles.length);
-                    
-                    // Tambahkan setiap post ke container saat ini
-                    articles.forEach(article => {
-                        postContainer.appendChild(article.cloneNode(true));
-                    });
-                    
-                    // Cari tombol load more di halaman baru
-                    const newLoadMoreBtn = doc.getElementById("loadMoreBtn");
-                    
-                    if (newLoadMoreBtn && newLoadMoreBtn.getAttribute("data-next")) {
-                        // Update URL untuk halaman berikutnya
-                        const nextUrl = newLoadMoreBtn.getAttribute("data-next");
-                        btn.setAttribute("data-next", nextUrl);
-                        btn.innerHTML = "Lihat Saluran Lainnya »";
-                        btn.disabled = false;
-                        
-                        // Update info
-                        if (pageInfo) {
-                            pageInfo.textContent = `Berhasil menambahkan ${articles.length} saluran`;
-                            setTimeout(() => {
-                                pageInfo.style.display = "none";
-                            }, 2000);
-                        }
-                        
-                        console.log("Berhasil load more, URL berikutnya:", nextUrl);
-                    } else {
-                        // Tidak ada halaman lagi
-                        btn.innerHTML = "✓ Semua saluran telah ditampilkan";
-                        btn.classList.add("btn-finished");
-                        btn.disabled = true;
-                        
-                        if (pageInfo) {
-                            pageInfo.textContent = "Semua saluran telah ditampilkan";
-                        }
-                        
-                        console.log("Tidak ada halaman lagi");
-                    }
-                } else {
-                    throw new Error("Post container tidak ditemukan di halaman berikutnya");
-                }
-            })
-            .catch(error => {
-                console.error("Error saat load more:", error);
-                
-                // Reset tombol ke state error
-                btn.innerHTML = "⚠ Gagal memuat. Klik untuk coba lagi";
-                btn.disabled = false;
-                
-                if (pageInfo) {
-                    pageInfo.textContent = "Error: " + error.message;
-                    pageInfo.style.color = "var(--accent-red)";
-                }
-                
-                // Set timeout untuk reset tombol
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                    if (pageInfo) {
-                        pageInfo.style.display = "none";
-                    }
-                }, 3000);
-            });
-    });
-    
-    // Tambahkan CSS untuk loading spinner secara dinamis
-    const style = document.createElement('style');
-    style.textContent = `
-        .loading-spinner {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: var(--primary);
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 8px;
-            vertical-align: middle;
+        if (newBtn) {
+          btn.dataset.next = newBtn.dataset.next;
+          btn.innerText = "Lihat Saluran Lainnya »";
+          btn.disabled = false;
+        } else {
+          btn.remove();
         }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        .btn-page:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-    `;
-    document.head.appendChild(style);
+      })
+      .catch(() => {
+        btn.innerText = "Gagal Memuat";
+      });
+  });
 });
 </script>
