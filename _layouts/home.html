@@ -50,13 +50,11 @@ layout: default
         <button 
             id="loadMoreBtn"
             data-next="{{ paginator.next_page_path | relative_url }}"
-            data-total-pages="{{ paginator.total_pages }}"
-            data-current-page="{{ paginator.page }}"
             class="btn-page">
             Lihat Saluran Lainnya »
         </button>
-        <p class="page-info" style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px;">
-            Halaman {{ paginator.page }} dari {{ paginator.total_pages }}
+        <p id="pageInfo" style="color: var(--text-muted); font-size: 0.8rem; margin-top: 10px; display: none;">
+            Memuat halaman...
         </p>
     </div>
     {% endif %}
@@ -68,127 +66,159 @@ layout: default
     </div>
 </section>
 
-<!-- SCRIPT LOAD MORE (VERSI PERBAIKAN) -->
+<!-- SCRIPT LOAD MORE (VERSI SIMPLE & BERFUNGSI) -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const btn = document.getElementById("loadMoreBtn");
     const postContainer = document.getElementById("post-container");
+    const pageInfo = document.getElementById("pageInfo");
 
-    if (!btn || !postContainer) {
-        console.log("Load More tidak diperlukan atau elemen tidak ditemukan");
+    // Debug: Cek apakah elemen ditemukan
+    console.log("Load More Button:", btn);
+    console.log("Post Container:", postContainer);
+    
+    if (!btn) {
+        console.log("Tombol Load More tidak ditemukan (mungkin tidak ada halaman lain)");
         return;
     }
 
-    btn.addEventListener("click", async function () {
+    btn.addEventListener("click", function () {
         let nextPageUrl = btn.getAttribute("data-next");
-        if (!nextPageUrl) {
-            console.log("Tidak ada halaman berikutnya");
+        
+        // Debug
+        console.log("URL halaman berikutnya:", nextPageUrl);
+        
+        if (!nextPageUrl || nextPageUrl === "null" || nextPageUrl === "") {
+            console.log("Tidak ada URL halaman berikutnya");
             return;
         }
 
-        // Simpan teks asli untuk reset jika error
-        const originalText = btn.innerText;
-        btn.innerText = "Sedang Memuat...";
+        // Ubah state tombol
+        const originalText = btn.textContent;
+        btn.innerHTML = '<span class="loading-spinner"></span> Memuat...';
         btn.disabled = true;
+        
+        // Tampilkan info loading
+        if (pageInfo) {
+            pageInfo.style.display = "block";
+            pageInfo.textContent = "Memuat saluran...";
+        }
 
-        console.log("Mengambil halaman:", nextPageUrl);
-
-        try {
-            const response = await fetch(nextPageUrl);
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            
-            const html = await response.text();
-            
-            // Gunakan regex untuk mengambil hanya bagian post-card
-            // Ini lebih aman daripada parsing seluruh HTML
-            const postMatches = html.match(/<article class="post-card">[\s\S]*?<\/article>/g);
-            
-            if (postMatches && postMatches.length > 0) {
-                // Tambahkan setiap post ke container
-                postMatches.forEach(postHtml => {
-                    postContainer.insertAdjacentHTML('beforeend', postHtml);
-                });
-                
-                console.log(`${postMatches.length} post berhasil ditambahkan`);
-                
-                // Update URL untuk halaman berikutnya
-                const currentPage = parseInt(btn.getAttribute("data-current-page")) || 1;
-                const nextPage = currentPage + 1;
-                const totalPages = parseInt(btn.getAttribute("data-total-pages")) || 1;
-                
-                // Update atribut data
-                btn.setAttribute("data-current-page", nextPage);
-                
-                // Cek apakah masih ada halaman berikutnya
-                if (nextPage < totalPages) {
-                    // Update URL untuk halaman berikutnya
-                    const newNextUrl = nextPageUrl.replace(/page=\d+/, `page=${nextPage + 1}`);
-                    btn.setAttribute("data-next", newNextUrl);
-                    
-                    // Update teks tombol
-                    btn.innerText = `Lihat Halaman ${nextPage + 1} »`;
-                    btn.disabled = false;
-                    
-                    // Update info halaman
-                    const pageInfo = document.querySelector('.page-info');
-                    if (pageInfo) {
-                        pageInfo.textContent = `Halaman ${nextPage} dari ${totalPages}`;
-                    }
-                } else {
-                    // Tidak ada halaman lagi
-                    btn.innerText = "Semua saluran telah ditampilkan";
-                    btn.disabled = true;
-                    btn.classList.add("btn-finished");
-                    
-                    // Update info halaman
-                    const pageInfo = document.querySelector('.page-info');
-                    if (pageInfo) {
-                        pageInfo.textContent = `Halaman ${totalPages} dari ${totalPages} - Semua konten ditampilkan`;
-                    }
+        // Fetch halaman berikutnya
+        fetch(nextPageUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-            } else {
-                // Jika tidak menemukan post, coba metode parsing HTML
-                console.log("Mencoba metode parsing HTML...");
+                return response.text();
+            })
+            .then(html => {
+                console.log("Berhasil mendapatkan HTML dari:", nextPageUrl);
+                
+                // Parse HTML response
                 const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
+                const doc = parser.parseFromString(html, "text/html");
                 
-                // Cari semua post-card dalam dokumen
-                const newPosts = doc.querySelectorAll('.post-card');
+                // Debug: Cek dokumen yang di-parse
+                console.log("Dokumen yang di-parse:", doc);
                 
-                if (newPosts.length > 0) {
-                    newPosts.forEach(post => {
-                        postContainer.appendChild(post.cloneNode(true));
+                // Cari container post di halaman baru
+                const newPostContainer = doc.getElementById("post-container");
+                
+                if (newPostContainer) {
+                    console.log("Menemukan post container baru");
+                    
+                    // Ambil hanya article elements (post-card)
+                    const articles = newPostContainer.querySelectorAll(".post-card");
+                    console.log("Jumlah post baru ditemukan:", articles.length);
+                    
+                    // Tambahkan setiap post ke container saat ini
+                    articles.forEach(article => {
+                        postContainer.appendChild(article.cloneNode(true));
                     });
                     
-                    // Update tombol load more dari halaman berikutnya
-                    const nextBtn = doc.getElementById('loadMoreBtn');
-                    if (nextBtn && nextBtn.getAttribute('data-next')) {
-                        btn.setAttribute('data-next', nextBtn.getAttribute('data-next'));
-                        btn.setAttribute('data-current-page', nextBtn.getAttribute('data-current-page') || nextPage);
-                        btn.innerText = "Lihat Saluran Lainnya »";
+                    // Cari tombol load more di halaman baru
+                    const newLoadMoreBtn = doc.getElementById("loadMoreBtn");
+                    
+                    if (newLoadMoreBtn && newLoadMoreBtn.getAttribute("data-next")) {
+                        // Update URL untuk halaman berikutnya
+                        const nextUrl = newLoadMoreBtn.getAttribute("data-next");
+                        btn.setAttribute("data-next", nextUrl);
+                        btn.innerHTML = "Lihat Saluran Lainnya »";
                         btn.disabled = false;
+                        
+                        // Update info
+                        if (pageInfo) {
+                            pageInfo.textContent = `Berhasil menambahkan ${articles.length} saluran`;
+                            setTimeout(() => {
+                                pageInfo.style.display = "none";
+                            }, 2000);
+                        }
+                        
+                        console.log("Berhasil load more, URL berikutnya:", nextUrl);
                     } else {
-                        btn.innerText = "Semua saluran telah ditampilkan";
-                        btn.disabled = true;
+                        // Tidak ada halaman lagi
+                        btn.innerHTML = "✓ Semua saluran telah ditampilkan";
                         btn.classList.add("btn-finished");
+                        btn.disabled = true;
+                        
+                        if (pageInfo) {
+                            pageInfo.textContent = "Semua saluran telah ditampilkan";
+                        }
+                        
+                        console.log("Tidak ada halaman lagi");
                     }
                 } else {
-                    throw new Error("Tidak menemukan post baru");
+                    throw new Error("Post container tidak ditemukan di halaman berikutnya");
                 }
-            }
-            
-        } catch (error) {
-            console.error("Error saat load more:", error);
-            btn.innerText = "Gagal memuat. Klik untuk coba lagi";
-            btn.disabled = false;
-            
-            // Set timeout untuk reset tombol
-            setTimeout(() => {
-                btn.innerText = originalText;
-            }, 3000);
-        }
+            })
+            .catch(error => {
+                console.error("Error saat load more:", error);
+                
+                // Reset tombol ke state error
+                btn.innerHTML = "⚠ Gagal memuat. Klik untuk coba lagi";
+                btn.disabled = false;
+                
+                if (pageInfo) {
+                    pageInfo.textContent = "Error: " + error.message;
+                    pageInfo.style.color = "var(--accent-red)";
+                }
+                
+                // Set timeout untuk reset tombol
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    if (pageInfo) {
+                        pageInfo.style.display = "none";
+                    }
+                }, 3000);
+            });
     });
+    
+    // Tambahkan CSS untuk loading spinner secara dinamis
+    const style = document.createElement('style');
+    style.textContent = `
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .btn-page:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+    `;
+    document.head.appendChild(style);
 });
 </script>
