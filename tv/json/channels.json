@@ -1,8 +1,8 @@
 {
   "USANETWORK": {
-    "url": "https://live-oneapp-prd-news.akamaized.net/Content/CMAF_OL2-CTR-4s/Live/channel(usa-west)/master.mpd",
-    "k1": "7f1648ec1c8836baa028e319d92e0841",
-    "k2": "93ba967ec39964d9a6359044ec5c3500"
+    "url": "https://unifi-live2.secureswiftcontent.com/Content/DASH/Live/channel(TV3)/master.mpd",
+    "k1": "ce43641a061a44fb9d95d986cfc9a68f",
+    "k2": "3d63855ca5cdfcfb765f306b98bcc646"
   },
   "MSNBC": {
     "url": "https://livehub-voidnet.onrender.com/cluster/streamcore/us/NBC_REDIS.m3u8"
