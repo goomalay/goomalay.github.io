@@ -52,6 +52,10 @@ layout: default
     class="btn-page">
     Lihat Saluran Lainnya »
   </button>
+
+  <div id="endMessage" class="end-message" style="display:none;">
+    ✅ Semua saluran telah ditampilkan
+  </div>
 </div>
 {% endif %}
 
@@ -84,17 +88,26 @@ document.addEventListener("DOMContentLoaded", function () {
         const newPosts = doc.querySelector("#post-container");
         const newBtn = doc.querySelector("#loadMoreBtn");
 
+        // 👉 INI YANG TADI HILANG (WAJIB ADA)
         if (newPosts) {
           document.getElementById("post-container")
             .insertAdjacentHTML("beforeend", newPosts.innerHTML);
         }
 
-        if (newBtn) {
+        if (newBtn && newBtn.dataset.next) {
           btn.dataset.next = newBtn.dataset.next;
           btn.innerText = "Lihat Saluran Lainnya »";
           btn.disabled = false;
         } else {
           btn.remove();
+
+          // tampilkan pesan SETELAH load selesai
+          const endMsg = document.getElementById("endMessage");
+          if (endMsg) {
+            setTimeout(() => {
+              endMsg.style.display = "block";
+            }, 300);
+          }
         }
       })
       .catch(() => {
@@ -103,3 +116,4 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
+
