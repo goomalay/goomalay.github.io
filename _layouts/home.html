@@ -64,42 +64,53 @@ layout: default
 
 <!-- LOAD MORE SCRIPT -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const btn = document.getElementById("loadMoreBtn");
-  if (!btn) return;
-
-  btn.addEventListener("click", function () {
-    let nextPage = btn.dataset.next;
-    if (!nextPage) return;
-
-    btn.innerText = "Memuat...";
-    btn.disabled = true;
-
-    fetch(nextPage)
-      .then(res => res.text())
-      .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-
-        const newPosts = doc.querySelector("#post-container");
-        const newBtn = doc.querySelector("#loadMoreBtn");
-
-        if (newPosts) {
-          document.getElementById("post-container")
-            .insertAdjacentHTML("beforeend", newPosts.innerHTML);
-        }
-
-        if (newBtn) {
-          btn.dataset.next = newBtn.dataset.next;
-          btn.innerText = "Lihat Saluran Lainnya »";
-          btn.disabled = false;
-        } else {
-          btn.remove();
-        }
-      })
-      .catch(() => {
-        btn.innerText = "Gagal Memuat";
-      });
-  });
+document.addEventListener("DOMContentLoaded", function() {
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    
+    if (!loadMoreBtn) return;
+    
+    loadMoreBtn.addEventListener('click', function() {
+        const nextPageUrl = this.dataset.next;
+        if (!nextPageUrl) return;
+        
+        // Disable tombol dan tampilkan loading
+        this.disabled = true;
+        this.textContent = 'Memuat...';
+        
+        fetch(nextPageUrl)
+            .then(response => response.text())
+            .then(html => {
+                // Parse HTML
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Ambil posts dari halaman baru
+                const newPosts = doc.querySelectorAll('#post-container .post-card');
+                const postContainer = document.getElementById('post-container');
+                
+                // Tambahkan setiap post ke container
+                newPosts.forEach(post => {
+                    postContainer.appendChild(post.cloneNode(true));
+                });
+                
+                // Cek apakah ada halaman berikutnya
+                const nextBtn = doc.getElementById('loadMoreBtn');
+                if (nextBtn && nextBtn.dataset.next) {
+                    // Update URL untuk halaman berikutnya
+                    this.dataset.next = nextBtn.dataset.next;
+                    this.disabled = false;
+                    this.textContent = 'Lihat Saluran Lainnya »';
+                } else {
+                    // Tidak ada halaman lagi
+                    this.textContent = 'Semua saluran ditampilkan';
+                    this.classList.add('btn-finished');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                this.textContent = 'Error! Klik untuk coba lagi';
+                this.disabled = false;
+            });
+    });
 });
 </script>
