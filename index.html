@@ -44,17 +44,16 @@ layout: default
         {% endfor %}
     </div>
 
-    <!-- LOAD MORE BUTTON -->
-    <div class="pagination-nav">
-        {% if paginator.next_page %}
-            <button 
-                id="loadMoreBtn"
-                data-next="{{ paginator.next_page_path | relative_url }}"
-                class="btn-page">
-                Lihat Saluran Lainnya »
-            </button>
-        {% endif %}
-    </div>
+{% if paginator and paginator.total_pages > 1 %}
+<div class="pagination-nav">
+  <button 
+    id="loadMoreBtn"
+    data-next="{{ paginator.next_page_path | relative_url }}"
+    class="btn-page">
+    Lihat Saluran Lainnya »
+  </button>
+</div>
+{% endif %}
 
     <!-- ADS SLOT BOTTOM -->
     <div class="ads-container" style="margin-top: 40px;">
