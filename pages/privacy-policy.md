@@ -4,84 +4,23 @@ title: "Privacy Policy"
 permalink: /privacy-policy/
 ---
 
-# Privacy Policy
+At **TV Online Malaysia**, accessible from [https://goomalay.github.io/](https://goomalay.github.io/), one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by TV Online Malaysia and how we use it.
 
-_Last updated: {{ site.time | date: "%B %d, %Y" }}_
+## Log Files
+TV Online Malaysia follows a standard procedure of using log files. These files log visitors when they visit websites. The information collected by log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable.
 
-Your privacy is important to us. At [TVMalaysia.Homes](https://www.tvmalaysia.homes/), we are committed to protecting any personal information you may share with us. This privacy policy outlines how we collect, use, and safeguard your data.
+## Cookies and Web Beacons
+Like any other website, TV Online Malaysia uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.
 
----
+## Google DoubleClick DART Cookie
+Google is one of a third-party vendor on our site. It also uses cookies, known as DART cookies, to serve ads to our site visitors based upon their visit to our site and other sites on the internet. However, visitors may choose to decline the use of DART cookies by visiting the Google ad and content network Privacy Policy at the following URL – [https://policies.google.com/technologies/ads](https://policies.google.com/technologies/ads)
 
-## 📌 Information We Collect
+## Advertising Partners
+Some of advertisers on our site may use cookies and web beacons. Our advertising partners include:
+* **Google AdSense**
 
-We do **not collect personal data directly** from users unless explicitly provided (e.g., via a contact form or email). However, we may automatically gather non-personal information, such as:
+## Third Party Privacy Policies
+TV Online Malaysia's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options.
 
-- Browser type
-- IP address
-- Pages visited
-- Date and time of visit
-
-This information is used solely for analytics and performance optimization.
-
----
-
-## 🍪 Cookies & Tracking Technologies
-
-Our website may use cookies and similar tracking tools to:
-
-- Understand visitor behavior
-- Improve site performance and user experience
-- Serve relevant ads through third-party providers
-
-Cookies are small data files stored in your browser. You can disable cookies through your browser settings at any time.
-
----
-
-## 🔎 Third-Party Services
-
-We may use third-party services to operate our website effectively. These include, but are not limited to:
-
-- **Google Analytics**: for traffic insights and usage behavior
-- **Google AdSense**: for displaying personalized ads
-
-These services may collect and use data in accordance with their own privacy policies.
-
-> Learn more about how Google uses data from AdSense and Analytics:
-> [https://policies.google.com/technologies/partner-sites](https://policies.google.com/technologies/partner-sites)
-
----
-
-## 🔐 Data Security
-
-We do not sell, trade, or rent users’ personal identification information. While no website is 100% secure, we take reasonable precautions to protect any data processed through our site.
-
----
-
-## 👶 Children's Privacy
-
-This website is not intended for individuals under the age of 13. We do not knowingly collect personal information from children. If we become aware of such data, we will delete it immediately.
-
----
-
-## 🌍 External Links
-
-Our blog may contain links to external websites. We are not responsible for the privacy practices or content of those sites. Please review their privacy policies individually.
-
----
-
-## 📩 Contact Us
-
-If you have any questions or concerns about this privacy policy, feel free to reach out:
-
-📧 **Email:** admin@tvmalaysia.homes  
-📝 Or visit our [Contact Page](/contact/)
-
----
-
-## 🔁 Updates to This Policy
-
-We reserve the right to update this privacy policy at any time. Changes will be posted on this page with a revised “Last Updated” date.
-
----
-
-Thank you for trusting [TVMalaysia.Homes](https://www.tvmalaysia.homes/). Your privacy matters to us.
+## Consent
+By using our website, you hereby consent to our Privacy Policy and agree to its Terms and Conditions.
