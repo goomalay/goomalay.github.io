@@ -1,0 +1,74 @@
+/* =========================================
+   CONTACT FORM STYLING
+   ========================================= */
+.contact-form-wrapper {
+    margin: 30px 0;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.form-group input, 
+.form-group textarea {
+    background: rgba(10, 15, 29, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 12px 15px;
+    color: white;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+    background: rgba(10, 15, 29, 0.8);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+}
+
+.btn-submit {
+    background: var(--primary);
+    color: #000;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 20px rgba(245, 158, 11, 0.4);
+}
+
+@media (max-width: 600px) {
+    .contact-form-wrapper { padding: 15px; }
+    .btn-submit { font-size: 0.9rem; }
+}
