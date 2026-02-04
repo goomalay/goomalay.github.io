@@ -1,0 +1,113 @@
+
+/* =========================================
+   FOOTER STYLES (FINAL VERSION)
+   ========================================= */
+.site-footer {
+    background-color: #070b15;
+    padding: 60px 0 30px;
+    border-top: 1px solid var(--glass-border);
+    margin-top: 80px;
+    text-align: center;
+}
+
+.footer-brand {
+    max-width: 600px;
+    margin: 0 auto 30px;
+}
+
+.footer-brand .logo {
+    display: inline-block;
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+}
+
+.footer-brand p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Link Navigasi Footer */
+.footer-links {
+    margin-bottom: 30px;
+}
+
+.footer-links ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+}
+
+/* Social Icons */
+.footer-social {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.footer-social a {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.03);
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.footer-social a:hover {
+    background: var(--primary);
+    color: #000;
+    transform: translateY(-3px);
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.03);
+}
+
+.copyright {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.copyright strong {
+    color: var(--text-main);
+}
+
+.disclaimer-note {
+    font-size: 0.7rem;
+    color: #444; /* Warna redup agar tidak mengalihkan perhatian */
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* RESPONSIVE FOOTER */
+@media (max-width: 600px) {
+    .site-footer { padding: 40px 0 20px; }
+    .footer-links ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .footer-brand p { font-size: 0.8rem; }
+}
