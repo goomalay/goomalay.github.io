@@ -1,12 +1,33 @@
-<footer>
+<footer class="site-footer">
     <div class="container">
-        <div class="footer-logo">TVOnline<span>Malaysia</span></div>
-        <div class="social-links">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
+        <!-- Logo & Deskripsi Singkat -->
+        <div class="footer-brand">
+            <a href="/" class="logo">TVOnline<span>Malaysia</span></a>
+            <p>Platform penstriman TV Malaysia dalam talian percuma dengan kualiti HD. Tonton saluran kegemaran anda di mana-mana sahaja, bila-bila masa.</p>
         </div>
-        <p class="copyright">© {{ "now" | date: "%Y" }} {{ site.title }} - Semua Hak Terpelihara.</p>
+
+        <!-- Link Kebijakan (Penting untuk AdSense) -->
+        <nav class="footer-links">
+            <ul>
+                <li><a href="{{ '/disclaimer/' | relative_url }}">Disclaimer</a></li>
+                <li><a href="{{ '/dmca/' | relative_url }}">DMCA Policy</a></li>
+                <li><a href="{{ '/privacy-policy/' | relative_url }}">Privacy Policy</a></li>
+                <li><a href="{{ '/terms-conditions/' | relative_url }}">Terms & Conditions</a></li>
+                <li><a href="{{ '/kontak/' | relative_url }}">Contact Us</a></li>
+            </ul>
+        </nav>
+
+        <!-- Social Icons (Opsional) -->
+        <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <p class="copyright">&copy; {{ "now" | date: "%Y" }} <strong>TV Online Malaysia</strong>. All Rights Reserved.</p>
+            <p class="disclaimer-note">Situs ini tidak menghosting file video apa pun. Semua konten disediakan oleh pihak ketiga yang tidak berafiliasi.</p>
+        </div>
     </div>
 </footer>
