@@ -35,7 +35,6 @@ layout: default
             </div>
 
             <div class="video-meta">
-                <div class="live-indicator"><span class="dot-live"></span> LIVE</div>
                 <p class="program-title">{{ page.program }}</p>
             </div>
         </div>
@@ -50,6 +49,10 @@ layout: default
             </div>
         </div>
 
+        <div class="ads-wrapper" style="margin-top: 20px;">
+            <div class="ads-placeholder">ADS 728×90</div>
+        </div>
+      
         <!-- ARTIKEL SEO -->
         <article class="post-description">
             <div class="content">
@@ -57,10 +60,6 @@ layout: default
             </div>
         </article>
 
-        <!-- IKLAN BAWAH -->
-        <div class="ads-wrapper" style="margin-top: 20px;">
-            <div class="ads-placeholder">ADS 728×90</div>
-        </div>
     </main>
 
     <!-- SIDEBAR (KANAN di Desktop, BAWAH di Mobile) -->
@@ -82,7 +81,6 @@ layout: default
                 </div>
                 <div class="sidebar-info">
                     <span class="sidebar-title">{{ channel.title }}</span>
-                    <span class="sidebar-status">Streaming HD</span>
                 </div>
             </a>
             {% endfor %}
