@@ -4,111 +4,64 @@ permalink: /tv/tv6/
 ---
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full Screen Player</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/shaka-player/3.2.0/shaka-player.compiled.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/shaka-player/3.2.0/shaka-player.ui.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/shaka-player/3.2.0/controls.css"/>
+<meta charset="utf-8">
+<title>Shaka Player Stable</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        html, body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            overflow: hidden; 
-            font-family: 'Poppins', sans-serif;
-        }
-        .player-container {
-            width: 100% !important;
-            height: 100% !important;
-            max-width: none !important;
-        }
+<meta name="referrer" content="no-referrer">
 
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; 
-        }
-        div a img {
-            visibility: hidden;
-        }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.1.1/controls.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.1.1/shaka-player.ui.min.js"></script>
 
-        /* Tambahan: Logo Watermark di Pojok (Opsional) */
-        body::before {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            z-index: 10;
-            content: '';
-            height: 50px;
-            width: 100px;
-            background: url('') no-repeat;
-            background-size: contain;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-    </style>
+<style>
+html,body{margin:0;background:black;height:100%}
+#player-container{width:100vw;height:100vh}
+video{width:100%;height:100%}
+</style>
 </head>
+
 <body>
-    <div data-shaka-player-container class="player-container" data-shaka-player-cast-receiver-id="1BA79154">
-        <video autoplay data-shaka-player id="video" style="width:100%;height:100%"></video>
-    </div>
 
-    <script>
-        // URL Manifest (Link Streaming)
-        const manifestUri = 'https://d25tgymtnqzu8s.cloudfront.net/smil:tv6/manifest.mpd';
+<div id="player-container" data-shaka-player-container>
+  <video id="video" controls playsinline data-shaka-player></video>
+</div>
 
-        async function init() {
-            const video = document.getElementById('video');
-            const ui = video['ui'];
-            const controls = ui.getControls();
-            const player = controls.getPlayer();
+<script>
+const manifestUri =
+"https://d25tgymtnqzu8s.cloudfront.net/smil:tv6/manifest.mpd";
 
-            // Konfigurasi DRM ClearKeys
-            player.configure({
-                drm: {
-                    clearKeys: {
-                        'ead0335d60401225727a6d531e9c2710': '1ee3b252227c5c2ec9378c833d2e14ff'
-                    }
-                }
-            });
+document.addEventListener('shaka-ui-loaded', async () => {
 
-            // Handle Error
-            player.addEventListener('error', onPlayerErrorEvent);
-            controls.addEventListener('error', onUIErrorEvent);
+  const video = document.getElementById('video');
+  const ui = video['ui'];
+  const controls = ui.getControls();
+  const player = controls.getPlayer();
 
-            try {
-                await player.load(manifestUri);
-                console.log('Video berhasil dimuat!');
-            } catch (error) {
-                onPlayerError(error);
-            }
-        }
+  player.configure({
+    drm: {
+      clearKeys: {
+        'ead0335d60401225727a6d531e9c2710':
+        '1ee3b252227c5c2ec9378c833d2e14ff'
+      }
+    }
+  });
 
-        function onPlayerErrorEvent(errorEvent) {
-            onPlayerError(errorEvent.detail);
-        }
+  try {
+    await player.load(manifestUri);
 
-        function onUIErrorEvent(errorEvent) {
-            onPlayerError(errorEvent.detail);
-        }
+    // 🔊 Aktifkan audio
+    video.muted = false;
+    video.volume = 1.0;
 
-        function onPlayerError(error) {
-            console.error('Error code', error.code, 'object', error);
-        }
+    console.log("STREAM OK");
 
-        function initFailed(errorEvent) {
-            console.error('Gagal memuat UI library!');
-        }
+  } catch (e) {
+    console.error("LOAD ERROR", e);
+  }
+});
+</script>
 
-        // Jalankan saat UI Shaka siap
-        document.addEventListener('shaka-ui-loaded', init);
-        document.addEventListener('shaka-ui-load-failed', initFailed);
-    </script>
 </body>
 </html>
