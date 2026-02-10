@@ -4,31 +4,115 @@ title: "404 - Halaman Tidak Ditemukan"
 permalink: /404.html
 ---
 
-<section class="error-container">
+<div class="error-page-container container">
     <div class="error-content">
         <div class="error-icon">
-            <i class="fa-solid fa-tv"></i>
-            <span class="error-badge">404</span>
+            <i class="fas fa-tv"></i>
+            <span class="error-signal"></span>
         </div>
-        <h1>Waduh! Sinyal Hilang.</h1>
-        <p>Maaf, halaman yang Anda cari tidak ditemukan atau sudah dipindahkan. Silakan kembali ke beranda untuk melanjutkan menonton.</p>
+        <h1 class="error-code">404</h1>
+        <h2>Ops! Siaran Terputus</h2>
+        <p>Maaf, halaman yang Anda cari tidak ditemukan atau sudah dipindahkan. Silakan kembali ke beranda untuk menonton siaran TV favorit Anda.</p>
         
         <div class="error-actions">
-            <a href="{{ '/' | relative_url }}" class="btn-home">
-                <i class="fa-solid fa-house"></i> Kembali ke Beranda
-            </a>
-            <a href="#" class="btn-secondary">
-                <i class="fa-solid fa-headset"></i> Lapor Masalah
-            </a>
-        </div>
-
-        <div class="error-suggestions">
-            <h3>Mungkin Anda Mencari:</h3>
-            <div class="suggest-links">
-                <a href="{{ '/' | relative_url }}"><i class="fa-solid fa-play"></i> Live TV</a>
-                <a href="#"><i class="fa-solid fa-volleyball"></i> Jadwal Bola</a>
-                <a href="#"><i class="fa-solid fa-layer-group"></i> Kategori</a>
-            </div>
+            <a href="/" class="btn-primary">Kembali ke Beranda</a>
+            <a href="/#channels" class="btn-outline">Lihat Daftar Saluran</a>
         </div>
     </div>
-</section>
+</div>
+
+<style>
+/* CSS KHUSUS HALAMAN 404 */
+.error-page-container {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top: 100px;
+}
+
+.error-content {
+    max-width: 600px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.error-icon {
+    font-size: 5rem;
+    color: var(--primary);
+    position: relative;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+/* Animasi Sinyal Rusak */
+.error-signal {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border-right: 2px solid var(--accent-red);
+    animation: glitch 0.5s infinite;
+    opacity: 0.5;
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-5px, 5px); }
+    40% { transform: translate(-5px, -5px); }
+    60% { transform: translate(5px, 5px); }
+    80% { transform: translate(5px, -5px); }
+    100% { transform: translate(0); }
+}
+
+.error-code {
+    font-size: 6rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 10px;
+    background: linear-gradient(to bottom, var(--primary), #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.error-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.error-content p {
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+
+.error-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn-outline {
+    border: 1px solid var(--glass-border);
+    padding: 14px 30px;
+    border-radius: 12px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-outline:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: white;
+}
+
+@media (max-width: 600px) {
+    .error-page-container { height: auto; padding: 150px 0 80px; }
+    .error-actions { flex-direction: column; }
+    .error-code { font-size: 4rem; }
+}
+</style>
