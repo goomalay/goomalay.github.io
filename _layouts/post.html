@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-<!-- SEO JSON-LD Schema untuk Google Index -->
+<!-- SEO JSON-LD Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -11,7 +11,7 @@ layout: default
   "thumbnailUrl": "{{ page.image | absolute_url }}",
   "uploadDate": "{{ page.date | date_to_xmlschema }}",
   "embedUrl": "{{ page.video_id }}",
-  "interactionCount": "12345"
+  "contentUrl": "{{ page.url | absolute_url }}"
 }
 </script>
 
@@ -20,23 +20,26 @@ layout: default
     <!-- SIDEBAR: Daftar Saluran -->
     <aside class="player-sidebar">
         <div class="sidebar-header">
-            <i class="fa fa-list"></i> Saluran TV
+            <i class="fas fa-tv"></i> Saluran TV Malaysia
         </div>
         
         <!-- FITUR PENCARIAN -->
         <div class="sidebar-search">
-            <input type="text" id="channelSearch" placeholder="Cari saluran..." onkeyup="searchChannel()">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="channelSearch" placeholder="Cari saluran..." onkeyup="searchChannel()">
+            </div>
         </div>
 
         <div class="sidebar-list" id="channelList">
             {% for channel in site.posts %}
             <a href="{{ channel.url | relative_url }}" class="sidebar-item {% if page.url == channel.url %}active{% endif %}">
                 <div class="sidebar-thumb">
-                    <img src="{{ channel.image | relative_url }}" alt="{{ channel.title }}">
+                    <img src="{{ channel.image | relative_url }}" alt="{{ channel.title }}" loading="lazy">
                 </div>
                 <div class="sidebar-info">
                     <span class="sidebar-title">{{ channel.title }}</span>
-                    <span class="sidebar-status">LIVE</span>
+                    <span class="sidebar-status"><span class="dot-live"></span> LIVE</span>
                 </div>
             </a>
             {% endfor %}
@@ -46,12 +49,24 @@ layout: default
     <!-- MAIN CONTENT -->
     <main class="player-main">
         
+        <!-- IKLAN ATAS (Slot 1) -->
+        <div class="ads-wrapper ads-top">
+            <span class="ads-label">ADVERTISEMENT</span>
+            <div class="ads-placeholder">
+                <!-- Masukkan Kode Iklan AdSense Di Sini -->
+                <p>ADS 728×90 / RESPONSIVE</p>
+            </div>
+        </div>
+
         <div class="video-container-wrapper">
             <div class="video-header">
-                <span class="category-badge">{{ page.category }}</span>
+                <nav class="breadcrumb">
+                    <a href="/">Home</a> / <a href="#">{{ page.category }}</a>
+                </nav>
                 <h1>{{ page.title }} Live Streaming</h1>
             </div>
 
+            <!-- PLAYER -->
             <div class="video-screen">
                 <iframe src="{{ page.video_id }}" 
                         frameborder="0" 
@@ -61,37 +76,40 @@ layout: default
                 </iframe>
             </div>
 
+            <!-- INFO DI BAWAH PLAYER -->
             <div class="video-meta">
-                <div class="live-indicator">
-                    <span class="dot-live"></span> SEDANG BERSIARAN LANGSUNG
+                <div class="meta-left">
+                    <div class="live-indicator">
+                        <span class="dot-live"></span> SEDANG BERSIARAN
+                    </div>
+                    <p class="program-title">{{ page.program }}</p>
                 </div>
-                <p class="program-title">{{ page.program }}</p>
             </div>
         </div>
 
-        <!-- SOCIAL SHARE DI ATAS ARTIKEL -->
+        <!-- SOCIAL SHARE (Premium Style) -->
         <div class="social-share-wrapper">
-            <span class="share-label">Bagikan:</span>
+            <span class="share-label"><i class="fas fa-share-alt"></i> BAGIKAN:</span>
             <div class="share-buttons">
-                <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-fb">
-                    <i class="fab fa-facebook"></i> FB
-                </a>
-                <a href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-tw">
-                    <i class="fab fa-twitter"></i> X
-                </a>
-                <a href="https://api.whatsapp.com/send?text={{ page.title }}%20{{ page.url | absolute_url }}" target="_blank" class="share-btn btn-wa">
-                    <i class="fab fa-whatsapp"></i> WA
-                </a>
-                <a href="https://telegram.me/share/url?url={{ page.url | absolute_url }}&text={{ page.title }}" target="_blank" class="share-btn btn-tg">
-                    <i class="fab fa-telegram"></i> TG
-                </a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-fb"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-tw"><i class="fab fa-twitter"></i></a>
+                <a href="https://api.whatsapp.com/send?text={{ page.title }}%20{{ page.url | absolute_url }}" target="_blank" class="share-btn btn-wa"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://telegram.me/share/url?url={{ page.url | absolute_url }}&text={{ page.title }}" target="_blank" class="share-btn btn-tg"><i class="fab fa-telegram-plane"></i></a>
             </div>
         </div>
 
-        <!-- DESKRIPSI KONTEN (SEO) -->
+        <!-- IKLAN BAWAH PLAYER (Slot 2) -->
+        <div class="ads-wrapper ads-bottom">
+            <div class="ads-placeholder">
+                <!-- Masukkan Kode Iklan AdSense Di Sini -->
+                <p>ADS 728×90 / RESPONSIVE</p>
+            </div>
+        </div>
+
+        <!-- ARTIKEL SEO -->
         <article class="post-description card-glass">
             <header class="desc-header">
-                <h2>Mengenai {{ page.title }}</h2>
+                <h2>Tonton {{ page.title }} Online Malaysia</h2>
             </header>
             <div class="content">
                 {{ content }}
@@ -101,19 +119,14 @@ layout: default
     </main>
 </div>
 
-<!-- JAVASCRIPT UNTUK PENCARIAN -->
+<!-- SCRIPT PENCARIAN -->
 <script>
 function searchChannel() {
     let input = document.getElementById('channelSearch').value.toLowerCase();
     let items = document.querySelectorAll('#channelList .sidebar-item');
-    
     items.forEach(item => {
         let title = item.querySelector('.sidebar-title').innerText.toLowerCase();
-        if (title.includes(input)) {
-            item.style.display = "flex";
-        } else {
-            item.style.display = "none";
-        }
+        item.style.display = title.includes(input) ? "flex" : "none";
     });
 }
 </script>
