@@ -1,5 +1,6 @@
-
-/* PLAYER PAGE LAYOUT */
+/* =========================================
+   PLAYER PAGE LAYOUT
+   ========================================= */
 .player-page-container {
     display: flex;
     gap: 25px;
@@ -7,7 +8,14 @@
     margin-bottom: 50px;
 }
 
-/* SIDEBAR STYLES */
+.player-main { 
+    flex-grow: 1; 
+    min-width: 0; 
+}
+
+/* =========================================
+   SIDEBAR & SEARCH
+   ========================================= */
 .player-sidebar {
     width: 320px;
     flex-shrink: 0;
@@ -17,6 +25,7 @@
     height: fit-content;
     position: sticky;
     top: 100px;
+    overflow: hidden; /* Agar input tidak keluar border */
 }
 
 .sidebar-header {
@@ -28,8 +37,25 @@
     font-size: 0.85rem;
 }
 
+.sidebar-search {
+    padding: 12px;
+    background: rgba(0,0,0,0.1);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.sidebar-search input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255,255,255,0.05);
+    color: white;
+    font-size: 0.85rem;
+    outline: none;
+}
+
 .sidebar-list {
-    max-height: 70vh;
+    max-height: 60vh;
     overflow-y: auto;
 }
 
@@ -53,85 +79,116 @@
     color: white;
 }
 
-.sidebar-item.active { border-left: 3px solid var(--primary); }
-
-.sidebar-thumb { width: 60px; aspect-ratio: 16/9; border-radius: 4px; overflow: hidden; background: #000; }
+.sidebar-thumb { width: 60px; aspect-ratio: 16/9; border-radius: 4px; overflow: hidden; background: #000; flex-shrink: 0; }
 .sidebar-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .sidebar-title { display: block; font-size: 0.85rem; font-weight: 600; }
-.sidebar-status { font-size: 0.7rem; color: var(--accent-red); font-weight: 800; }
 
-/* MAIN PLAYER STYLES */
-.player-main { flex-grow: 1; min-width: 0; }
-
-.ads-placeholder {
-    background: rgba(255,255,255,0.03);
-    border: 1px dashed var(--glass-border);
-    color: #444;
-    height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    margin-bottom: 20px;
-    border-radius: 8px;
-}
-
+/* =========================================
+   VIDEO AREA
+   ========================================= */
 .video-container-wrapper {
     background: var(--bg-card);
     border-radius: 15px;
     overflow: hidden;
     border: 1px solid var(--glass-border);
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
-
-.video-header { padding: 20px; }
-.video-header h1 { font-size: 1.5rem; margin-top: 5px; }
-.category-badge { color: var(--primary); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
 
 .video-screen {
     position: relative;
     width: 100%;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    padding-top: 56.25%; /* 16:9 */
     background: #000;
 }
 
 .video-screen iframe {
     position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-    width: 100%; height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
 }
 
-.video-meta { padding: 20px; background: rgba(0,0,0,0.2); }
-.live-indicator { color: var(--accent-red); font-size: 0.8rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
-.dot-live { width: 8px; height: 8px; background: var(--accent-red); border-radius: 50%; display: inline-block; animation: pulse 1s infinite; }
+/* =========================================
+   SOCIAL SHARE
+   ========================================= */
+.social-share-wrapper {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+}
 
-.program-title { margin-top: 5px; color: var(--text-muted); font-size: 0.95rem; }
+.share-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.share-btn {
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.btn-fb { background: #1877f2; }
+.btn-wa { background: #25d366; }
+.btn-tg { background: #0088cc; }
 
+/* =========================================
+   CONTENT & SEO
+   ========================================= */
 .post-description {
     background: var(--bg-card);
     padding: 25px;
     border-radius: 15px;
     border: 1px solid var(--glass-border);
-    margin-top: 25px;
 }
 
-.desc-header {
-    font-weight: 800;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--glass-border);
-    color: var(--primary);
-}
+.content h2 { color: var(--primary); font-size: 1.3rem; margin: 20px 0 10px; }
+.content p { line-height: 1.7; margin-bottom: 15px; color: var(--text-muted); }
 
-.content { color: var(--text-muted); font-size: 1rem; line-height: 1.8; }
-.content p { margin-bottom: 15px; }
-
-/* RESPONSIVE PLAYER PAGE */
+/* =========================================
+   RESPONSIVE OPTIMIZATION (TIDAK BENTROK)
+   ========================================= */
 @media (max-width: 992px) {
-    .player-page-container { flex-direction: column; padding-top: 100px; }
-    .player-sidebar { width: 100%; position: relative; top: 0; order: 2; }
-    .sidebar-list { display: flex; overflow-x: auto; max-height: none; gap: 10px; padding: 10px; }
-    .sidebar-item { flex-direction: column; min-width: 120px; text-align: center; border: 1px solid var(--glass-border); border-radius: 8px; }
+    .player-page-container { flex-direction: column; padding-top: 80px; }
+    
+    .player-sidebar { 
+        width: 100%; 
+        order: 2; 
+        position: relative; 
+        top: 0; 
+    }
+
+    .sidebar-list { 
+        display: flex; 
+        overflow-x: auto; 
+        max-height: none; 
+        padding: 10px;
+        gap: 12px;
+    }
+
+    .sidebar-item { 
+        flex-direction: column; 
+        min-width: 130px; 
+        border-bottom: none; 
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        padding: 8px;
+    }
+
     .sidebar-thumb { width: 100%; }
+    
     .player-main { order: 1; }
+}
+
+@media (max-width: 768px) {
+    /* Perbaikan Sticky Video Mobile */
+    .video-container-wrapper {
+        position: sticky;
+        top: 70px; /* Sesuaikan dengan tinggi navbar mobile anda */
+        z-index: 999;
+        margin-left: -15px; /* Opsional: mentok ke pinggir layar */
+        margin-right: -15px;
+        border-radius: 0;
+    }
 }
