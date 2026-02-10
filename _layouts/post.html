@@ -1,7 +1,6 @@
 ---
 layout: default
 ---
-<!-- SEO JSON-LD Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -10,24 +9,68 @@ layout: default
   "description": "{{ page.description }}",
   "thumbnailUrl": "{{ page.image | absolute_url }}",
   "uploadDate": "{{ page.date | date_to_xmlschema }}",
-  "embedUrl": "{{ page.video_id }}",
-  "contentUrl": "{{ page.url | absolute_url }}"
+  "embedUrl": "{{ page.video_id }}"
 }
 </script>
 
 <div class="player-page-container container">
     
-    <!-- SIDEBAR: Daftar Saluran -->
-    <aside class="player-sidebar">
-        <div class="sidebar-header">
-            <i class="fas fa-tv"></i> Saluran TV Malaysia
-        </div>
+    <!-- MAIN CONTENT (KIRI di Desktop, ATAS di Mobile) -->
+    <main class="player-main">
         
-        <!-- FITUR PENCARIAN -->
+        <!-- IKLAN ATAS -->
+        <div class="ads-wrapper">
+            <span class="ads-label">ADVERTISEMENT</span>
+            <div class="ads-placeholder">ADS 728×90</div>
+        </div>
+
+        <div class="video-container-wrapper">
+            <div class="video-header">
+                <span class="category-badge">{{ page.category }}</span>
+                <h1>{{ page.title }} Live Streaming</h1>
+            </div>
+
+            <div class="video-screen">
+                <iframe src="{{ page.video_id }}" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
+            </div>
+
+            <div class="video-meta">
+                <div class="live-indicator"><span class="dot-live"></span> LIVE</div>
+                <p class="program-title">{{ page.program }}</p>
+            </div>
+        </div>
+
+        <!-- SOCIAL SHARE -->
+        <div class="social-share-wrapper">
+            <span class="share-label">SHARE:</span>
+            <div class="share-buttons">
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-fb"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://api.whatsapp.com/send?text={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-wa"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://telegram.me/share/url?url={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-tg"><i class="fab fa-telegram-plane"></i></a>
+            </div>
+        </div>
+
+        <!-- ARTIKEL SEO -->
+        <article class="post-description">
+            <div class="content">
+                {{ content }}
+            </div>
+        </article>
+
+        <!-- IKLAN BAWAH -->
+        <div class="ads-wrapper" style="margin-top: 20px;">
+            <div class="ads-placeholder">ADS 728×90</div>
+        </div>
+    </main>
+
+    <!-- SIDEBAR (KANAN di Desktop, BAWAH di Mobile) -->
+    <aside class="player-sidebar">
+        <div class="sidebar-header">SALURAN LAIN</div>
+        
         <div class="sidebar-search">
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="channelSearch" placeholder="Cari saluran..." onkeyup="searchChannel()">
+                <input type="text" id="channelSearch" placeholder="Cari channel..." onkeyup="searchChannel()">
             </div>
         </div>
 
@@ -35,91 +78,18 @@ layout: default
             {% for channel in site.posts %}
             <a href="{{ channel.url | relative_url }}" class="sidebar-item {% if page.url == channel.url %}active{% endif %}">
                 <div class="sidebar-thumb">
-                    <img src="{{ channel.image | relative_url }}" alt="{{ channel.title }}" loading="lazy">
+                    <img src="{{ channel.image | relative_url }}" alt="{{ channel.title }}">
                 </div>
                 <div class="sidebar-info">
                     <span class="sidebar-title">{{ channel.title }}</span>
-                    <span class="sidebar-status"><span class="dot-live"></span> LIVE</span>
+                    <span class="sidebar-status">Streaming HD</span>
                 </div>
             </a>
             {% endfor %}
         </div>
     </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="player-main">
-        
-        <!-- IKLAN ATAS (Slot 1) -->
-        <div class="ads-wrapper ads-top">
-            <span class="ads-label">ADVERTISEMENT</span>
-            <div class="ads-placeholder">
-                <!-- Masukkan Kode Iklan AdSense Di Sini -->
-                <p>ADS 728×90 / RESPONSIVE</p>
-            </div>
-        </div>
-
-        <div class="video-container-wrapper">
-            <div class="video-header">
-                <nav class="breadcrumb">
-                    <a href="/">Home</a> / <a href="#">{{ page.category }}</a>
-                </nav>
-                <h1>{{ page.title }} Live Streaming</h1>
-            </div>
-
-            <!-- PLAYER -->
-            <div class="video-screen">
-                <iframe src="{{ page.video_id }}" 
-                        frameborder="0" 
-                        allowfullscreen="true" 
-                        scrolling="no" 
-                        allow="autoplay; encrypted-media">
-                </iframe>
-            </div>
-
-            <!-- INFO DI BAWAH PLAYER -->
-            <div class="video-meta">
-                <div class="meta-left">
-                    <div class="live-indicator">
-                        <span class="dot-live"></span> SEDANG BERSIARAN
-                    </div>
-                    <p class="program-title">{{ page.program }}</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SOCIAL SHARE (Premium Style) -->
-        <div class="social-share-wrapper">
-            <span class="share-label"><i class="fas fa-share-alt"></i> BAGIKAN:</span>
-            <div class="share-buttons">
-                <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-fb"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-tw"><i class="fab fa-twitter"></i></a>
-                <a href="https://api.whatsapp.com/send?text={{ page.title }}%20{{ page.url | absolute_url }}" target="_blank" class="share-btn btn-wa"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://telegram.me/share/url?url={{ page.url | absolute_url }}&text={{ page.title }}" target="_blank" class="share-btn btn-tg"><i class="fab fa-telegram-plane"></i></a>
-            </div>
-        </div>
-
-        <!-- IKLAN BAWAH PLAYER (Slot 2) -->
-        <div class="ads-wrapper ads-bottom">
-            <div class="ads-placeholder">
-                <!-- Masukkan Kode Iklan AdSense Di Sini -->
-                <p>ADS 728×90 / RESPONSIVE</p>
-            </div>
-        </div>
-
-        <!-- ARTIKEL SEO -->
-        <article class="post-description card-glass">
-            <header class="desc-header">
-                <h2>Tonton {{ page.title }} Online Malaysia</h2>
-            </header>
-            <div class="content">
-                {{ content }}
-            </div>
-        </article>
-
-    </main>
 </div>
 
-<!-- SCRIPT PENCARIAN -->
 <script>
 function searchChannel() {
     let input = document.getElementById('channelSearch').value.toLowerCase();
