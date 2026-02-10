@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Screen Player</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/shaka-player/3.2.0/shaka-player.compiled.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/shaka-player/3.2.0/shaka-player.ui.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/shaka-player/3.2.0/controls.css">
+
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            overflow: hidden; 
+            font-family: 'Poppins', sans-serif;
+        }
+        .player-container {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: none !important;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+        }
+        div a img {
+            visibility: hidden;
+        }
+
+        /* Tambahan: Logo Watermark di Pojok (Opsional) */
+        body::before {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 10;
+            content: '';
+            height: 50px;
+            width: 100px;
+            background: url('') no-repeat; /* Masukkan link logo jika perlu */
+            background-size: contain;
+            opacity: 0.5;
+            pointer-events: none; /* Agar tidak menghalangi klik */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container Shaka Player Tanpa Batas Lebar -->
+    <div data-shaka-player-container class="player-container" data-shaka-player-cast-receiver-id="1BA79154">
+        <video autoplay data-shaka-player id="video" style="width:100%;height:100%"></video>
+    </div>
+
+    <script>
+        // URL Manifest (Link Streaming)
+        const manifestUri = 'https://d25tgymtnqzu8s.cloudfront.net/smil:tv6/manifest.mpd';
+
+        async function init() {
+            const video = document.getElementById('video');
+            const ui = video['ui'];
+            const controls = ui.getControls();
+            const player = controls.getPlayer();
+
+            // Konfigurasi DRM ClearKeys
+            player.configure({
+                drm: {
+                    clearKeys: {
+                        '4310edb8b9ffe79abb40bacafa778ec3': 'aebb7e86d8a336d9a93d3dd8a41153cf'
+                    }
+                }
+            });
+
+            // Handle Error
+            player.addEventListener('error', onPlayerErrorEvent);
+            controls.addEventListener('error', onUIErrorEvent);
+
+            try {
+                await player.load(manifestUri);
+                console.log('Video berhasil dimuat!');
+            } catch (error) {
+                onPlayerError(error);
+            }
+        }
+
+        function onPlayerErrorEvent(errorEvent) {
+            onPlayerError(errorEvent.detail);
+        }
+
+        function onUIErrorEvent(errorEvent) {
+            onPlayerError(errorEvent.detail);
+        }
+
+        function onPlayerError(error) {
+            console.error('Error code', error.code, 'object', error);
+        }
+
+        function initFailed(errorEvent) {
+            console.error('Gagal memuat UI library!');
+        }
+
+        // Jalankan saat UI Shaka siap
+        document.addEventListener('shaka-ui-loaded', init);
+        document.addEventListener('shaka-ui-load-failed', initFailed);
+    </script>
+</body>
+</html>
