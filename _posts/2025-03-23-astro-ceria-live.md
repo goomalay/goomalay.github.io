@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Astro Ceria Malaysia"
+title: "Astro Ceria"
 seo_title: "Tonton Astro Ceria Live Streaming Online - Kartun, Hiburan Kanak-Kanak & Program Keluarga"
 description: "Tonton Astro Ceria live streaming online secara percuma. Saksikan rancangan kartun, hiburan kanak-kanak, program pendidikan dan kandungan keluarga Malaysia."
 program: "Astro Ceria Live - Kartun, Hiburan Kanak-Kanak & Program Keluarga Malaysia"
-video_id: "/shaka/?id=ASTROCERIA"
+video_id: "/tv/?id=ASTROCERIA"
 image: "assets/img/Astro-Ceria.webp"
 category: "Live TV Malaysia"
 permalink: /astro-ceria-live/
