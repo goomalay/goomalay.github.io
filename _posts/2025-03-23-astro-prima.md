@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Astro Prima Malaysia"
+title: "Astro Prima"
 seo_title: "Tonton Astro Prima Live Streaming Online - Drama, Hiburan & Rancangan Popular"
 description: "Tonton Astro Prima live streaming online secara percuma. Saksikan drama Melayu popular, rancangan hiburan, realiti TV, dokumentari dan program keluarga Malaysia."
 program: "Astro Prima Live - Drama, Hiburan & Program Popular Malaysia"
-video_id: "/shaka/?id=ASTROPRIMA"
+video_id: "/tv/?id=ASTROPRIMA"
 image: "assets/img/Astro-Prima.webp"
 category: "Live TV Malaysia"
 permalink: /astro-prima-live/
