@@ -4,7 +4,7 @@ title: "Selangor TV"
 seo_title: "Tonton Selangor TV Live Streaming Online - Berita Negeri, Program Komuniti & Info Rakyat"
 description: "Tonton Selangor TV live streaming online secara percuma. Ikuti berita Selangor, program komuniti, info kerajaan negeri, dokumentari dan hiburan tempatan."
 program: "Selangor TV Live - Berita Negeri & Program Komuniti Selangor"
-video_id: "/shaka/?id=SELANGORTV"
+video_id: "/tv/?id=SELANGORTV"
 image: "assets/img/Selangor-TV.webp"
 category: "Live TV Malaysia"
 permalink: /selangor-tv-live/
