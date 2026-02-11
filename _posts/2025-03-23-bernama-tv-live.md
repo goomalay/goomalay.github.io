@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Bernama TV Malaysia"
+title: "Bernama TV"
 seo_title: "Tonton Bernama TV Live Streaming Online - Berita Terkini & Isu Semasa Malaysia"
 description: "Tonton Bernama TV live streaming online secara percuma. Saksikan berita terkini Malaysia, laporan mendalam, analisis isu semasa, dokumentari dan liputan eksklusif."
 program: "Bernama TV Live - Berita Terkini & Analisis Isu Semasa Malaysia"
-video_id: "/shaka/?id=BERNAMATV"
+video_id: "/tv/?id=BERNAMATV"
 image: "assets/img/Bernama-TV.webp"
 category: "Live TV Malaysia"
 permalink: /bernama-tv-live/
