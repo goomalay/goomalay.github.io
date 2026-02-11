@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Awesome TV Malaysia"
+title: "Awesome TV"
 seo_title: "Tonton Awesome TV Live Streaming Online - Hiburan, Drama & Program Popular"
 description: "Tonton Awesome TV live streaming online secara percuma. Saksikan rancangan hiburan, drama tempatan, realiti TV, muzik dan kandungan popular Malaysia."
 program: "Awesome TV Live - Hiburan, Drama & Program Popular Malaysia"
-video_id: "/shaka/?id=AWESOMETV"
+video_id: "/tv/?id=AWESOMETV"
 image: "assets/img/Awesome-TV.webp"
 category: "Live TV Malaysia"
 permalink: /awesome-tv-live/
