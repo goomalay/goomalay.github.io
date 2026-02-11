@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "TV AlHijrah Malaysia"
+title: "TV AlHijrah"
 seo_title: "Tonton TV AlHijrah Live Streaming Online - Berita Islamik, Dakwah & Hiburan Patuh Syariah"
 description: "Tonton TV AlHijrah live streaming online secara percuma. Saksikan berita Islamik, rancangan dakwah, hiburan patuh syariah, dokumentari dan program motivasi Malaysia."
 program: "TV AlHijrah Live - Berita Islamik, Dakwah & Hiburan Patuh Syariah"
-video_id: "/shaka/?id=ALHIJRAH"
+video_id: "/tv/?id=ALHIJRAH"
 image: "assets/img/Al-Hijrah-TV.webp"
 category: "Live TV Malaysia"
 permalink: /tv-alhijrah-live/
