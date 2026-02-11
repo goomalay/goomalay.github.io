@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Mara TV Malaysia"
+title: "Mara TV"
 seo_title: "Tonton Mara TV Live Streaming Online - Pendidikan, Keusahawanan & Program Belia"
 description: "Tonton Mara TV live streaming online secara percuma. Saksikan rancangan pendidikan, keusahawanan, program belia, motivasi dan kandungan pembangunan komuniti Malaysia."
 program: "Mara TV Live - Pendidikan, Keusahawanan & Program Belia Malaysia"
