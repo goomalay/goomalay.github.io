@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Astro Citra Malaysia"
+title: "Astro Citra"
 seo_title: "Tonton Astro Citra Live Streaming Online - Filem Melayu & Drama Popular"
 description: "Tonton Astro Citra live streaming online secara percuma. Saksikan filem Melayu terkini, drama bersiri popular, program hiburan dan kandungan sinema Malaysia."
 program: "Astro Citra Live - Filem Melayu, Drama & Hiburan Popular Malaysia"
-video_id: "/shaka/?id=ASTROCITRA"
+video_id: "/tv/?id=ASTROCITRA"
 image: "assets/img/Astro-Citra.webp"
 category: "Live TV Malaysia"
 permalink: /astro-citra-live/
