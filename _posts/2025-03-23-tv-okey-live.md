@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "TV Okey Malaysia"
+title: "TV Okey"
 seo_title: "Tonton TV Okey Live Streaming Online - Hiburan Belia, Drama & Kandungan Kreatif"
 description: "Tonton TV Okey live streaming online secara percuma. Nikmati drama tempatan, hiburan belia, rancangan kreatif, realiti TV dan program segar Malaysia."
 program: "TV Okey Live - Hiburan Belia, Drama & Kandungan Kreatif Malaysia"
-video_id: "/shaka/?id=TVOK"
+video_id: "/tv/?id=TVOK"
 image: "assets/img/Okey-TV.webp"
 category: "Live TV Malaysia"
 permalink: /tv-okey-live/
