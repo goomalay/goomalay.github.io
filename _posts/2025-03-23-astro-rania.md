@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Astro Rania Malaysia"
+title: "Astro Rania"
 seo_title: "Tonton Astro Rania Live Streaming Online - Drama, Hiburan & Program Keluarga"
 description: "Tonton Astro Rania live streaming online secara percuma. Saksikan drama Melayu popular, rancangan hiburan, realiti TV, program keluarga dan kandungan menarik Malaysia."
 program: "Astro Rania Live - Drama, Hiburan & Program Keluarga Malaysia"
-video_id: "/shaka/?id=ASTRORANIA"
+video_id: "/tv/?id=ASTRORANIA"
 image: "assets/img/Astro-Rania.webp"
 category: "Live TV Malaysia"
 permalink: /astro-rania-live/
