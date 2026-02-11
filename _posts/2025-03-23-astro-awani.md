@@ -4,7 +4,7 @@ title: "Astro Awani"
 seo_title: "Tonton Astro Awani Live Streaming Online - Berita Terkini & Isu Semasa Malaysia"
 description: "Tonton Astro Awani live streaming online secara percuma. Saksikan berita terkini Malaysia, laporan mendalam, isu semasa, dokumentari dan liputan eksklusif Astro Awani."
 program: "Astro Awani Live - Berita Terkini & Isu Semasa Malaysia"
-video_id: "/shaka/?id=ASTROAWANI"
+video_id: "/tv/?id=ASTROAWANI"
 image: "assets/img/astro-awani-live.jpg"
 category: "Live TV Malaysia"
 permalink: /astro-awani-live/
