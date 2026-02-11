@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Dunia Sinema Malaysia"
+title: "Dunia Sinema"
 seo_title: "Tonton Dunia Sinema Live Streaming Online - Filem Melayu, Drama & Hiburan Popular"
 description: "Tonton Dunia Sinema live streaming online secara percuma. Saksikan filem Melayu, drama bersiri, rancangan hiburan dan kandungan sinema tempatan Malaysia."
 program: "Dunia Sinema Live - Filem Melayu, Drama & Hiburan Popular Malaysia"
-video_id: "/shaka/?id=DUNIASINEMA"
+video_id: "/tv/?id=DUNIASINEMA"
 image: "assets/img/Dunia-Sinema.webp"
 category: "Live TV Malaysia"
 permalink: /dunia-sinema-live/
