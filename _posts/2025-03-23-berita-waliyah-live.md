@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Berita Waliyah Malaysia"
+title: "Berita Waliyah"
 seo_title: "Tonton Berita Waliyah Live Streaming Online - Berita Islamik & Isu Semasa Malaysia"
 description: "Tonton Berita Waliyah live streaming online secara percuma. Saksikan berita Islamik, liputan isu semasa, ceramah, dokumentari dan program dakwah Malaysia."
 program: "Berita Waliyah Live - Berita Islamik & Isu Semasa Malaysia"
-video_id: "/shaka/?id=BERITAWALIYAH"
+video_id: "/tv/?id=BERITAWALIYAH"
 image: "assets/img/Berita-RTM.webp"
 category: "Live TV Malaysia"
 permalink: /berita-waliyah-live/
