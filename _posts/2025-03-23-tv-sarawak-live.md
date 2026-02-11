@@ -4,7 +4,7 @@ title: "TV Sarawak (TVS)"
 seo_title: "Tonton TV Sarawak Live Streaming Online - Budaya Sarawak, Berita & Hiburan Tempatan"
 description: "Tonton TV Sarawak (TVS) live streaming online secara percuma. Saksikan berita Sarawak, program budaya, hiburan tempatan, dokumentari dan rancangan komuniti."
 program: "TV Sarawak Live - Budaya, Berita & Hiburan Tempatan Sarawak"
-video_id: "/shaka/?id=TVS"
+video_id: "/tv/?id=TVS"
 image: "assets/img/TV-Sarawak.webp"
 category: "Live TV Malaysia"
 permalink: /tv-sarawak-live/
