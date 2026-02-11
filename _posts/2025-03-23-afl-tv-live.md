@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "AFL TV Malaysia"
+title: "AFL TV"
 seo_title: "Tonton AFL TV Live Streaming Online - Sukan, Liga & Pertandingan Terkini"
 description: "Tonton AFL TV live streaming online secara percuma. Saksikan liputan sukan tempatan dan antarabangsa, liga bola sepak, pertandingan olahraga dan rancangan sukan Malaysia."
 program: "AFL TV Live - Sukan, Liga & Pertandingan Terkini Malaysia"
