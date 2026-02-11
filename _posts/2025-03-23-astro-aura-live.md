@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Astro Aura Malaysia"
+title: "Astro Aura"
 seo_title: "Tonton Astro Aura Live Streaming Online - Hiburan, Drama & Program Popular"
 description: "Tonton Astro Aura live streaming online secara percuma. Saksikan rancangan hiburan, drama tempatan, realiti TV, program keluarga dan kandungan popular Malaysia."
 program: "Astro Aura Live - Hiburan, Drama & Program Popular Malaysia"
-video_id: "/shaka/?id=ASTROAURA"
+video_id: "/tv/?id=ASTROAURA"
 image: "assets/img/Astro-Aura.webp"
 category: "Live TV Malaysia"
 permalink: /astro-aura-live/
