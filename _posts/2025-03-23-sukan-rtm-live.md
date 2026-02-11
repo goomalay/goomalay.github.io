@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Sukan RTM Malaysia"
+title: "Sukan RTM"
 seo_title: "Tonton Sukan RTM Live Streaming Online - Bola Sepak, Badminton & Sukan Malaysia"
 description: "Tonton Sukan RTM live streaming online secara percuma. Saksikan siaran langsung sukan Malaysia, bola sepak tempatan, badminton, acara antarabangsa dan kejohanan utama."
 program: "Sukan RTM Live - Siaran Langsung Bola Sepak & Acara Sukan Malaysia"
-video_id: "/shaka/?id=SUKANRTM"
+video_id: "/tv/?id=SUKANRTM"
 image: "assets/img/Sukan-RTM.webp"
 category: "Live TV Malaysia"
 permalink: /sukan-rtm-live/
