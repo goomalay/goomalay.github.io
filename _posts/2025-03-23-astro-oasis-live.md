@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Astro Oasis Malaysia"
+title: "Astro Oasis"
 seo_title: "Tonton Astro Oasis Live Streaming Online - Rancangan Islamik & Dakwah Malaysia"
 description: "Tonton Astro Oasis live streaming online secara percuma. Saksikan rancangan Islamik, ceramah, dokumentari keagamaan, motivasi dan program dakwah Malaysia."
 program: "Astro Oasis Live - Rancangan Islamik, Ceramah & Dakwah Malaysia"
-video_id: "/shaka/?id=ASTROOASIS"
+video_id: "/tv/?id=ASTROOASIS"
 image: "assets/img/Astro-Oasis.webp"
 category: "Live TV Malaysia"
 permalink: /astro-oasis-live/
