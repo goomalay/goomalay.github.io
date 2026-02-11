@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "RTM Parlimen Malaysia"
+title: "RTM Parlimen"
 seo_title: "Tonton RTM Parlimen Live Streaming Online - Sidang Parlimen & Berita Politik Malaysia"
 description: "Tonton RTM Parlimen live streaming online secara percuma. Saksikan siaran langsung sidang Parlimen, berita politik, debat wakil rakyat dan perkembangan kerajaan Malaysia."
 program: "RTM Parlimen Live - Sidang Parlimen & Berita Politik Malaysia"
-video_id: "/shaka/?id=PARLIMENRTM"
+video_id: "/tv/?id=PARLIMENRTM"
 image: "assets/img/RTM-Parlimen.webp"
 category: "Live TV Malaysia"
 permalink: /rtm-parlimen-live/
