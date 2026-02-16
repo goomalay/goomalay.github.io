@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://www.tvmalaysia.homes/sitemap.xml
+Sitemap: https://www.livetvmalaysia.site/sitemap.xml
