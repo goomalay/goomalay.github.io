@@ -1,21 +1,105 @@
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% seo %}
+    
+    <!-- Title Tag: Otomatis Rapih -->
+    <title>{% if page.url == "/" %}{{ site.title }}{% elsif page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }} | {{ site.title }}{% endif %}</title>
+
+    <!-- Canonical Tag -->
+    <link rel="canonical" href="{{ page.url | absolute_url }}">
+
+    <!-- Meta Description -->
+    <meta name="description" content="{% if page.description %}{{ page.description | strip_html | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+
+    <!-- OpenGraph (Facebook, WhatsApp, Telegram) -->
+    <meta property="og:title" content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title | default: site.title }}{% endif %}">
+    <meta property="og:description" content="{% if page.description %}{{ page.description | strip_html | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+    <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+    <meta property="og:url" content="{{ page.url | absolute_url }}">
+    <meta property="og:site_name" content="{{ site.title }}">
+    {% if page.image %}
+    <meta property="og:image" content="{{ page.image | absolute_url }}">
+    {% endif %}
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title | default: site.title }}{% endif %}">
+
+    <!-- Robots Tag -->
+    <meta name="robots" content="index, follow">
+
+    <!-- Assets -->
     <link rel="shortcut icon" href="{{ site.baseurl }}/assets/img/favicon.ico">
     <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
-    <!-- Google Fonts & Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <meta name="google-site-verification" content="AClBoYkUfOFJsqDelDrrWx5Rs1KVVVOJQQlW0fiX_9A" />
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1PMX3CHLW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-G1PMX3CHLW');
-</script>
+    <!-- Verification Search Console -->
+    {% if site.google_verify %}<meta name="google-site-verification" content="{{ site.google_verify }}" />{% endif %}
+    {% if site.bing_verify %}<meta name="msvalidate.01" content="{{ site.bing_verify }}" />{% endif %}
+
+    <!-- Schema.org Homepage -->
+    {% if page.url == "/" %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "{{ site.title }}",
+      "url": "{{ site.url }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ site.url }}/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    {% endif %}
+
+    <!-- Schema.org Video Live (Hanya muncul di postingan channel) -->
+    {% if page.layout == 'post' %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "VideoObject",
+          "name": "{{ page.seo_title | default: page.title | escape }}",
+          "description": "{{ page.description | escape }}",
+          "thumbnailUrl": "{{ page.image | absolute_url }}",
+          "uploadDate": "{% if page.date %}{{ page.date | date_to_xmlschema }}{% else %}{{ site.time | date_to_xmlschema }}{% endif %}",
+          "embedUrl": "{{ page.video_id }}",
+          "interactionCount": "15420",
+          "publication": {
+            "@type": "BroadcastEvent",
+            "isLiveBroadcast": true,
+            "startDate": "{{ site.time | date_to_xmlschema }}",
+            "name": "{{ page.program | default: page.title | escape }}"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "{{ site.url }}/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "{{ page.category | default: 'TV Malaysia' }}",
+              "item": "{{ site.url }}/{{ page.category | slugify | default: 'tv-malaysia' }}"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "{{ page.title | escape }}",
+              "item": "{{ page.url | absolute_url }}"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    {% endif %}
 </head>
