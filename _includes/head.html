@@ -1,17 +1,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Title Tag: Otomatis Rapih -->
     <title>{% if page.url == "/" %}{{ site.title }}{% elsif page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }} | {{ site.title }}{% endif %}</title>
-
-    <!-- Canonical Tag -->
     <link rel="canonical" href="{{ page.url | absolute_url }}">
-
-    <!-- Meta Description -->
     <meta name="description" content="{% if page.description %}{{ page.description | strip_html | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-
-    <!-- OpenGraph (Facebook, WhatsApp, Telegram) -->
     <meta property="og:title" content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title | default: site.title }}{% endif %}">
     <meta property="og:description" content="{% if page.description %}{{ page.description | strip_html | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
     <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
@@ -20,24 +12,14 @@
     {% if page.image %}
     <meta property="og:image" content="{{ page.image | absolute_url }}">
     {% endif %}
-
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title | default: site.title }}{% endif %}">
-
-    <!-- Robots Tag -->
     <meta name="robots" content="index, follow">
-
-    <!-- Assets -->
     <link rel="shortcut icon" href="{{ site.baseurl }}/assets/img/favicon.ico">
     <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <!-- Verification Search Console -->
     {% if site.google_verify %}<meta name="google-site-verification" content="{{ site.google_verify }}" />{% endif %}
     {% if site.bing_verify %}<meta name="msvalidate.01" content="{{ site.bing_verify }}" />{% endif %}
-
-    <!-- Schema.org Homepage -->
     {% if page.url == "/" %}
     <script type="application/ld+json">
     {
@@ -53,8 +35,6 @@
     }
     </script>
     {% endif %}
-
-    <!-- Schema.org Video Live (Hanya muncul di postingan channel) -->
     {% if page.layout == 'post' %}
     <script type="application/ld+json">
     {
