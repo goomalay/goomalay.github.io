@@ -1,12 +1,15 @@
 title: TV Malaysia Live Online | Tonton Semua Saluran
 seo_title: TV Malaysia Online
 description: Tonton semua saluran TV Malaysia secara online dengan mudah dan percuma.
-url: "https://www.livetvmalaysia.site" # Masukkan URL Anda di sini
+url: "https://www.livetvmalaysia.site"
 baseurl: "" 
+
+google_verify: "AClBoYkUfOFJsqDelDrrWx5Rs1KVVVOJQQlW0fiX_9A"
+bing_verify: "KODE_DARI_BING"
 
 author: Admin TV Online
 lang: ms-MY
-permalink: /:title/ # Lebih SEO Friendly tanpa tahun
+permalink: /:title/
 
 # Build settings
 markdown: kramdown
@@ -22,5 +25,4 @@ paginate: 12
 paginate_path: "/page:num/"
 plugins:
   - jekyll-paginate
-  - jekyll-seo-tag
   - jekyll-sitemap
