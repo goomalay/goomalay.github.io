@@ -4,7 +4,7 @@ title: "beIN SPORTS 1"
 seo_title: "Watch beIN SPORTS 1 Live Streaming - Live Football, UEFA Leagues & Major Events"
 description: "Watch beIN SPORTS 1 live streaming in HD. Your home for elite football, including La Liga, Serie A, and exclusive 2026 international sports coverage."
 program: "beIN SPORTS 1 Live - Global Football, European Leagues & Sports Analysis"
-video_id: "/tv/?id=beinsports1"
+video_id: "/shaka/?id=BEINS1"
 image: "assets/img/beinsports1.webp"
 category: "Sports TV"
 permalink: /beinsports-1/
