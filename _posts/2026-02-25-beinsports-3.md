@@ -4,7 +4,7 @@ title: "beIN SPORTS 3"
 seo_title: "Watch beIN SPORTS 3 Live Streaming Online - Premium Soccer, Tennis & Motorsports"
 description: "Stream beIN SPORTS 3 live online in HD. Catch world-class soccer leagues, ATP Tour tennis, Formula 1, and exclusive 2026 sports coverage on any device."
 program: "beIN SPORTS 3 Live - Elite Football, Tennis Grand Slams & International Sports"
-video_id: "/tv/?id=beinsports3"
+video_id: "/shaka/?id=BEINS3"
 image: "assets/img/beinsports3.webp"
 category: "Sports TV"
 permalink: /beinsports-3/
