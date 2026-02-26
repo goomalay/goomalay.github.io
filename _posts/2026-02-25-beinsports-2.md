@@ -4,7 +4,7 @@ title: "beIN SPORTS 2"
 seo_title: "beIN SPORTS 2 Live Stream - Watch Serie A, Ligue 1 & Premium Sports Online"
 description: "Experience beIN SPORTS 2 live streaming in 4K. Watch Italian Serie A, French Ligue 1, and world-class sports coverage. Fast, reliable, and mobile-friendly streaming for 2026."
 program: "beIN SPORTS 2 Live - European Football, French Ligue 1 & Italian Serie A"
-video_id: "/tv/?id=beinsports2"
+video_id: "/shaka/?id=BEINS2"
 image: "assets/img/beinsports2.webp"
 category: "Sports TV"
 permalink: /beinsports-2/
