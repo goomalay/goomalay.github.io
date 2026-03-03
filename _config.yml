@@ -1,14 +1,17 @@
-title: TV Malaysia Live Online | Tonton Semua Saluran
-seo_title: TV Malaysia Online
-description: Tonton semua saluran TV Malaysia secara online dengan mudah dan percuma.
+# Site Settings
+title: "Live TV Malaysia Online | Watch All Channels Free"
+seo_title: "Live TV Malaysia Online - HD Streaming & 2026 Live Sports"
+description: "Watch all Malaysian TV channels live online for free. Experience high-definition streaming of RTM, Media Prima, Astro, and international news with low-latency 5G optimization."
 url: "https://www.livetvmalaysia.site"
 baseurl: "" 
 
+# Verification Codes
 google_verify: "AClBoYkUfOFJsqDelDrrWx5Rs1KVVVOJQQlW0fiX_9A"
 bing_verify: "2023033E7A81CF57AE17074D2DAC523D"
 
+# Author & Language Settings
 author: Admin TV Online
-lang: my
+lang: en
 permalink: /:title/
 
 # Build settings
@@ -21,6 +24,7 @@ exclude:
   - Gemfile.lock
   - vendor
 
+# Pagination & Plugins
 paginate: 12
 paginate_path: "/page:num/"
 plugins:
