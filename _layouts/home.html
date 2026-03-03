@@ -8,34 +8,34 @@ layout: default
         <h1>{{ site.title }}</h1>
         <p>{{ site.description }}</p>
 
-        <!-- ADS SLOT HERO -->
+        <!-- PREMIUM ADS SLOT HERO -->
         <div class="ads-container">
-            <div class="ads-label">ADVERTISEMENT</div>
-            <!-- Pasang kode AdSense di sini -->
+            <div class="ads-label">SPONSORED ADVERTISEMENT</div>
+            <!-- Place AdSense code here -->
         </div>
     </div>
 </section>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT - TRENDING CHANNELS -->
 <section id="channels" class="container main-section">
     <div class="section-header">
         <div class="title-wrapper">
             <span class="live-dot"></span>
-            <h2>Channel Populer</h2>
+            <h2>Trending Live Channels</h2>
         </div>
     </div>
 
-    <!-- GRID SALURAN -->
+    <!-- CHANNEL GRID -->
     <div id="post-container" class="post-grid">
         {% for post in paginator.posts %}
         <article class="post-card">
-            <a href="{{ post.url | relative_url }}" class="card-link-wrapper">
+            <a href="{{ post.url | relative_url }}" class="card-link-wrapper" title="Watch {{ post.title }} Live">
                 <div class="thumb-container">
-                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                    <img src="{{ post.image | relative_url }}" alt="Stream {{ post.title }} Live Online" loading="lazy">
                 </div>
                 <div class="post-info">
                     <h3>{{ post.title }}</h3>
-                    <p class="program-desc">{{ post.program | truncate: 60 }}</p>
+                    <p class="program-desc">{{ post.program | truncate: 80 }}</p>
                 </div>
             </a>
         </article>
@@ -44,34 +44,39 @@ layout: default
 
 {% if paginator and paginator.total_pages > 1 %}
 <div class="pagination-nav">
-  <button 
-    id="loadMoreBtn"
-    data-next="{{ paginator.next_page_path | relative_url }}"
-    class="btn-page">
-    Lihat Saluran Lainnya »
-  </button>
+  <!-- SEO Friendly Button: Provides a fallback for crawlers -->
+  <a href="{{ paginator.next_page_path | relative_url }}" 
+     id="loadMoreBtn" 
+     class="btn-page" 
+     data-next="{{ paginator.next_page_path | relative_url }}">
+    Explore More Channels »
+  </a>
 </div>
 {% endif %}
 
     <!-- ADS SLOT BOTTOM -->
     <div class="ads-container" style="margin-top: 40px;">
-        <div class="ads-label">ADVERTISEMENT</div>
-        <!-- Pasang kode AdSense di sini -->
+        <div class="ads-label">SPONSORED ADVERTISEMENT</div>
+        <!-- Place AdSense code here -->
     </div>
 </section>
 
-<!-- LOAD MORE SCRIPT -->
+<!-- LOAD MORE SCRIPT (AJAX) -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const btn = document.getElementById("loadMoreBtn");
   if (!btn) return;
 
-  btn.addEventListener("click", function () {
+  btn.addEventListener("click", function (e) {
+    // Prevent default anchor behavior to allow AJAX loading
+    e.preventDefault();
+    
     let nextPage = btn.dataset.next;
     if (!nextPage) return;
 
-    btn.innerText = "Memuat...";
-    btn.disabled = true;
+    btn.innerText = "Loading Channels...";
+    btn.style.opacity = "0.7";
+    btn.style.pointerEvents = "none";
 
     fetch(nextPage)
       .then(res => res.text())
@@ -89,14 +94,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (newBtn) {
           btn.dataset.next = newBtn.dataset.next;
-          btn.innerText = "Lihat Saluran Lainnya »";
-          btn.disabled = false;
+          btn.href = newBtn.dataset.next; // Update fallback URL
+          btn.innerText = "Explore More Channels »";
+          btn.style.opacity = "1";
+          btn.style.pointerEvents = "auto";
         } else {
           btn.remove();
         }
       })
       .catch(() => {
-        btn.innerText = "Gagal Memuat";
+        btn.innerText = "Connection Error - Try Again";
+        btn.style.opacity = "1";
+        btn.style.pointerEvents = "auto";
       });
   });
 });
