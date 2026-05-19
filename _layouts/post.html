@@ -1,98 +1,90 @@
 ---
 layout: default
 ---
-<div class="player-page-container container">
+
+<div class="post-flex-container">
     
-    <!-- MAIN CONTENT (KIRI di Desktop, ATAS di Mobile) -->
-    <main class="player-main">
+    <!-- KOLOM UTAMA (KIRI) -->
+    <div class="player-column">
         
-        <!-- IKLAN ATAS -->
-        <div class="ads-wrapper">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1555037532758037"
-     crossorigin="anonymous"></script>
-<!-- tm 1 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-1555037532758037"
-     data-ad-slot="9721871211"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+        <!-- IKLAN ATAS PLAYER -->
+        <div class="ads-container" style="margin-bottom: 20px;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1555037532758037"
+                 data-ad-slot="9721871211"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
 
-        <div class="video-container-wrapper">
-            <div class="video-header">
-                <span class="category-badge">{{ page.category }}</span>
-                <h1>{{ page.title }} Live Streaming</h1>
-            </div>
-
-            <div class="video-screen">
-                <iframe src="{{ page.video_id }}" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
-            </div>
-
-            <div class="video-meta">
-                <p class="program-title">{{ page.program }}</p>
-            </div>
+        <!-- PLAYER BOX -->
+        <div class="post-header-meta">
+            <span class="cat-badge">{{ page.category }}</span>
+            <h1 class="post-main-title">{{ page.title }} Live Streaming</h1>
+            <p class="program-info"><i class="fa-solid fa-play-circle"></i> Currently Playing: {{ page.program }}</p>
         </div>
 
-        <!-- SOCIAL SHARE -->
-        <div class="social-share-wrapper">
-            <span class="share-label">SHARE:</span>
-            <div class="share-buttons">
-                <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-fb"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://api.whatsapp.com/send?text={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-wa"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://telegram.me/share/url?url={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-tg"><i class="fab fa-telegram-plane"></i></a>
-            </div>
+        <div class="video-frame-container">
+            <iframe src="{{ page.video_id }}" allowfullscreen="true" scrolling="no"></iframe>
         </div>
 
-        <div class="ads-wrapper" style="margin-top: 20px;">
-            <div class="ads-placeholder">ADS 728×90</div>
+        <!-- SOSIAL SHARE -->
+        <div style="display: flex; gap: 10px; margin-bottom: 30px;">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}" target="_blank" style="background:#1877f2; color:white; padding:8px 15px; border-radius:5px; text-decoration:none; font-size:12px; font-weight:700;"><i class="fab fa-facebook"></i> Share</a>
+            <a href="https://api.whatsapp.com/send?text={{ page.url | absolute_url }}" target="_blank" style="background:#25d366; color:white; padding:8px 15px; border-radius:5px; text-decoration:none; font-size:12px; font-weight:700;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
         </div>
-      
+
         <!-- ARTIKEL SEO -->
-        <article class="post-description">
-            <div class="content">
-                {{ content }}
-            </div>
+        <article class="post-article-content">
+            {{ content }}
         </article>
 
-    </main>
+        <!-- IKLAN BAWAH ARTIKEL -->
+        <div class="ads-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1555037532758037"
+                 data-ad-slot="XXXXXXXXXX"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
 
-    <!-- SIDEBAR (KANAN di Desktop, BAWAH di Mobile) -->
-    <aside class="player-sidebar">
-        <div class="sidebar-header">SALURAN LAIN</div>
-        
-        <div class="sidebar-search">
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" id="channelSearch" placeholder="Cari channel..." onkeyup="searchChannel()">
+    <!-- KOLOM SAMPING (KANAN) -->
+    <aside class="side-column">
+        <div class="side-list-box">
+            <div class="side-list-title">
+                <i class="fa-solid fa-layer-group" style="color:var(--accent-green)"></i> OTHER CHANNELS
+            </div>
+            
+            <!-- Mini Search Sidebar -->
+            <input type="text" id="sideSearch" placeholder="Search channel..." onkeyup="filterChannels()" style="width:100%; padding:8px; border:1px solid #eee; border-radius:5px; margin-bottom:15px; outline:none; font-size:12px;">
+
+            <div id="sideChannelList">
+                {% assign all_posts = site.posts | limit: 20 %}
+                {% for channel in all_posts %}
+                <a href="{{ channel.url }}" class="channel-side-item {% if page.url == channel.url %}active{% endif %}">
+                    <div class="side-thumb">
+                        <img src="{{ channel.image | relative_url }}" alt="{{ channel.title }}" loading="lazy">
+                    </div>
+                    <div class="side-name">{{ channel.title }}</div>
+                </a>
+                {% endfor %}
             </div>
         </div>
-
-        <div class="sidebar-list" id="channelList">
-            {% for channel in site.posts %}
-            <a href="{{ channel.url | relative_url }}" class="sidebar-item {% if page.url == channel.url %}active{% endif %}">
-                <div class="sidebar-thumb">
-                    <img src="{{ channel.image | relative_url }}" alt="{{ channel.title }}">
-                </div>
-                <div class="sidebar-info">
-                    <span class="sidebar-title">{{ channel.title }}</span>
-                </div>
-            </a>
-            {% endfor %}
-        </div>
     </aside>
+
 </div>
 
 <script>
-function searchChannel() {
-    let input = document.getElementById('channelSearch').value.toLowerCase();
-    let items = document.querySelectorAll('#channelList .sidebar-item');
+function filterChannels() {
+    let input = document.getElementById('sideSearch').value.toLowerCase();
+    let items = document.querySelectorAll('#sideChannelList .channel-side-item');
     items.forEach(item => {
-        let title = item.querySelector('.sidebar-title').innerText.toLowerCase();
-        item.style.display = title.includes(input) ? "flex" : "none";
+        let name = item.querySelector('.side-name').innerText.toLowerCase();
+        item.style.display = name.includes(input) ? "flex" : "none";
     });
 }
 </script>
