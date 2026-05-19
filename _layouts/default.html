@@ -1,64 +1,61 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: 'en' }}">
-<head>
-    {% include head.html %}
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+<html lang="en">
+{% include head.html %}
 <body>
 
-    <!-- Overlay untuk Mobile (Klik di luar sidebar untuk menutup) -->
-    <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+    <!-- Overlay untuk klik di luar sidebar (Mobile) -->
+    <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-    <!-- SIDEBAR FIXED -->
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar" id="sidebarMenu">
         <div class="sidebar-logo">
             <a href="/">
                 <span class="live">LiveTV</span><span class="my">Malaysia</span>
             </a>
+            <!-- Tombol Close khusus Mobile -->
+            <button class="close-sidebar" onclick="toggleSidebar()"><i class="fa-solid fa-xmark"></i></button>
         </div>
+        
         <nav class="nav-menu">
             <ul>
                 <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
                 <li><a href="/category/live-tv-malaysia/"><i class="fa-solid fa-tv"></i> TV Malaysia</a></li>
                 <li><a href="/category/live-tv-internasional/"><i class="fa-solid fa-globe"></i> International</a></li>
                 <li><a href="/category/live-tv-sports/"><i class="fa-solid fa-volleyball"></i> TV Sports</a></li>
-                <li><a href="/rakettv/"><i class="fa-solid fa-play-circle"></i> Rakettv</a></li>
+                <li><a href="/rakettv/"><i class="fa-solid fa-play"></i> Rakettv</a></li>
             </ul>
         </nav>
-        <div style="padding: 20px; font-size: 11px; color: #444;">&copy; 2025 LiveTVMalaysia</div>
+        <div style="padding: 20px; font-size: 10px; color: #444;">&copy; 2025 LIVETVMALAYSIA.SITE</div>
     </aside>
 
-    <div class="main-content" id="mainArea">
+    <div class="main-content">
         <header class="header-top">
             <div class="header-inner">
-                <button class="btn-icon" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <button class="btn-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
                 
                 <div class="search-box">
                     <div class="search-input-wrapper" id="searchWrap">
-                        <input type="text" placeholder="Search..." id="channelSearch">
+                        <input type="text" placeholder="Search channels..." id="searchInput">
                     </div>
-                    <button class="btn-icon" onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button class="btn-toggle" onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
             </div>
         </header>
 
-        <!-- PENEMPATAN IKLAN BAWAH HEADER -->
-        <div class="ads-placement-top">
-            <div class="ads-wrapper">
-                <!-- Google Adsense Code Start -->
+        <!-- IKLAN DI BAWAH HEADER -->
+        <div class="ads-placement">
+            <div class="ads-container">
+                <!-- Gunakan Client ID Anda -->
                 <ins class="adsbygoogle"
                      style="display:block"
-                     data-ad-client="ca-pub-XXXXXXXXXXXX"
-                     data-ad-slot="XXXXXXXXX"
+                     data-ad-client="ca-pub-1555037532758037"
+                     data-ad-slot="XXXXXXXXXX"
                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                <!-- Google Adsense Code End -->
             </div>
         </div>
 
-        <main class="container">
+        <main class="content-container">
             {{ content }}
         </main>
 
@@ -70,29 +67,18 @@
                 <a href="/privacy-policy/">Privacy Policy</a>
                 <a href="/terms-conditions/">Terms & Conditions</a>
             </div>
-            <div class="copyright">
-                &copy; {{ site.time | date: '%Y' }} {{ site.title }}
-            </div>
+            <p style="font-size: 11px; color: #999;">Watch Live TV Streaming Malaysia Online HD Free</p>
         </footer>
     </div>
 
     <script>
         function toggleSidebar() {
-            const sb = document.getElementById('sidebar');
-            const ma = document.getElementById('mainArea');
-            const ov = document.getElementById('overlay');
-            
-            if(window.innerWidth <= 768) {
-                sb.classList.toggle('active');
-                ov.classList.toggle('active');
-            } else {
-                sb.classList.toggle('closed');
-                ma.classList.toggle('full-width');
-            }
+            document.getElementById('sidebarMenu').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('active');
         }
         function toggleSearch() {
             document.getElementById('searchWrap').classList.toggle('active');
-            document.getElementById('channelSearch').focus();
+            document.getElementById('searchInput').focus();
         }
     </script>
 </body>
