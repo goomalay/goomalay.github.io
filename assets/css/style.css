@@ -1,0 +1,24 @@
+/* Grid Khusus TV Malaysia (3-6 kolom) */
+.grid-malaysia {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(6, 1fr); /* Desktop */
+}
+
+/* Grid Khusus TV Lain (3-4 kolom) */
+.grid-others {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(4, 1fr); /* Desktop */
+}
+
+/* Responsif Tablet */
+@media (max-width: 1024px) {
+    .grid-malaysia { grid-template-columns: repeat(4, 1fr); }
+    .grid-others { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Responsif HP */
+@media (max-width: 600px) {
+    .grid-malaysia, .grid-others { grid-template-columns: repeat(3, 1fr); } /* Minimal 3 kolom agar rapi */
+}
