@@ -134,6 +134,13 @@ body {
     gap: 15px;
 }
 
+.thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 5px;
+}
+
 .card {
     text-decoration: none; color: inherit; display: block;
     border-radius: 8px; border: 1px solid #eee; background: #fff;
