@@ -1,53 +1,56 @@
 <!DOCTYPE html>
-<html lang="id">
-{% include head.html %}
+<html lang="ms-MY">
+<head>
+    {% include head.html %}
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
 <body>
 
-    <div class="app-wrapper">
-        <!-- Sidebar Kiri -->
-        <aside class="main-sidebar">
-            <div class="sidebar-logo">
-                <a href="/">
-                    <span class="text-green">LiveTV</span><span class="text-yellow">Malaysia</span>
-                </a>
-            </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="/category/live-tv-malaysia/"><i class="fas fa-tv"></i> TV Malaysia</a></li>
-                    <li><a href="/category/tv-internasional/"><i class="fas fa-globe"></i> TV Internasional</a></li>
-                    <li><a href="/category/tv-sports/"><i class="fas fa-running"></i> TV Sports</a></li>
-                    <li><a href="/rakettv/"><i class="fas fa-bolt"></i> Rakettv</a></li>
-                </ul>
-            </nav>
-        </aside>
-
-        <!-- Bagian Kanan -->
-        <div class="main-content-area">
-            <!-- Header Top Search -->
-            <header class="header-top">
-                <div class="search-container">
-                    <button class="search-toggle" id="searchToggle"><i class="fas fa-search"></i></button>
-                    <div class="search-box" id="searchBox">
-                        <input type="text" id="searchInput" placeholder="Cari saluran TV...">
-                    </div>
-                </div>
-            </header>
-
-            <!-- Isi Halaman -->
-            <main class="page-body">
-                {{ content }}
-            </main>
+    <!-- Sidebar Kiri -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <a href="/">
+                <span class="logo-live">LiveTV</span><span class="logo-malaysia">Malaysia</span>
+            </a>
         </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="/"><i class="icon-home"></i> Home</a></li>
+                <li><a href="/category/live-tv-malaysia/"><i class="icon-tv"></i> TV Malaysia</a></li>
+                <li><a href="/category/live-tv-internasional/"><i class="icon-globe"></i> TV Internasional</a></li>
+                <li><a href="/category/live-tv-sports/"><i class="icon-sport"></i> TV Sports</a></li>
+                <li><a href="/rakettv/"><i class="icon-play"></i> Rakettv</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+        
+        <!-- Header Top -->
+        <header class="top-header">
+            <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Cari channel favorit..." onkeyup="searchChannel()">
+                <button id="searchBtn">🔍</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="content">
+            {{ content }}
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; {{ site.time | date: '%Y' }} LiveTVMalaysia.site - All Rights Reserved.</p>
+        </footer>
     </div>
 
     <script>
-        // JS Sederhana untuk Search Buka Tutup
-        const searchToggle = document.getElementById('searchToggle');
-        const searchBox = document.getElementById('searchBox');
-        searchToggle.addEventListener('click', () => {
-            searchBox.classList.toggle('active');
-        });
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
     </script>
 </body>
 </html>
