@@ -226,3 +226,140 @@ body {
 .footer { padding: 30px 15px; border-top: 1px solid #eee; text-align: center; font-size: 12px; color: #888; }
 .footer-links { margin-bottom: 10px; }
 .footer-links a { margin: 0 8px; color: #666; text-decoration: none; }
+
+
+/* 
+   ============================================================
+   8. ARTIKEL STYLING (SEO & READABILITY)
+   ============================================================ 
+*/
+
+/* Jarak antar paragraf */
+.post-body p {
+    margin-bottom: 1.5rem;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #334155;
+}
+
+/* Judul di dalam artikel (H2, H3, H4) */
+.post-body h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 2rem 0 1rem;
+    color: #0f172a;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 8px;
+}
+
+.post-body h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 1.5rem 0 0.8rem;
+    color: #1e293b;
+}
+
+/* List (ul & ol) */
+.post-body ul, 
+.post-body ol {
+    margin: 1.2rem 0 1.5rem 1.5rem;
+    padding-left: 10px;
+}
+
+.post-body li {
+    margin-bottom: 0.8rem;
+    padding-left: 5px;
+}
+
+.post-body ul li {
+    list-style-type: disc;
+}
+
+.post-body ol li {
+    list-style-type: decimal;
+}
+
+/* Link di dalam artikel */
+.post-body a {
+    color: var(--accent-green);
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.post-body a:hover {
+    color: var(--accent-yellow);
+}
+
+/* Blockquote (Kutipan) */
+.post-body blockquote {
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--accent-green);
+    background-color: #f8fafc;
+    font-style: italic;
+    color: #64748b;
+    border-radius: 0 8px 8px 0;
+}
+
+/* Code & Preformatted */
+.post-body code {
+    background-color: #f1f5f9;
+    color: #e11d48;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+}
+
+.post-body pre {
+    background-color: #1e293b;
+    color: #f8fafc;
+    padding: 1.2rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 1.5;
+}
+
+/* Gambar di dalam artikel */
+.post-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Table styling (Jika ada data channel) */
+.post-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 14px;
+}
+
+.post-body table th, 
+.post-body table td {
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    text-align: left;
+}
+
+.post-body table th {
+    background-color: #f8fafc;
+    font-weight: 700;
+}
+
+/* Responsif untuk artikel di mobile */
+@media (max-width: 768px) {
+    .post-body p {
+        font-size: 15px;
+    }
+    .post-body h2 {
+        font-size: 20px;
+    }
+    .post-body h3 {
+        font-size: 18px;
+    }
+}
