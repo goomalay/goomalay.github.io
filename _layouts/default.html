@@ -73,23 +73,26 @@
     </div>
 
     <script>
-        function openSidebar() {
-            if(window.innerWidth <= 768) {
-                document.getElementById('sidebarMenu').classList.add('open');
-                document.getElementById('sidebarOverlay').classList.add('active');
-            } else {
-                document.getElementById('sidebarMenu').classList.toggle('closed');
-                document.getElementById('mainWrapper').classList.toggle('full-width');
-            }
-        }
-        function closeSidebar() {
-            document.getElementById('sidebarMenu').classList.remove('open');
-            document.getElementById('sidebarOverlay').classList.remove('active');
-        }
-        function toggleSearch() {
-            document.getElementById('searchWrap').classList.toggle('active');
-            document.getElementById('searchInput').focus();
-        }
+function openSidebar() {
+    const sidebar = document.getElementById('sidebarMenu');
+    const overlay = document.getElementById('sidebarOverlay');
+    const mainArea = document.getElementById('mainWrapper');
+
+    if (window.innerWidth <= 768) {
+        // Mode Mobile
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+    } else {
+        // Mode Desktop
+        sidebar.classList.toggle('closed');
+        mainArea.classList.toggle('full-width');
+    }
+}
+
+function closeSidebar() {
+    document.getElementById('sidebarMenu').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('active');
+}
     </script>
 </body>
 </html>
