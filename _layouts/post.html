@@ -2,89 +2,69 @@
 layout: default
 ---
 
-<div class="post-flex-container">
+<div class="post-container">
     
-    <!-- KOLOM UTAMA (KIRI) -->
-    <div class="player-column">
-        
-        <!-- IKLAN ATAS PLAYER -->
-        <div class="ads-container" style="margin-bottom: 20px;">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-1555037532758037"
-                 data-ad-slot="9721871211"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        </div>
-
-        <!-- PLAYER BOX -->
-        <div class="post-header-meta">
-            <span class="cat-badge">{{ page.category }}</span>
-            <h1 class="post-main-title">{{ page.title }} Live Streaming</h1>
-            <p class="program-info"><i class="fa-solid fa-play-circle"></i> Currently Playing: {{ page.program }}</p>
-        </div>
-
-        <div class="video-frame-container">
-            <iframe src="{{ page.video_id }}" allowfullscreen="true" scrolling="no"></iframe>
-        </div>
-
-        <!-- SOSIAL SHARE -->
-        <div style="display: flex; gap: 10px; margin-bottom: 30px;">
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}" target="_blank" style="background:#1877f2; color:white; padding:8px 15px; border-radius:5px; text-decoration:none; font-size:12px; font-weight:700;"><i class="fab fa-facebook"></i> Share</a>
-            <a href="https://api.whatsapp.com/send?text={{ page.url | absolute_url }}" target="_blank" style="background:#25d366; color:white; padding:8px 15px; border-radius:5px; text-decoration:none; font-size:12px; font-weight:700;"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-        </div>
-
-        <!-- ARTIKEL SEO -->
-        <article class="post-article-content">
-            {{ content }}
-        </article>
-
-        <!-- IKLAN BAWAH ARTIKEL -->
-        <div class="ads-container">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-1555037532758037"
-                 data-ad-slot="XXXXXXXXXX"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    <!-- HEADER INFO -->
+    <div class="post-header-info">
+        <span class="cat-badge" style="background:var(--accent-yellow); color:#000; padding:4px 10px; border-radius:4px; font-size:11px; font-weight:800;">{{ page.category }}</span>
+        <h1>{{ page.title }} Live Streaming</h1>
+        <div class="program-tag">
+            <i class="fa-solid fa-circle-dot" style="color:#ff0000; font-size:10px;"></i>
+            {{ page.program }}
         </div>
     </div>
 
-    <!-- KOLOM SAMPING (KANAN) -->
-    <aside class="side-column">
-        <div class="side-list-box">
-            <div class="side-list-title">
-                <i class="fa-solid fa-layer-group" style="color:var(--accent-green)"></i> OTHER CHANNELS
-            </div>
-            
-            <!-- Mini Search Sidebar -->
-            <input type="text" id="sideSearch" placeholder="Search channel..." onkeyup="filterChannels()" style="width:100%; padding:8px; border:1px solid #eee; border-radius:5px; margin-bottom:15px; outline:none; font-size:12px;">
+    <!-- PLAYER BOX -->
+    <div class="player-box">
+        <iframe src="{{ page.video_id }}" allowfullscreen="true" scrolling="no"></iframe>
+    </div>
 
-            <div id="sideChannelList">
-                {% assign all_posts = site.posts | limit: 20 %}
-                {% for channel in all_posts %}
-                <a href="{{ channel.url }}" class="channel-side-item {% if page.url == channel.url %}active{% endif %}">
-                    <div class="side-thumb">
-                        <img src="{{ channel.image | relative_url }}" alt="{{ channel.title }}" loading="lazy">
-                    </div>
-                    <div class="side-name">{{ channel.title }}</div>
-                </a>
-                {% endfor %}
-            </div>
+    <!-- IKLAN POST (Single Ad) -->
+    <div class="ads-container" style="margin: 20px 0;">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1555037532758037"
+             data-ad-slot="9721871211"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- SOCIAL SHARE -->
+    <div class="share-section">
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-fb">
+            <i class="fab fa-facebook"></i> Facebook
+        </a>
+        <a href="https://api.whatsapp.com/send?text={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-wa">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <a href="https://telegram.me/share/url?url={{ page.url | absolute_url }}" target="_blank" class="share-btn btn-tg">
+            <i class="fab fa-telegram-plane"></i> Telegram
+        </a>
+        <a href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url }}&text={{ page.title }}" target="_blank" class="share-btn btn-tw">
+            <i class="fa-brands fa-x-twitter"></i> X (Twitter)
+        </a>
+    </div>
+
+    <!-- CONTENT ARTIKEL -->
+    <article class="post-body">
+        {{ content }}
+    </article>
+
+    <!-- RECENT POSTS (Grid 3 Kolom) -->
+    <section class="recent-posts">
+        <h2 class="recent-posts-title">Other Channels You Might Like</h2>
+        <div class="grid-3">
+            {% assign related = site.posts | where_exp: "item", "item.url != page.url" | limit: 6 %}
+            {% for post in related %}
+            <a href="{{ post.url }}" class="card">
+                <div class="thumb-wrapper">
+                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                </div>
+                <div class="card-title">{{ post.title }}</div>
+            </a>
+            {% endfor %}
         </div>
-    </aside>
+    </section>
 
 </div>
-
-<script>
-function filterChannels() {
-    let input = document.getElementById('sideSearch').value.toLowerCase();
-    let items = document.querySelectorAll('#sideChannelList .channel-side-item');
-    items.forEach(item => {
-        let name = item.querySelector('.side-name').innerText.toLowerCase();
-        item.style.display = name.includes(input) ? "flex" : "none";
-    });
-}
-</script>
