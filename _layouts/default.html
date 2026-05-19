@@ -1,52 +1,53 @@
 <!DOCTYPE html>
 <html lang="id">
-
 {% include head.html %}
-
 <body>
-    <div class="wrapper">
+
+    <div class="app-wrapper">
         <!-- Sidebar Kiri -->
-        <aside class="sidebar">
-            <div class="logo">
-                <span class="logo-live">LiveTV</span><span class="logo-malaysia">Malaysia</span>
+        <aside class="main-sidebar">
+            <div class="sidebar-logo">
+                <a href="/">
+                    <span class="text-green">LiveTV</span><span class="text-yellow">Malaysia</span>
+                </a>
             </div>
-            <nav class="nav-menu">
+            <nav class="sidebar-nav">
                 <ul>
-                    <li class="{% if page.url == '/' %}active{% endif %}">
-                        <a href="/"><i class="fas fa-home"></i> Home</a>
-                    </li>
-                    <li><a href="/category/malaysia"><i class="fas fa-tv"></i> TV Malaysia</a></li>
-                    <li><a href="/category/internasional"><i class="fas fa-globe"></i> TV Internasional</a></li>
-                    <li><a href="/category/sports"><i class="fas fa-running"></i> TV Sports</a></li>
-                    <li><a href="/rakettv"><i class="fas fa-play-circle"></i> Rakettv</a></li>
+                    <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="/category/live-tv-malaysia/"><i class="fas fa-tv"></i> TV Malaysia</a></li>
+                    <li><a href="/category/tv-internasional/"><i class="fas fa-globe"></i> TV Internasional</a></li>
+                    <li><a href="/category/tv-sports/"><i class="fas fa-running"></i> TV Sports</a></li>
+                    <li><a href="/rakettv/"><i class="fas fa-bolt"></i> Rakettv</a></li>
                 </ul>
             </nav>
         </aside>
 
-        <!-- Container Kanan -->
-        <div class="main-container">
+        <!-- Bagian Kanan -->
+        <div class="main-content-area">
+            <!-- Header Top Search -->
             <header class="header-top">
                 <div class="search-container">
-                    <form action="/search" method="get" class="search-bar">
-                        <input type="text" name="q" placeholder="Cari saluran TV...">
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </form>
+                    <button class="search-toggle" id="searchToggle"><i class="fas fa-search"></i></button>
+                    <div class="search-box" id="searchBox">
+                        <input type="text" id="searchInput" placeholder="Cari saluran TV...">
+                    </div>
                 </div>
             </header>
 
-            <main class="content">
+            <!-- Isi Halaman -->
+            <main class="page-body">
                 {{ content }}
             </main>
-
-            <footer class="footer-bottom">
-                <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. All Rights Reserved.</p>
-            </footer>
         </div>
     </div>
 
-    <!-- Script untuk Search Bar Buka Tutup (Opsional) -->
     <script>
-        // Tambahkan logic JS jika ingin search bar melebar saat diklik
+        // JS Sederhana untuk Search Buka Tutup
+        const searchToggle = document.getElementById('searchToggle');
+        const searchBox = document.getElementById('searchBox');
+        searchToggle.addEventListener('click', () => {
+            searchBox.classList.toggle('active');
+        });
     </script>
 </body>
 </html>
