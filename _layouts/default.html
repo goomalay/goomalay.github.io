@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ site.lang | default: 'en' }}">
 <head>
     {% include head.html %}
     <link rel="stylesheet" href="/assets/css/style.css">
@@ -7,51 +7,74 @@
 </head>
 <body>
 
-    <div class="site-wrapper">
-        <!-- Sidebar Kiri (Toggleable) -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo">
+    <!-- SIDEBAR FIXED -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <a href="/">
                 <span class="live">LiveTV</span><span class="my">Malaysia</span>
-            </div>
-            <nav class="nav-menu">
-                <ul>
-                    <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
-                    <li><a href="/category/live-tv-malaysia/"><i class="fa-solid fa-tv"></i> TV Malaysia</a></li>
-                    <li><a href="/category/live-tv-internasional/"><i class="fa-solid fa-globe"></i> International</a></li>
-                    <li><a href="/category/live-tv-sports/"><i class="fa-solid fa-volleyball"></i> TV Sports</a></li>
-                </ul>
-            </nav>
-        </aside>
-
-        <!-- Main Area -->
-        <div class="main-area">
-            <header class="header-top">
-                <div class="left-controls">
-                    <!-- Tombol Buka Tutup Sidebar -->
-                    <button class="toggle-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
-                </div>
-
-                <div class="search-wrapper">
-                    <div id="searchContainer">
-                        <input type="text" placeholder="Search channel...">
-                    </div>
-                    <!-- Tombol Buka Tutup Search -->
-                    <button class="toggle-btn" onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
-                </div>
-            </header>
-
-            <main class="content-padding">
-                {{ content }}
-            </main>
+            </a>
         </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="/category/live-tv-malaysia/"><i class="fa-solid fa-tv"></i> TV Malaysia</a></li>
+                <li><a href="/category/live-tv-internasional/"><i class="fa-solid fa-globe"></i> International</a></li>
+                <li><a href="/category/live-tv-sports/"><i class="fa-solid fa-volleyball"></i> TV Sports</a></li>
+                <li><a href="/rakettv/"><i class="fa-solid fa-play-circle"></i> Rakettv</a></li>
+            </ul>
+        </nav>
+        <div style="padding: 20px; font-size: 11px; color: #444;">&copy; 2025 LiveTVMalaysia</div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content" id="mainArea">
+        <header class="header-top">
+            <div class="header-inner">
+                <button class="btn-icon" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                
+                <div class="search-box">
+                    <div class="search-input-wrapper" id="searchWrap">
+                        <input type="text" placeholder="Search for channels..." id="channelSearch">
+                    </div>
+                    <button class="btn-icon" onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <main class="container">
+            {{ content }}
+        </main>
+
+        <!-- FOOTER WITH LEGAL PAGES -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="/contact/">Contact</a>
+                <a href="/disclaimer/">Disclaimer</a>
+                <a href="/dmca/">DMCA</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-conditions/">Terms & Conditions</a>
+            </div>
+            <div class="copyright">
+                &copy; {{ site.time | date: '%Y' }} {{ site.title }} - High Performance Live Streaming
+            </div>
+        </footer>
     </div>
 
+    <!-- JS Toggle Functions -->
     <script>
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('closed');
+            const sb = document.getElementById('sidebar');
+            const ma = document.getElementById('mainArea');
+            sb.classList.toggle('closed');
+            ma.classList.toggle('full-width');
+            // Untuk mobile
+            if(window.innerWidth <= 768) {
+                sb.classList.toggle('active');
+            }
         }
         function toggleSearch() {
-            document.getElementById('searchContainer').classList.toggle('active');
+            document.getElementById('searchWrap').classList.toggle('active');
+            document.getElementById('channelSearch').focus();
         }
     </script>
 </body>
