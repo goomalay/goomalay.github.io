@@ -3,16 +3,15 @@
 {% include head.html %}
 <body>
 
-    <!-- Overlay untuk klik di luar sidebar (Mobile) -->
-    <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+    <div id="sidebarOverlay" onclick="closeSidebar()"></div>
 
     <aside class="sidebar" id="sidebarMenu">
         <div class="sidebar-logo">
             <a href="/">
-                <span class="live">LiveTV</span><span class="my">Malaysia</span>
+                <span style="color:#2ecc71">LiveTV</span><span style="color:#f7d100">Malaysia</span>
             </a>
-            <!-- Tombol Close khusus Mobile -->
-            <button class="close-sidebar" onclick="toggleSidebar()"><i class="fa-solid fa-xmark"></i></button>
+            <!-- Tombol Tutup Sidebar di Mobile -->
+            <button class="btn-close-sidebar" onclick="closeSidebar()"><i class="fa-solid fa-xmark"></i></button>
         </div>
         
         <nav class="nav-menu">
@@ -21,36 +20,29 @@
                 <li><a href="/category/live-tv-malaysia/"><i class="fa-solid fa-tv"></i> TV Malaysia</a></li>
                 <li><a href="/category/live-tv-internasional/"><i class="fa-solid fa-globe"></i> International</a></li>
                 <li><a href="/category/live-tv-sports/"><i class="fa-solid fa-volleyball"></i> TV Sports</a></li>
-                <li><a href="/rakettv/"><i class="fa-solid fa-play"></i> Rakettv</a></li>
+                <li><a href="/rakettv/"><i class="fa-solid fa-play-circle"></i> Rakettv</a></li>
             </ul>
         </nav>
-        <div style="padding: 20px; font-size: 10px; color: #444;">&copy; 2025 LIVETVMALAYSIA.SITE</div>
     </aside>
 
-    <div class="main-content">
+    <div class="main-content" id="mainWrapper">
         <header class="header-top">
             <div class="header-inner">
-                <button class="btn-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <button style="background:none; border:none; font-size:22px; cursor:pointer;" onclick="openSidebar()"><i class="fa-solid fa-bars"></i></button>
                 
                 <div class="search-box">
                     <div class="search-input-wrapper" id="searchWrap">
                         <input type="text" placeholder="Search channels..." id="searchInput">
                     </div>
-                    <button class="btn-toggle" onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button style="background:none; border:none; font-size:20px; cursor:pointer;" onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
             </div>
         </header>
 
-        <!-- IKLAN DI BAWAH HEADER -->
-        <div class="ads-placement">
-            <div class="ads-container">
-                <!-- Gunakan Client ID Anda -->
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-1555037532758037"
-                     data-ad-slot="XXXXXXXXXX"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
+        <div style="max-width:900px; margin:20px auto 0; padding:0 20px;">
+            <div style="background:#f9f9f9; border:1px dashed #ccc; min-height:90px; display:flex; align-items:center; justify-content:center;">
+                <!-- Adsense Code -->
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1555037532758037" data-ad-slot="XXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
         </div>
@@ -65,16 +57,25 @@
                 <a href="/disclaimer/">Disclaimer</a>
                 <a href="/dmca/">DMCA</a>
                 <a href="/privacy-policy/">Privacy Policy</a>
-                <a href="/terms-conditions/">Terms & Conditions</a>
+                <a href="/terms-conditions/">Terms</a>
             </div>
-            <p style="font-size: 11px; color: #999;">Watch Live TV Streaming Malaysia Online HD Free</p>
+            <p style="font-size:11px; color:#aaa;">&copy; 2025 LIVETVMALAYSIA.SITE</p>
         </footer>
     </div>
 
     <script>
-        function toggleSidebar() {
-            document.getElementById('sidebarMenu').classList.toggle('open');
-            document.getElementById('sidebarOverlay').classList.toggle('active');
+        function openSidebar() {
+            if(window.innerWidth <= 768) {
+                document.getElementById('sidebarMenu').classList.add('open');
+                document.getElementById('sidebarOverlay').classList.add('active');
+            } else {
+                document.getElementById('sidebarMenu').classList.toggle('closed');
+                document.getElementById('mainWrapper').classList.toggle('full-width');
+            }
+        }
+        function closeSidebar() {
+            document.getElementById('sidebarMenu').classList.remove('open');
+            document.getElementById('sidebarOverlay').classList.remove('active');
         }
         function toggleSearch() {
             document.getElementById('searchWrap').classList.toggle('active');
