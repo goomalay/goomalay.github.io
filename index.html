@@ -9,19 +9,19 @@ title: "Home"
     ADVERTISEMENT - RESPONSIVE BANNER
 </div>
 
-<!-- SECTION TV MALAYSIA -->
 <section>
-    <h2 class="section-title">TV Malaysia</h2>
+    <div style="margin-bottom: 25px; font-weight: 800; font-size: 20px; border-left: 4px solid #f7d100; padding-left: 15px;">
+        TV MALAYSIA
+    </div>
+    
     <div class="grid-3">
-        {% assign posts = site.posts | where: "category", "Live TV Malaysia" | limit: 12 %}
-        {% for post in posts %}
+        {% assign items = site.posts | where: "category", "Live TV Malaysia" | limit: 12 %}
+        {% for post in items %}
         <a href="{{ post.url }}" class="card">
-            <div class="card-img-wrapper">
-                <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+            <div class="thumb-box">
+                <img src="{{ post.image }}" alt="{{ post.title }}">
             </div>
-            <div class="card-info">
-                <span class="card-title">{{ post.title }}</span>
-            </div>
+            <span class="card-title">{{ post.title }}</span>
         </a>
         {% endfor %}
     </div>
