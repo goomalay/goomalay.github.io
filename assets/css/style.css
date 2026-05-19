@@ -1,181 +1,128 @@
-/* RESET & BASE */
 :root {
-    --bg-body: #ffffff;
-    --bg-sidebar: #0f172a; /* Biru gelap elegan untuk sidebar */
-    --accent-green: #22c55e;
-    --accent-yellow: #eab308;
-    --text-main: #1e293b;
-    --text-muted: #64748b;
-    --sidebar-width: 260px;
-    --max-width: 900px;
+    --bg-white: #ffffff;
+    --bg-dark: #000000;
+    --accent-green: #2ecc71;
+    --accent-yellow: #f7d100;
+    --text-dark: #111111;
+    --sidebar-width: 240px;
+    --container-width: 1140px; /* Sidebar (240) + Content (900) */
 }
 
 body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background-color: var(--bg-body);
-    color: var(--text-main);
     margin: 0;
-    display: flex;
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f5f5; /* Background luar sedikit abu agar konten putih terlihat stand out */
 }
 
-/* SIDEBAR */
+/* WRAPPER UTAMA - MEMBUAT SEGALANYA DI TENGAH */
+.site-wrapper {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--bg-white);
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+/* SIDEBAR - POSISI MENEMPEL DI KIRI KONTEN */
 .sidebar {
     width: var(--sidebar-width);
-    background: var(--bg-sidebar);
-    height: 100vh;
-    position: fixed;
-    left: 0; top: 0;
-    padding: 40px 0;
-    z-index: 1000;
+    background-color: var(--bg-dark);
+    color: white;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
 }
 
-.logo { padding: 0 30px 40px; font-size: 22px; font-weight: 800; }
-.logo a { text-decoration: none; }
-.logo .live { color: var(--accent-green); }
-.logo .my { color: var(--accent-yellow); }
+.sidebar.closed {
+    margin-left: calc(var(--sidebar-width) * -1); /* Menutup sidebar ke kiri */
+}
 
-.nav-menu ul { list-style: none; padding: 0; }
-.nav-menu li { margin-bottom: 5px; }
+.sidebar-logo { padding: 25px; font-size: 20px; font-weight: 800; text-transform: uppercase; }
+.sidebar-logo .live { color: var(--accent-green); }
+.sidebar-logo .my { color: var(--accent-yellow); }
+
+.nav-menu ul { list-style: none; padding: 0; margin: 0; }
 .nav-menu li a {
+    display: flex; align-items: center; padding: 15px 25px;
+    color: #fff; text-decoration: none; font-weight: 700; font-size: 14px;
+}
+.nav-menu li a:hover { background: #1a1a1a; }
+.nav-menu li a i { width: 30px; font-size: 16px; margin-right: 10px; }
+
+/* MAIN CONTENT AREA */
+.main-area {
+    flex-grow: 1;
+    background: var(--bg-white);
     display: flex;
-    align-items: center;
-    padding: 12px 30px;
-    color: #94a3b8;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    transition: 0.3s;
-}
-.nav-menu li a:hover {
-    background: rgba(255,255,255,0.05);
-    color: #fff;
-}
-.nav-menu li a i { margin-right: 15px; width: 20px; font-size: 18px; }
-
-/* MAIN CONTENT */
-.main-wrapper {
-    margin-left: var(--sidebar-width);
-    width: calc(100% - var(--sidebar-width));
-    background: #fff;
+    flex-direction: column;
 }
 
+/* HEADER DENGAN TOMBOL TOGGLE */
 .header-top {
-    height: 70px;
-    background: #fff;
-    border-bottom: 1px solid #f1f5f9;
+    height: 60px;
+    border-bottom: 1px solid #eee;
     display: flex;
     align-items: center;
-    padding: 0 40px;
-    position: sticky;
-    top: 0;
-    z-index: 99;
+    padding: 0 20px;
+    justify-content: space-between;
 }
 
-/* SEARCH BAR BUKA TUTUP */
-.search-container {
-    display: flex;
-    align-items: center;
-    background: #f1f5f9;
-    padding: 8px 15px;
+.left-controls { display: flex; align-items: center; gap: 15px; }
+
+.toggle-btn {
+    background: none; border: none; font-size: 20px; cursor: pointer; color: #333;
+}
+
+/* SEARCH BAR (BISA DITUTUP BUKA) */
+.search-wrapper {
+    display: flex; align-items: center; gap: 10px;
+}
+
+#searchContainer {
+    display: none; /* Default tertutup */
+    background: #f1f1f1;
+    padding: 5px 15px;
     border-radius: 50px;
-    width: 250px; /* Lebar default */
-    border: 1px solid transparent;
-    transition: 0.3s;
-}
-.search-container:focus-within {
-    width: 400px;
-    background: #fff;
-    border-color: var(--accent-green);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-.search-container input {
-    border: none; background: transparent; outline: none;
-    padding-left: 10px; width: 100%; font-size: 14px;
 }
 
-/* CONTAINER 900PX */
-.content-container {
-    max-width: var(--max-width);
-    margin: 0 auto; /* PENTING: Membuat konten di tengah */
-    padding: 40px 20px;
+#searchContainer.active {
+    display: flex;
 }
 
-/* SECTION TITLE */
-.section-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin: 0 0 25px 0;
-    padding-left: 15px;
-    border-left: 5px solid var(--accent-yellow);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+#searchContainer input {
+    border: none; background: transparent; outline: none; width: 200px;
 }
 
-/* GRID 3 KOLOM */
+/* CONTENT GRID 3 KOLOM (900px AREA) */
+.content-padding {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
 .grid-3 {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Tetap 3 kolom */
-    gap: 25px;
-    margin-bottom: 60px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
-/* CARD CHANNEL */
-.card {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    text-decoration: none;
-    border: 1px solid #f1f5f9;
-    transition: 0.3s ease;
+.card { text-decoration: none; color: #000; }
+.thumb-box {
+    aspect-ratio: 16/9; background: #000; border-radius: 4px; overflow: hidden;
 }
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
-}
-.card-img-wrapper {
-    width: 100%;
-    aspect-ratio: 16/9; /* Menjaga semua gambar seragam */
-    background: #f8fafc;
-    overflow: hidden;
-}
-.card img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Cocok untuk logo TV agar tidak terpotong */
-    padding: 10px;
-}
-.card-info {
-    padding: 15px;
-    text-align: center;
-    background: #fff;
-}
+.thumb-box img { width: 100%; height: 100%; object-fit: cover; }
 .card-title {
-    color: var(--text-main);
-    font-size: 15px;
-    font-weight: 700;
-    display: block;
+    display: block; margin-top: 10px; font-size: 13px; font-weight: 700; text-transform: uppercase;
 }
 
-/* ADS BANNER */
-.ads-box {
-    background: #f8fafc;
-    border: 1px dashed #cbd5e1;
-    border-radius: 8px;
-    margin-bottom: 40px;
-    padding: 20px;
-    text-align: center;
-    color: #94a3b8;
-    font-size: 12px;
-}
-
-/* RESPONSIVE */
-@media (max-width: 1024px) {
-    .grid-3 { grid-template-columns: repeat(2, 1fr); }
-}
+/* MOBILE */
 @media (max-width: 768px) {
-    .sidebar { display: none; }
-    .main-wrapper { margin-left: 0; width: 100%; }
-    .content-container { padding: 20px; }
-    .search-container { width: 100%; }
-    .search-container:focus-within { width: 100%; }
+    .sidebar { position: absolute; height: 100%; }
+    .grid-3 { grid-template-columns: repeat(2, 1fr); }
 }
