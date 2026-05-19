@@ -4,15 +4,15 @@ title: "Home"
 ---
 
 <section>
-    <h2 class="section-title">Malaysia TV Live</h2>
+    <h1 style="font-size: 22px; font-weight: 800; margin-bottom: 25px; border-left: 5px solid #f7d100; padding-left: 15px;">TV MALAYSIA LIVE</h1>
     <div class="grid-3">
-        {% assign posts = site.posts | where: "category", "Live TV Malaysia" | limit: 12 %}
-        {% for post in posts %}
+        {% assign channels = site.posts | where: "category", "Live TV Malaysia" | limit: 12 %}
+        {% for post in channels %}
         <a href="{{ post.url }}" class="card">
-            <div class="thumb-wrap">
+            <div class="thumb">
                 <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
             </div>
-            <div class="card-name">{{ post.title }}</div>
+            <div class="card-title">{{ post.title }}</div>
         </a>
         {% endfor %}
     </div>
