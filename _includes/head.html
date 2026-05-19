@@ -2,8 +2,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% if page.url == "/" %}{{ site.title }}{% elsif page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }} | {{ site.title }}{% endif %}</title>
+    
     <link rel="canonical" href="{{ page.url | absolute_url }}">
     <meta name="description" content="{% if page.description %}{{ page.description | strip_html | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+    
+    <!-- Open Graph / Facebook -->
     <meta property="og:title" content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title | default: site.title }}{% endif %}">
     <meta property="og:description" content="{% if page.description %}{{ page.description | strip_html | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
     <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
@@ -12,14 +15,21 @@
     {% if page.image %}
     <meta property="og:image" content="{{ page.image | absolute_url }}">
     {% endif %}
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title | default: site.title }}{% endif %}">
+
     <meta name="robots" content="index, follow">
     <link rel="shortcut icon" href="{{ site.baseurl }}/assets/img/favicon.ico">
-    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
+    
+    <!-- CSS - Pastikan file ini ada di assets/css/style.css -->
+    <link rel="stylesheet" href="{{ "/assets/css/style.css" | relative_url }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     {% if site.google_verify %}<meta name="google-site-verification" content="{{ site.google_verify }}" />{% endif %}
-    {% if site.bing_verify %}<meta name="msvalidate.01" content="{{ site.bing_verify }}" />{% endif %}
+    
+    <!-- Schema Search Box -->
     {% if page.url == "/" %}
     <script type="application/ld+json">
     {
@@ -35,6 +45,8 @@
     }
     </script>
     {% endif %}
+
+    <!-- Schema Video & Breadcrumb (Sangat Bagus untuk SEO TV) -->
     {% if page.layout == 'post' %}
     <script type="application/ld+json">
     {
@@ -46,7 +58,7 @@
           "description": "{{ page.description | escape }}",
           "thumbnailUrl": "{{ page.image | absolute_url }}",
           "uploadDate": "{% if page.date %}{{ page.date | date_to_xmlschema }}{% else %}{{ site.time | date_to_xmlschema }}{% endif %}",
-          "embedUrl": "{{ page.video_id }}",
+          "embedUrl": "{{ site.url }}{{ page.url }}",
           "interactionCount": "15420",
           "publication": {
             "@type": "BroadcastEvent",
@@ -82,6 +94,6 @@
     }
     </script>
     {% endif %}
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1555037532758037"
-     crossorigin="anonymous"></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1555037532758037" crossorigin="anonymous"></script>
 </head>
