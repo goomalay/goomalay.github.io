@@ -3,46 +3,56 @@
 <head>
     {% include head.html %}
     <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- Sidebar Kiri (Fixed) -->
-    <aside class="sidebar">
-        <div class="logo">
-            <a href="/">
+    <div class="site-wrapper">
+        <!-- Sidebar Kiri (Toggleable) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
                 <span class="live">LiveTV</span><span class="my">Malaysia</span>
-            </a>
-        </div>
-        <nav class="nav-menu">
-            <ul>
-                <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
-                <li><a href="/category/live-tv-malaysia/"><i class="fa-solid fa-tv"></i> TV Malaysia</a></li>
-                <li><a href="/category/live-tv-internasional/"><i class="fa-solid fa-globe"></i> International</a></li>
-                <li><a href="/category/live-tv-sports/"><i class="fa-solid fa-running"></i> TV Sports</a></li>
-                <li><a href="/rakettv/"><i class="fa-solid fa-play-circle"></i> Rakettv</a></li>
-            </ul>
-        </nav>
-    </aside>
-
-    <div class="main-wrapper">
-        <!-- Header Top -->
-        <header class="header-top">
-            <div class="search-container">
-                <i class="fa-solid fa-search" style="color: #888;"></i>
-                <input type="text" placeholder="Search channels..." id="searchInput">
             </div>
-        </header>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="/category/live-tv-malaysia/"><i class="fa-solid fa-tv"></i> TV Malaysia</a></li>
+                    <li><a href="/category/live-tv-internasional/"><i class="fa-solid fa-globe"></i> International</a></li>
+                    <li><a href="/category/live-tv-sports/"><i class="fa-solid fa-volleyball"></i> TV Sports</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-        <!-- Main Content Section -->
-        <main class="content-container">
-            {{ content }}
-        </main>
+        <!-- Main Area -->
+        <div class="main-area">
+            <header class="header-top">
+                <div class="left-controls">
+                    <!-- Tombol Buka Tutup Sidebar -->
+                    <button class="toggle-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                </div>
 
-        <footer style="text-align: center; padding: 40px; color: #999; font-size: 13px;">
-            &copy; {{ site.time | date: '%Y' }} {{ site.title }} - All Rights Reserved.
-        </footer>
+                <div class="search-wrapper">
+                    <div id="searchContainer">
+                        <input type="text" placeholder="Search channel...">
+                    </div>
+                    <!-- Tombol Buka Tutup Search -->
+                    <button class="toggle-btn" onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+            </header>
+
+            <main class="content-padding">
+                {{ content }}
+            </main>
+        </div>
     </div>
 
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('closed');
+        }
+        function toggleSearch() {
+            document.getElementById('searchContainer').classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
