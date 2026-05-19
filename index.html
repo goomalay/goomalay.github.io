@@ -10,18 +10,15 @@ title: "Home"
 </div>
 
 <section>
-    <div style="margin-bottom: 25px; font-weight: 800; font-size: 20px; border-left: 4px solid #f7d100; padding-left: 15px;">
-        TV MALAYSIA
-    </div>
-    
+    <h2 class="section-title">Malaysia TV Live</h2>
     <div class="grid-3">
-        {% assign items = site.posts | where: "category", "Live TV Malaysia" | limit: 12 %}
-        {% for post in items %}
+        {% assign posts = site.posts | where: "category", "Live TV Malaysia" | limit: 12 %}
+        {% for post in posts %}
         <a href="{{ post.url }}" class="card">
-            <div class="thumb-box">
-                <img src="{{ post.image }}" alt="{{ post.title }}">
+            <div class="thumb-wrap">
+                <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
             </div>
-            <span class="card-title">{{ post.title }}</span>
+            <div class="card-name">{{ post.title }}</div>
         </a>
         {% endfor %}
     </div>
@@ -43,17 +40,16 @@ title: "Home"
     </div>
 </section>
 
-<!-- SECTION SPORTS -->
 <section>
-    <h2 class="section-title">TV Sports</h2>
+    <h2 class="section-title">Sports Channels</h2>
     <div class="grid-3">
         {% assign posts = site.posts | where: "category", "Live TV Sports" | limit: 6 %}
         {% for post in posts %}
         <a href="{{ post.url }}" class="card">
-            <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
-            <div class="card-info">
-                <span class="card-title">{{ post.title }}</span>
+            <div class="thumb-wrap">
+                <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
             </div>
+            <div class="card-name">{{ post.title }}</div>
         </a>
         {% endfor %}
     </div>
