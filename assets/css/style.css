@@ -363,3 +363,41 @@ body {
         font-size: 18px;
     }
 }
+
+
+
+
+/* --- CSS Iklan Header Responsive --- */
+.ads-header-responsive {
+    max-width: 900px; /* Sesuai lebar container Anda */
+    width: 100%;
+    margin: 20px auto 0; /* Jarak atas 20px, bawah 0, tengah otomatis */
+    padding: 0 20px; /* Jarak kiri kanan di mobile */
+    display: flex;
+    justify-content: center;
+}
+
+.ads-wrapper-box {
+    width: 100%;
+    background: #f9f9f9;
+    border: 1px dashed #ddd;
+    border-radius: 8px;
+    min-height: 90px; /* Tinggi standar iklan adsense */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Penyesuaian Mobile */
+@media (max-width: 768px) {
+    .ads-header-responsive {
+        margin: 15px auto 0;
+        padding: 0 10px; /* Padding lebih kecil di HP */
+    }
+    
+    .ads-wrapper-box {
+        min-height: 50px; /* Iklan mobile biasanya lebih tipis (Smart Banner) */
+    }
+}
