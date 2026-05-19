@@ -7,6 +7,9 @@
 </head>
 <body>
 
+    <!-- Overlay untuk Mobile (Klik di luar sidebar untuk menutup) -->
+    <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+
     <!-- SIDEBAR FIXED -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-logo">
@@ -26,7 +29,6 @@
         <div style="padding: 20px; font-size: 11px; color: #444;">&copy; 2025 LiveTVMalaysia</div>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <div class="main-content" id="mainArea">
         <header class="header-top">
             <div class="header-inner">
@@ -34,18 +36,32 @@
                 
                 <div class="search-box">
                     <div class="search-input-wrapper" id="searchWrap">
-                        <input type="text" placeholder="Search for channels..." id="channelSearch">
+                        <input type="text" placeholder="Search..." id="channelSearch">
                     </div>
                     <button class="btn-icon" onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
             </div>
         </header>
 
+        <!-- PENEMPATAN IKLAN BAWAH HEADER -->
+        <div class="ads-placement-top">
+            <div class="ads-wrapper">
+                <!-- Google Adsense Code Start -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXX"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                <!-- Google Adsense Code End -->
+            </div>
+        </div>
+
         <main class="container">
             {{ content }}
         </main>
 
-        <!-- FOOTER WITH LEGAL PAGES -->
         <footer class="footer">
             <div class="footer-links">
                 <a href="/contact/">Contact</a>
@@ -55,21 +71,23 @@
                 <a href="/terms-conditions/">Terms & Conditions</a>
             </div>
             <div class="copyright">
-                &copy; {{ site.time | date: '%Y' }} {{ site.title }} - High Performance Live Streaming
+                &copy; {{ site.time | date: '%Y' }} {{ site.title }}
             </div>
         </footer>
     </div>
 
-    <!-- JS Toggle Functions -->
     <script>
         function toggleSidebar() {
             const sb = document.getElementById('sidebar');
             const ma = document.getElementById('mainArea');
-            sb.classList.toggle('closed');
-            ma.classList.toggle('full-width');
-            // Untuk mobile
+            const ov = document.getElementById('overlay');
+            
             if(window.innerWidth <= 768) {
                 sb.classList.toggle('active');
+                ov.classList.toggle('active');
+            } else {
+                sb.classList.toggle('closed');
+                ma.classList.toggle('full-width');
             }
         }
         function toggleSearch() {
