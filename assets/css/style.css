@@ -1,175 +1,126 @@
 :root {
-    --primary-green: #2ecc71;
-    --accent-yellow: #f1c40f;
-    --dark-bg: #1a1a1a;
-    --sidebar-width: 250px;
+    --sidebar-width: 260px;
+    --green-logo: #2ecc71;
+    --yellow-logo: #f1c40f;
+    --bg-body: #121212;
+    --bg-card: #1e1e1e;
+    --text-main: #ffffff;
 }
 
 body {
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
 }
 
-.wrapper {
-    display: flex;
-}
+.app-wrapper { display: flex; }
 
 /* Sidebar */
-.sidebar {
+.main-sidebar {
     width: var(--sidebar-width);
     height: 100vh;
-    background: #222;
-    color: white;
+    background: #000;
     position: fixed;
-    left: 0;
-    top: 0;
+    border-right: 1px solid #333;
     padding: 20px;
-    z-index: 1000;
+    z-index: 100;
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    text-align: center;
-}
-.logo-live { color: var(--primary-green); }
-.logo-malaysia { color: var(--accent-yellow); }
+.sidebar-logo { margin-bottom: 40px; font-size: 24px; font-weight: bold; text-align: center; }
+.sidebar-logo a { text-decoration: none; }
+.text-green { color: var(--green-logo); }
+.text-yellow { color: var(--yellow-logo); }
 
-.nav-menu ul {
-    list-style: none;
-    padding: 0;
-}
-
-.nav-menu li a {
-    color: #ccc;
-    text-decoration: none;
+.sidebar-nav ul { list-style: none; padding: 0; }
+.sidebar-nav li a {
     display: block;
-    padding: 12px;
+    color: #bbb;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 5px;
     transition: 0.3s;
 }
+.sidebar-nav li a:hover { background: #333; color: #fff; }
+.sidebar-nav li a i { width: 25px; }
 
-.nav-menu li a:hover {
-    background: var(--primary-green);
-    color: white;
-    border-radius: 5px;
-}
-
-/* Main Container */
-.main-container {
+/* Main Content Area */
+.main-content-area {
     margin-left: var(--sidebar-width);
-    flex: 1;
+    width: 100%;
     min-height: 100vh;
 }
 
 .header-top {
-    background: white;
-    padding: 15px 30px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    height: 60px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
     position: sticky;
     top: 0;
-    z-index: 999;
+    z-index: 99;
 }
 
-.search-wrapper {
-    display: flex;
-    max-width: 600px;
-}
-
-.search-wrapper input {
-    flex: 1;
+/* Search Bar Buka Tutup */
+.search-container { display: flex; align-items: center; width: 100%; }
+.search-box { width: 0; overflow: hidden; transition: 0.4s; }
+.search-box.active { width: 100%; max-width: 500px; margin-left: 15px; }
+.search-box input {
+    width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px 0 0 5px;
+    border-radius: 20px;
+    border: 1px solid #444;
+    background: #222;
+    color: #fff;
 }
+.search-toggle { background: none; border: none; color: #fff; font-size: 20px; cursor: pointer; }
 
-.search-wrapper button {
-    padding: 10px 20px;
-    background: var(--primary-green);
-    border: none;
-    color: white;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-}
-
-/* Content & Grid */
-.content { padding: 20px; }
-
-.adsense-container {
-    margin-bottom: 30px;
-    text-align: center;
-}
-
-.tv-section { margin-bottom: 40px; }
-
-.section-header {
+/* Content Section */
+.page-body { padding: 20px 30px; }
+.section-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-left: 5px solid var(--primary-green);
-    padding-left: 15px;
     margin-bottom: 20px;
 }
+.section-title h2 { font-size: 22px; border-left: 4px solid var(--green-logo); padding-left: 15px; }
+.btn-more { color: var(--green-logo); text-decoration: none; font-size: 14px; }
 
-.channel-grid {
-    display: grid;
-    gap: 15px;
-}
+/* Grid System */
+.grid-container { display: grid; gap: 15px; margin-bottom: 40px; }
+.grid-6 { grid-template-columns: repeat(6, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
 
-/* Responsive Grid */
-.grid-6 { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-.grid-4 { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
-
+/* Channel Card */
 .channel-card {
-    background: white;
-    border-radius: 8px;
+    background: var(--bg-card);
+    border-radius: 10px;
     overflow: hidden;
     text-decoration: none;
-    color: #333;
-    transition: transform 0.2s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    color: #fff;
+    transition: 0.3s;
+    text-align: center;
+    padding-bottom: 10px;
 }
-
-.channel-card:hover { transform: translateY(-5px); }
-
-.card-image img {
+.channel-card:hover { transform: translateY(-5px); background: #333; }
+.poster-wrapper img {
     width: 100%;
     aspect-ratio: 16/9;
     object-fit: cover;
 }
+.channel-card h3 { font-size: 14px; margin: 10px 0 0; }
 
-.card-info { padding: 10px; text-align: center; }
-.card-info h3 { font-size: 14px; margin: 0; }
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .sidebar { width: 0; display: none; }
-    .main-container { margin-left: 0; }
-    .grid-6, .grid-4 { grid-template-columns: repeat(3, 1fr); }
-}
-
-/* Grid Khusus TV Malaysia (3-6 kolom) */
-.grid-malaysia {
-    display: grid;
-    gap: 15px;
-    grid-template-columns: repeat(6, 1fr); /* Desktop */
-}
-
-/* Grid Khusus TV Lain (3-4 kolom) */
-.grid-others {
-    display: grid;
-    gap: 15px;
-    grid-template-columns: repeat(4, 1fr); /* Desktop */
-}
-
-/* Responsif Tablet */
+/* Responsive */
 @media (max-width: 1024px) {
-    .grid-malaysia { grid-template-columns: repeat(4, 1fr); }
-    .grid-others { grid-template-columns: repeat(3, 1fr); }
+    .grid-6 { grid-template-columns: repeat(4, 1fr); }
+    .grid-4 { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* Responsif HP */
-@media (max-width: 600px) {
-    .grid-malaysia, .grid-others { grid-template-columns: repeat(3, 1fr); } /* Minimal 3 kolom agar rapi */
+@media (max-width: 768px) {
+    .main-sidebar { transform: translateX(-100%); transition: 0.3s; }
+    .main-content-area { margin-left: 0; }
+    .grid-6, .grid-4 { grid-template-columns: repeat(3, 1fr); }
 }
