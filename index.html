@@ -1,60 +1,76 @@
 ---
 layout: default
-title: "Live TV Malaysia - Watch Free HD Streaming Online"
+title: "Home - Live TV Malaysia Streaming"
 ---
 
-<!-- Top Ads -->
-<div class="ads-wrapper">
-    <div class="ads-placeholder">
-        <!-- Google Adsense Code Here -->
-        <span style="color: #444;">Responsive Advertisement Banner</span>
+<div class="container">
+    
+    <!-- ADS BANNER -->
+    <div style="margin-bottom: 30px; text-align: center;">
+        <div style="background: #111; padding: 15px; border: 1px solid #222; color: #444; font-size: 12px;">
+            <!-- AdSense Code Here -->
+            ADVERTISEMENT
+        </div>
     </div>
+
+    <!-- TV MALAYSIA SECTION -->
+    <section>
+        <div class="section-header">
+            <h2>TV Malaysia</h2>
+        </div>
+        <div class="grid-3">
+            {% assign malaysia = site.posts | where: "category", "Live TV Malaysia" | limit: 12 %}
+            {% for post in malaysia %}
+            <a href="{{ post.url }}" class="channel-card">
+                <div class="thumb-wrapper">
+                    <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+                </div>
+                <div class="channel-info">
+                    <span class="channel-name">{{ post.title }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- TV INTERNATIONAL SECTION -->
+    <section>
+        <div class="section-header">
+            <h2>TV International</h2>
+        </div>
+        <div class="grid-3">
+            {% assign inter = site.posts | where: "category", "Live TV Internasional" | limit: 6 %}
+            {% for post in inter %}
+            <a href="{{ post.url }}" class="channel-card">
+                <div class="thumb-wrapper">
+                    <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+                </div>
+                <div class="channel-info">
+                    <span class="channel-name">{{ post.title }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- TV SPORTS SECTION -->
+    <section>
+        <div class="section-header">
+            <h2>TV Sports</h2>
+        </div>
+        <div class="grid-3">
+            {% assign sports = site.posts | where: "category", "Live TV Sports" | limit: 6 %}
+            {% for post in sports %}
+            <a href="{{ post.url }}" class="channel-card">
+                <div class="thumb-wrapper">
+                    <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+                </div>
+                <div class="channel-info">
+                    <span class="channel-name">{{ post.title }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+
 </div>
-
-<!-- SECTION TV MALAYSIA -->
-<section class="section-container">
-    <div class="section-title">TV Malaysia</div>
-    <div class="grid-channels">
-        {% assign items = site.posts | where: "category", "Live TV Malaysia" | limit: 12 %}
-        {% for post in items %}
-        <a href="{{ post.url }}" class="card">
-            <img src="{{ post.image }}" alt="{{ post.title }}" class="card-thumb" loading="lazy">
-            <div class="card-body">
-                <h3 class="card-title">{{ post.title }}</h3>
-            </div>
-        </a>
-        {% endfor %}
-    </div>
-</section>
-
-<!-- SECTION INTERNATIONAL -->
-<section class="section-container">
-    <div class="section-title">International TV</div>
-    <div class="grid-channels" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
-        {% assign items = site.posts | where: "category", "Live TV Internasional" | limit: 8 %}
-        {% for post in items %}
-        <a href="{{ post.url }}" class="card">
-            <img src="{{ post.image }}" alt="{{ post.title }}" class="card-thumb" loading="lazy">
-            <div class="card-body">
-                <h3 class="card-title">{{ post.title }}</h3>
-            </div>
-        </a>
-        {% endfor %}
-    </div>
-</section>
-
-<!-- SECTION SPORTS -->
-<section class="section-container">
-    <div class="section-title">Sports Channels</div>
-    <div class="grid-channels" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));">
-        {% assign items = site.posts | where: "category", "Live TV Sports" | limit: 8 %}
-        {% for post in items %}
-        <a href="{{ post.url }}" class="card">
-            <img src="{{ post.image }}" alt="{{ post.title }}" class="card-thumb" loading="lazy">
-            <div class="card-body">
-                <h3 class="card-title">{{ post.title }}</h3>
-            </div>
-        </a>
-        {% endfor %}
-    </div>
-</section>
