@@ -1,39 +1,40 @@
 ---
 layout: default
 ---
-<div class="static-page-container container">
-    
-    <!-- SIDEBAR NAVIGASI (Kiri) -->
-    <aside class="page-sidebar">
-        <nav class="side-nav">
-            <ul>
-                <li>
-                    <a href="/tentang-kami/" class="{% if page.url == '/tentang-kami/' %}active{% endif %}">Tentang Kami</a>
-                </li>
-                <li>
-                    <a href="/kebijakan-privasi/" class="{% if page.url == '/kebijakan-privasi/' %}active{% endif %}">Kebijakan Privasi</a>
-                </li>
-                <li>
-                    <a href="/disclaimer/" class="{% if page.url == '/disclaimer/' %}active{% endif %}">Disclaimer</a>
-                </li>
-                <li>
-                    <a href="/kontak/" class="{% if page.url == '/kontak/' %}active{% endif %}">Kontak</a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
 
-    <!-- KONTEN UTAMA (Kanan) -->
-    <main class="page-content-wrapper">
-        <article class="page-card-glass">
-            <header class="page-header">
-                <h1>{{ page.title }}</h1>
-                <p class="last-update">Update: Manual oleh Admin • {{ "now" | date: "%d %B %Y" }}</p>
-            </header>
-            
-            <div class="entry-content">
-                {{ content }}
-            </div>
-        </article>
-    </main>
+<div class="post-container">
+    
+    <!-- PAGE HEADER -->
+    <header class="page-header" style="margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 20px;">
+        <h1 style="font-size: 32px; font-weight: 800; color: #000; margin-bottom: 10px; letter-spacing: -1px;">
+            {{ page.title }}
+        </h1>
+        <div style="display: flex; align-items: center; gap: 15px; color: #64748b; font-size: 13px; font-weight: 600;">
+            <span><i class="fa-solid fa-calendar-day"></i> Last updated: {{ site.time | date: '%B %d, %Y' }}</span>
+            <span><i class="fa-solid fa-shield-check"></i> Verified Page</span>
+        </div>
+    </header>
+
+    <!-- PAGE CONTENT (Clean & Readable) -->
+    <article class="post-body">
+        {{ content }}
+    </article>
+
+    <!-- FOOTER PAGE INFO (Hanya muncul jika bukan halaman contact) -->
+    {% if page.url != "/contact/" %}
+    <div style="margin-top: 60px; padding: 25px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; display: flex; align-items: flex-start; gap: 15px;">
+        <i class="fa-solid fa-circle-info" style="color: var(--accent-green); font-size: 20px; margin-top: 3px;"></i>
+        <div>
+            <h4 style="margin: 0 0 5px; font-size: 15px; font-weight: 800; color: #0f172a;">Questions about our {{ page.title }}?</h4>
+            <p style="font-size: 14px; color: #475569; margin: 0; line-height: 1.5;">
+                Your trust is important to us. If you have any inquiries or need further clarification regarding the information on this page, please do not hesitate to 
+                <a href="/contact/" style="color: var(--accent-green); font-weight: 700; text-decoration: none;">contact our support team</a>.
+            </p>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- SPACE EXTRA UNTUK FOOTER -->
+    <div style="margin-bottom: 60px;"></div>
+
 </div>
