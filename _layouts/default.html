@@ -95,6 +95,53 @@ function closeSidebar() {
     document.getElementById('sidebarOverlay').classList.remove('active');
 }
     </script>
+
+    <!-- Panggil jQuery jika belum ada -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function() {
+  $("#supermag-pro-load-more-link").on("click", function(e) {
+    e.preventDefault();
+    var loadMoreUrl = $(this).attr("href");
+    
+    $(this).hide(); // Sembunyikan tombol saat loading
+    $("#blog-pager .loading").show(); // Tampilkan loader
+    
+    $.ajax({
+      url: loadMoreUrl,
+      success: function(data) {
+        // Cari konten baru di dalam .blog-posts
+        var newPosts = $(data).find(".blog-posts");
+        
+        // Tambahkan animasi ke item baru
+        newPosts.find(".index-post").addClass("post-animated post-fadeInUp");
+        
+        // Masukkan item baru ke dalam grid yang sudah ada
+        $(".blog-posts").append(newPosts.html());
+        
+        // Cari link "Next Page" dari data yang baru diambil
+        var nextPageLink = $(data).find("#supermag-pro-load-more-link");
+        
+        $("#blog-pager .loading").hide(); // Sembunyikan loader
+        
+        if (nextPageLink.length) {
+          // Jika masih ada halaman berikutnya, update URL tombol dan tampilkan lagi
+          $("#supermag-pro-load-more-link").attr("href", nextPageLink.attr("href")).show();
+        } else {
+          // Jika sudah habis, tampilkan pesan "That is All"
+          $("#supermag-pro-load-more-link").hide();
+          $("#blog-pager .no-more").addClass("show");
+        }
+      },
+      error: function() {
+        $("#supermag-pro-load-more-link").show();
+        $("#blog-pager .loading").hide();
+      }
+    });
+  });
+});
+</script>
     <script type="text/javascript">var _Hasync= _Hasync|| [];
 _Hasync.push(['Histats.start', '1,4995581,4,0,0,0,00010000']);
 _Hasync.push(['Histats.fasi', '1']);
