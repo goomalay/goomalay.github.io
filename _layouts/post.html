@@ -51,16 +51,17 @@ layout: default
         {{ content }}
     </article>
 
-<!-- RECENT POSTS SECTION -->
+<!-- RECENT POSTS PER CATEGORY -->
 <section class="recent-posts" style="margin-top: 50px;">
-    <h2 class="recent-posts-title">Other Channels You Might Like</h2>
+    <h2 class="recent-posts-title">More From {{ page.category }}</h2>
     
-    <div class="grid-3" id="recent-grid">
-        <!-- Ambil semua postingan kecuali postingan yang sedang dibuka sekarang -->
-        {% assign recent_list = site.posts | where_exp: "item", "item.url != page.url" %}
+    <div class="grid-3" id="related-grid">
+        <!-- Filter postingan: Kategori sama, tapi bukan postingan yang sekarang dibuka -->
+        {% assign related_posts = site.posts | where: "category", page.category | where_exp: "item", "item.url != page.url" %}
         
-        {% for post in recent_list limit: 18 %}
-        <article class="index-post {% if forloop.index > 6 %}hidden-recent{% endif %}">
+        <!-- Batasi total yang dimuat (misal 24) agar halaman tetap ringan -->
+        {% for post in related_posts limit: 24 %}
+        <article class="index-post {% if forloop.index > 6 %}hidden-related{% endif %}">
             <a href="{{ post.url | relative_url }}" class="card">
                 <div class="thumb-wrapper">
                     <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
@@ -71,32 +72,34 @@ layout: default
         {% endfor %}
     </div>
 
-    <!-- Tombol Load More untuk Recent Posts -->
-    {% if recent_list.size > 6 %}
+    <!-- Tombol Load More Berdasarkan Kategori -->
+    {% if related_posts.size > 6 %}
     <div style="text-align: center; margin: 30px 0;">
-        <button class="load-more" id="loadMoreRecent" onclick="showMoreRecent()" style="width: 100%; max-width: 400px; cursor: pointer;">
-            LOAD MORE RECOMMENDATIONS
+        <button class="load-more" id="loadMoreRelated" onclick="showMoreRelated()" style="width: 100%; max-width: 400px; cursor: pointer;">
+            SHOW MORE FROM {{ page.category | upcase }}
         </button>
+        <span id="noMoreRelated" class="no-more">That is all from this category</span>
     </div>
     {% endif %}
 </section>
 
 <script>
-function showMoreRecent() {
-    // Cari item yang disembunyikan khusus di bagian recent posts
-    const hiddenItems = document.querySelectorAll('.hidden-recent');
+function showMoreRelated() {
+    // Ambil semua item yang tersembunyi khusus bagian related
+    const hiddenItems = document.querySelectorAll('.hidden-related');
     
-    // Tampilkan 6 item berikutnya setiap klik
+    // Tampilkan 6 item berikutnya (2 baris grid) agar tetap rapi
     for (let i = 0; i < 6; i++) {
         if (hiddenItems[i]) {
-            hiddenItems[i].classList.remove('hidden-recent');
+            hiddenItems[i].classList.remove('hidden-related');
             hiddenItems[i].classList.add('post-animated', 'post-fadeInUp');
         }
     }
 
-    // Sembunyikan tombol jika semua sudah tampil
-    if (document.querySelectorAll('.hidden-recent').length === 0) {
-        document.getElementById('loadMoreRecent').style.display = 'none';
+    // Sembunyikan tombol jika sudah tidak ada lagi yang tersembunyi
+    if (document.querySelectorAll('.hidden-related').length === 0) {
+        document.getElementById('loadMoreRelated').style.display = 'none';
+        document.getElementById('noMoreRelated').classList.add('show');
     }
 }
 </script>
