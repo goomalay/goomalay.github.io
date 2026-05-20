@@ -1,0 +1,32 @@
+---
+layout: default
+---
+
+<div class="category-header" style="margin-bottom: 30px;">
+    <!-- Breadcrumbs untuk SEO -->
+    <nav style="font-size: 12px; color: #888; margin-bottom: 10px;">
+        <a href="/" style="color: var(--accent-green); text-decoration: none;">Home</a> 
+        <i class="fa-solid fa-chevron-right" style="font-size: 8px; margin: 0 5px;"></i> 
+        <span style="color: #000; font-weight: 700;">{{ page.title }}</span>
+    </nav>
+    
+    <h1 class="section-title">{{ page.title }}</h1>
+    <p style="color: #64748b; font-size: 14px; margin-top: -15px;">Watch {{ page.title }} live streaming online for free in HD quality.</p>
+</div>
+
+<!-- Grid yang kompatibel dengan AJAX Load More -->
+<div class="blog-posts grid-3">
+    {% for post in paginator.posts %}
+    <div class="index-post">
+        <a href="{{ post.url }}" class="card">
+            <div class="thumb-wrapper">
+                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+            </div>
+            <div class="card-title">{{ post.title }}</div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination (Gunakan include yang sama dengan index) -->
+{% include pagination.html %}
