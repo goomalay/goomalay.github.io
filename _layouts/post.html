@@ -51,20 +51,54 @@ layout: default
         {{ content }}
     </article>
 
-    <!-- RECENT POSTS (Grid 3 Kolom) -->
-    <section class="recent-posts">
-        <h2 class="recent-posts-title">Other Channels You Might Like</h2>
-        <div class="grid-3">
-            {% assign related = site.posts | where_exp: "item", "item.url != page.url" | limit: 6 %}
-            {% for post in related %}
-            <a href="{{ post.url }}" class="card">
+<!-- RECENT POSTS SECTION -->
+<section class="recent-posts" style="margin-top: 50px;">
+    <h2 class="recent-posts-title">Other Channels You Might Like</h2>
+    
+    <div class="grid-3" id="recent-grid">
+        <!-- Ambil semua postingan kecuali postingan yang sedang dibuka sekarang -->
+        {% assign recent_list = site.posts | where_exp: "item", "item.url != page.url" %}
+        
+        {% for post in recent_list limit: 18 %}
+        <article class="index-post {% if forloop.index > 6 %}hidden-recent{% endif %}">
+            <a href="{{ post.url | relative_url }}" class="card">
                 <div class="thumb-wrapper">
                     <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
                 </div>
                 <div class="card-title">{{ post.title }}</div>
             </a>
-            {% endfor %}
-        </div>
-    </section>
+        </article>
+        {% endfor %}
+    </div>
+
+    <!-- Tombol Load More untuk Recent Posts -->
+    {% if recent_list.size > 6 %}
+    <div style="text-align: center; margin: 30px 0;">
+        <button class="load-more" id="loadMoreRecent" onclick="showMoreRecent()" style="width: 100%; max-width: 400px; cursor: pointer;">
+            LOAD MORE RECOMMENDATIONS
+        </button>
+    </div>
+    {% endif %}
+</section>
+
+<script>
+function showMoreRecent() {
+    // Cari item yang disembunyikan khusus di bagian recent posts
+    const hiddenItems = document.querySelectorAll('.hidden-recent');
+    
+    // Tampilkan 6 item berikutnya setiap klik
+    for (let i = 0; i < 6; i++) {
+        if (hiddenItems[i]) {
+            hiddenItems[i].classList.remove('hidden-recent');
+            hiddenItems[i].classList.add('post-animated', 'post-fadeInUp');
+        }
+    }
+
+    // Sembunyikan tombol jika semua sudah tampil
+    if (document.querySelectorAll('.hidden-recent').length === 0) {
+        document.getElementById('loadMoreRecent').style.display = 'none';
+    }
+}
+</script>
 
 </div>
