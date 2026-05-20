@@ -501,3 +501,19 @@ body {
 .blog-posts {
     min-height: 400px; /* Menghindari layout jumping saat loading */
 }
+
+
+/* Sembunyikan item kategori yang lebih dari 12 */
+.hidden-item {
+    display: none !important;
+}
+
+/* Animasi muncul yang halus */
+.post-animated {
+    animation: fadeInUp 0.5s ease both;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
