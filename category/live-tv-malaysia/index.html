@@ -4,13 +4,20 @@ title: "Live TV Malaysia"
 ---
 
 <div class="main section">
+    <!-- Breadcrumbs untuk SEO -->
+    <div style="font-size: 12px; color: #888; margin-bottom: 10px;">
+        <a href="/" style="color: var(--accent-green); text-decoration: none;">Home</a> 
+        <i class="fa-solid fa-chevron-right" style="font-size: 8px; margin: 0 5px;"></i> 
+        <span style="color: #333; font-weight: 700;">Live TV Malaysia</span>
+    </div>
+
     <h1 class="section-title">Category: Live TV Malaysia</h1>
 
     <!-- Container Grid -->
     <div class="blog-posts grid-3" id="category-grid">
         {% assign category_posts = site.posts | where: "category", "Live TV Malaysia" %}
         {% for post in category_posts %}
-            <!-- Tambahkan class 'hidden-item' jika index lebih dari 12 -->
+            <!-- Kita sembunyikan item setelah nomor 12 -->
             <article class="index-post {% if forloop.index > 12 %}hidden-item{% endif %}">
                 <a href="{{ post.url | relative_url }}" class="card">
                     <div class="thumb-wrapper">
@@ -22,20 +29,20 @@ title: "Live TV Malaysia"
         {% endfor %}
     </div>
 
-    <!-- Tombol Load More Khusus Kategori -->
+    <!-- Tombol Load More (Manual) -->
     {% if category_posts.size > 12 %}
     <div id="blog-pager" style="text-align: center; margin: 40px 0;">
-        <button class="load-more" id="loadMoreCat" onclick="showMoreChannels()">
-            Load More Channels
+        <button class="load-more" id="loadMoreCat" onclick="showMoreChannels()" style="width: 50%; cursor: pointer;">
+            LOAD MORE CHANNELS
         </button>
-        <span id="noMoreCat" class="no-more">That is All</span>
+        <span id="noMoreCat" class="no-more">THAT IS ALL</span>
     </div>
     {% endif %}
 </div>
 
 <script>
 function showMoreChannels() {
-    // Ambil semua item yang tersembunyi
+    // Cari semua elemen yang memiliki class 'hidden-item'
     const hiddenItems = document.querySelectorAll('.hidden-item');
     
     // Tampilkan 12 item berikutnya
@@ -46,7 +53,7 @@ function showMoreChannels() {
         }
     }
 
-    // Jika sudah tidak ada lagi yang tersembunyi, ganti tombol dengan tulisan
+    // Jika sudah tidak ada lagi yang tersembunyi, ganti tombol dengan pesan
     if (document.querySelectorAll('.hidden-item').length === 0) {
         document.getElementById('loadMoreCat').style.display = 'none';
         document.getElementById('noMoreCat').classList.add('show');
