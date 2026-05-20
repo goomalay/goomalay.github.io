@@ -405,54 +405,81 @@ body {
 
 
 
-/* --- Pagination & Load More --- */
-.btn-load-more {
-    display: inline-block;
-    padding: 15px 40px;
-    background: var(--accent-yellow);
-    color: #000;
-    font-weight: 800;
-    font-size: 14px;
-    text-decoration: none;
-    border-radius: 50px;
-    transition: 0.3s;
-    cursor: pointer;
-    border: none;
-    text-transform: uppercase;
-}
-.btn-load-more:hover {
-    background: var(--accent-green);
-    color: #fff;
-    transform: translateY(-3px);
+/* --- Pagination Load More Sinkron --- */
+#blog-pager {
+    text-align: center;
+    margin: 40px 0;
+    padding: 0 20px;
 }
 
-.no-more.show { display: inline-block !important; }
+#blog-pager .load-more {
+    display: inline-block;
+    min-width: 50%; /* Lebar 50% di desktop */
+    max-width: 100%;
+    height: 40px; /* Sedikit lebih tinggi agar nyaman di klik */
+    background-color: var(--accent-yellow); /* Kuning Malaysia */
+    font-size: 14px;
+    color: #000000; /* Teks hitam agar jelas di atas kuning */
+    text-align: center;
+    font-weight: 800; /* Tebal agar menonjol */
+    line-height: 40px;
+    padding: 0 30px;
+    text-decoration: none;
+    text-transform: uppercase; /* Huruf kapital agar profesional */
+    border-radius: 4px; /* Sudut halus mengikuti style card */
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#blog-pager .load-more:hover {
+    background-color: var(--accent-green); /* Berubah hijau saat di-hover */
+    color: #ffffff; /* Teks jadi putih saat background hijau */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+}
+
+/* Status Saat Habis (That is All) */
+#blog-pager .no-more {
+    display: none;
+    min-width: 50%;
+    height: 40px;
+    background-color: #f1f1f1;
+    color: #999;
+    line-height: 40px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 4px;
+}
+
+#blog-pager .no-more.show {
+    display: inline-block !important;
+}
 
 /* Loader Animation */
+.loading {
+    display: none;
+    margin: 15px 0;
+}
 .loader {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid var(--accent-green);
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: spin 1s linear infinite;
-  margin: 0 auto;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--accent-green);
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
 }
-
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-/* Animasi Post saat muncul (Fade In) */
-.post-animated {
-    animation-duration: 0.5s;
-    animation-fill-mode: both;
-}
-.post-fadeInUp {
-    animation-name: fadeInUp;
-}
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translate3d(0, 20px, 0); }
-    to { opacity: 1; transform: translate3d(0, 0, 0); }
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    #blog-pager .load-more {
+        width: 100%; /* Tombol lebar penuh di HP agar mudah di-tap */
+    }
 }
