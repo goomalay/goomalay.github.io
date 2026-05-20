@@ -6,7 +6,7 @@ description: "Watch beIN SPORTS 1 live streaming in HD. Your home for elite foot
 program: "beIN SPORTS 1 Live - Global Football, European Leagues & Sports Analysis"
 video_id: "/shaka/?id=BEINS1"
 image: "assets/img/beinsports1.webp"
-category: "Sports TV"
+category: "Live TV Sports"
 permalink: /beinsports-1/
 ---
 
