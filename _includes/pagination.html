@@ -1,19 +1,23 @@
-<div class='blog-pager' id='blog-pager' style="text-align: center; margin: 40px 0;">
+<div class='blog-pager' id='blog-pager'>
   {% if paginator.total_pages > 1 %}
     {% if paginator.next_page %}
-      <a class='btn-load-more' href='{{ paginator.next_page_path | relative_url }}' id='supermag-pro-load-more-link'>
-        LOAD MORE CHANNELS
+      <!-- Tombol Load More -->
+      <a class='load-more' href='{{ paginator.next_page_path | relative_url }}' id='supermag-pro-load-more-link'>
+        Load More Channels
       </a>
-      <!-- Loader Animation -->
-      <div class='loading' style="display:none; margin-top: 20px;">
-          <div class="loader"></div>
+      
+      <!-- Efek Loading (Muncul saat diklik) -->
+      <div class='loading'>
+          <div class='loader'></div>
       </div>
-      <span class='no-more btn-load-more' style="display:none; background:#eee; color:#999; cursor:default;">
-       THAT IS ALL
+      
+      <!-- Pesan jika konten habis -->
+      <span class='no-more'>
+       That is All
       </span>
     {% else %}
-      <span class="no-more btn-load-more show" style="background:#eee; color:#999;">
-        THAT IS ALL
+      <span class="no-more show">
+        That is All
       </span>
     {% endif %}
   {% endif %}
