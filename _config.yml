@@ -5,35 +5,26 @@ description: "Watch all Malaysian TV channels live online for free."
 url: "https://www.livetvmalaysia.site"
 baseurl: "" 
 
-google_verify: "AClBoYkUfOFJsqDelDrrWx5Rs1KVVVOJQQlW0fiX_9A"
-bing_verify: "2023033E7A81CF57AE17074D2DAC523D"
+# Author & Language Settings
+author: Admin TV Online
+lang: en
+permalink: /:title/
+
+# Plugins (Hanya gunakan yang didukung standar)
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Konfigurasi Pagination V1 (WAJIB SEPERTI INI)
+paginate: 12
+paginate_path: "/page:num/"
 
 # Build settings
 markdown: kramdown
-permalink: /:title/
-
-# Plugins
-plugins:
-  - jekyll-paginate-v2
-  - jekyll-sitemap
-  - jekyll-seo-tag
-  - jekyll-feed
-
-# Pagination V2
-pagination:
-  enabled: true
-  per_page: 12
-  permalink: '/page/:num/' 
-  title: ':title - page :num'
-  sort_field: 'date'
-  sort_reverse: true
-
-
-autopages:
-  enabled: true
-  categories:
-    enabled: true
-    layouts:
-      - 'list.html' # Layout yang akan digunakan untuk halaman kategori
-    title: 'Live Streaming :categories'
-    permalink: '/category/:category/'
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
