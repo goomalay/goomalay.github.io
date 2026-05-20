@@ -27,19 +27,14 @@ exclude:
   - .jekyll-cache
   - .jekyll-metadata
 
-# Plugins (Daftarkan di sini sekali saja)
+# Plugins
 plugins:
   - jekyll-paginate-v2
   - jekyll-sitemap
 
-# Konfigurasi Pagination V2 (Menggantikan paginate & paginate_path versi lama)
+# Konfigurasi Pagination V2
 pagination:
   enabled: true
   per_page: 12
   permalink: "/page/:num/"
-  title_suffix: " - Page :num"
-  limit: 0
-  sort_field: "date"
-  sort_reverse: true
-  # Fitur tambahan agar otomatis memproses halaman kategori
-  index_page_before: ["index.html", "index.md"]
+  index_page_before: ["index.html"] # Menghindari error loop
