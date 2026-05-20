@@ -1,27 +1,29 @@
 ---
 layout: default
-title: "Watch Live TV Malaysia Online - Free HD Streaming"
-pagination:
+title: "Home"
+pagination: 
   enabled: true
 ---
 
-<section>
+<div class="main section" id="main">
     <h1 class="section-title">Latest Channels</h1>
-    
-    <!-- Container Utama untuk AJAX Load More -->
+
+    <!-- Container untuk AJAX Load More -->
     <div class="blog-posts grid-3">
         {% for post in paginator.posts %}
-        <div class="index-post">
-            <a href="{{ post.url }}" class="card">
+        <article class="index-post">
+            <a href="{{ post.url | relative_url }}" class="card">
                 <div class="thumb-wrapper">
                     <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
                 </div>
-                <div class="card-title">{{ post.title }}</div>
+                <div class="card-title">
+                    {{ post.title }}
+                </div>
             </a>
-        </div>
+        </article>
         {% endfor %}
     </div>
 
-    <!-- Panggil file pagination.html -->
+    <!-- Panggil Pagination -->
     {% include pagination.html %}
-</section>
+</div>
