@@ -4,7 +4,7 @@ title: "UNIVERSERO"
 seo_title: "Watch UNIVERSERO Live Streaming HD 2026 - Entertainment, Reality Shows & Trending TV Programs"
 description: "Watch UNIVERSERO live streaming in HD. Enjoy top entertainment shows, reality TV, lifestyle programs, celebrity news, and trending 2026 television content online anytime."
 program: "UNIVERSERO Live - Entertainment, Reality Shows, Lifestyle & Trending TV"
-video_id: "/shaka/?id=UNIVERSERO"
+video_id: "/shaka/?id=UNIVERSO"
 image: "assets/img/Universero.webp"
 category: "Live TV Sports"
 permalink: /universero/
