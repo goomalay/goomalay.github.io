@@ -483,3 +483,21 @@ body {
         width: 100%; /* Tombol lebar penuh di HP agar mudah di-tap */
     }
 }
+
+
+.category-header {
+    padding: 20px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.category-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #000;
+}
+
+/* Memastikan transisi load more tetap halus di kategori */
+.blog-posts {
+    min-height: 400px; /* Menghindari layout jumping saat loading */
+}
