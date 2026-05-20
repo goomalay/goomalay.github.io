@@ -1,40 +1,39 @@
 # Site Settings
-title: "Live TV Malaysia Online | Watch All Channels Free"
+title: "Live TV Malaysia Online"
 seo_title: "Live TV Malaysia Online - HD Streaming & 2026 Live Sports"
-description: "Watch all Malaysian TV channels live online for free. Experience high-definition streaming of RTM, Media Prima, Astro, and international news with low-latency 5G optimization."
+description: "Watch all Malaysian TV channels live online for free."
 url: "https://www.livetvmalaysia.site"
 baseurl: "" 
 
-# Verification Codes
 google_verify: "AClBoYkUfOFJsqDelDrrWx5Rs1KVVVOJQQlW0fiX_9A"
 bing_verify: "2023033E7A81CF57AE17074D2DAC523D"
 
-# Author & Language Settings
-author: Admin TV Online
-lang: en
-permalink: /:title/
-
 # Build settings
 markdown: kramdown
-include:
-  - _pages
-exclude:
-  - README.md
-  - Gemfile
-  - Gemfile.lock
-  - vendor
-  - .sass-cache
-  - .jekyll-cache
-  - .jekyll-metadata
+permalink: /:title/
 
 # Plugins
 plugins:
   - jekyll-paginate-v2
   - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-feed
 
-# Konfigurasi Pagination V2
+# Pagination V2
 pagination:
   enabled: true
   per_page: 12
-  permalink: "/page/:num/"
-  index_page_before: ["index.html"] # Menghindari error loop
+  permalink: '/page/:num/' 
+  title: ':title - page :num'
+  sort_field: 'date'
+  sort_reverse: true
+
+
+autopages:
+  enabled: true
+  categories:
+    enabled: true
+    layouts:
+      - 'list.html' # Layout yang akan digunakan untuk halaman kategori
+    title: 'Live Streaming :categories'
+    permalink: '/category/:category/'
