@@ -503,12 +503,12 @@ body {
 }
 
 
-/* Sembunyikan item kategori yang lebih dari 12 */
+/* Sembunyikan item kategori awal */
 .hidden-item {
     display: none !important;
 }
 
-/* Animasi muncul yang halus */
+/* Animasi muncul */
 .post-animated {
     animation: fadeInUp 0.5s ease both;
 }
