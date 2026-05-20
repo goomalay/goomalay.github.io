@@ -6,7 +6,7 @@ description: "Stream beIN SPORTS 3 live online in HD. Catch world-class soccer l
 program: "beIN SPORTS 3 Live - Elite Football, Tennis Grand Slams & International Sports"
 video_id: "/shaka/?id=BEINS3"
 image: "assets/img/beinsports3.webp"
-category: "Sports TV"
+category: "Live TV Sports"
 permalink: /beinsports-3/
 ---
 
