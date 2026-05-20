@@ -401,3 +401,58 @@ body {
         min-height: 50px; /* Iklan mobile biasanya lebih tipis (Smart Banner) */
     }
 }
+
+
+
+
+/* --- Pagination & Load More --- */
+.btn-load-more {
+    display: inline-block;
+    padding: 15px 40px;
+    background: var(--accent-yellow);
+    color: #000;
+    font-weight: 800;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: 0.3s;
+    cursor: pointer;
+    border: none;
+    text-transform: uppercase;
+}
+.btn-load-more:hover {
+    background: var(--accent-green);
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+.no-more.show { display: inline-block !important; }
+
+/* Loader Animation */
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid var(--accent-green);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Animasi Post saat muncul (Fade In) */
+.post-animated {
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+.post-fadeInUp {
+    animation-name: fadeInUp;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translate3d(0, 20px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
