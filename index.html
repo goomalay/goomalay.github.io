@@ -1,50 +1,23 @@
 ---
 layout: default
-title: "Home"
 ---
 
 <section>
-    <h1 style="font-size: 22px; font-weight: 800; margin-bottom: 25px; border-left: 5px solid #f7d100; padding-left: 15px;">TV MALAYSIA LIVE</h1>
-    <div class="grid-3">
-        {% assign channels = site.posts | where: "category", "Live TV Malaysia" | limit: 12 %}
-        {% for post in channels %}
-        <a href="{{ post.url }}" class="card">
-            <div class="thumb">
-                <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
-            </div>
-            <div class="card-title">{{ post.title }}</div>
-        </a>
+    <h1 class="section-title">All Channels</h1>
+    
+    <div class="blog-posts grid-3">
+        {% for post in paginator.posts %}
+        <div class="index-post">
+            <a href="{{ post.url }}" class="card">
+                <div class="thumb-wrapper">
+                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                </div>
+                <div class="card-title">{{ post.title }}</div>
+            </a>
+        </div>
         {% endfor %}
     </div>
-</section>
 
-<!-- SECTION INTERNATIONAL -->
-<section>
-    <h2 class="section-title">International TV</h2>
-    <div class="grid-3">
-        {% assign posts = site.posts | where: "category", "Live TV Internasional" | limit: 6 %}
-        {% for post in posts %}
-        <a href="{{ post.url }}" class="card">
-            <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
-            <div class="card-info">
-                <span class="card-title">{{ post.title }}</span>
-            </div>
-        </a>
-        {% endfor %}
-    </div>
-</section>
-
-<section>
-    <h2 class="section-title">Sports Channels</h2>
-    <div class="grid-3">
-        {% assign posts = site.posts | where: "category", "Live TV Sports" | limit: 6 %}
-        {% for post in posts %}
-        <a href="{{ post.url }}" class="card">
-            <div class="thumb-wrap">
-                <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
-            </div>
-            <div class="card-name">{{ post.title }}</div>
-        </a>
-        {% endfor %}
-    </div>
+    <!-- Panggil file pagination.html -->
+    {% include pagination.html %}
 </section>
