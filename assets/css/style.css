@@ -518,6 +518,17 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.hidden-recent {
+/* Sembunyikan item rekomendasi setelah item ke-6 */
+.hidden-related {
     display: none !important;
+}
+
+/* Mempercantik judul recent posts */
+.recent-posts-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 25px;
+    padding-top: 30px;
+    border-top: 2px solid #f1f5f9;
+    text-transform: uppercase;
 }
