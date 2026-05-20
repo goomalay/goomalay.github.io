@@ -72,13 +72,15 @@ layout: default
         {% endfor %}
     </div>
 
-    <!-- Tombol Load More Berdasarkan Kategori -->
     {% if related_posts.size > 6 %}
-    <div style="text-align: center; margin: 30px 0;">
-        <button class="load-more" id="loadMoreRelated" onclick="showMoreRelated()" style="width: 100%; max-width: 400px; cursor: pointer;">
+    <div id="blog-pager" style="text-align: center; margin: 40px 0;">
+        <!-- Menambahkan class 'load-more' agar desainnya otomatis sinkron -->
+        <button class="load-more" id="loadMoreRelated" onclick="showMoreRelated()">
             SHOW MORE FROM {{ page.category | upcase }}
         </button>
-        <span id="noMoreRelated" class="no-more">That is all from this category</span>
+        
+        <!-- Pesan ketika sudah habis -->
+        <span id="noMoreRelated" class="no-more">THAT IS ALL FROM THIS CATEGORY</span>
     </div>
     {% endif %}
 </section>
