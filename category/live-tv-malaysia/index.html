@@ -1,0 +1,18 @@
+---
+layout: default
+title: "Live TV Malaysia"
+---
+<h1 class="section-title">Category: Live TV Malaysia</h1>
+<div class="grid-3">
+    {% assign posts = site.posts | where: "category", "Live TV Malaysia" %}
+    {% for post in posts %}
+    <article class="index-post">
+        <a href="{{ post.url | relative_url }}" class="card">
+            <div class="thumb-wrapper">
+                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}">
+            </div>
+            <div class="card-title">{{ post.title }}</div>
+        </a>
+    </article>
+    {% endfor %}
+</div>
