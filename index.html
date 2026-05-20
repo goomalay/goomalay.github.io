@@ -1,8 +1,6 @@
 ---
 layout: default
 title: "Home"
-pagination: 
-  enabled: true
 ---
 
 <div class="main section" id="main">
@@ -10,18 +8,34 @@ pagination:
 
     <!-- Container untuk AJAX Load More -->
     <div class="blog-posts grid-3">
-        {% for post in paginator.posts %}
-        <article class="index-post">
-            <a href="{{ post.url | relative_url }}" class="card">
-                <div class="thumb-wrapper">
-                    <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
-                </div>
-                <div class="card-title">
-                    {{ post.title }}
-                </div>
-            </a>
-        </article>
-        {% endfor %}
+        {% if paginator.posts.size > 0 %}
+            {% for post in paginator.posts %}
+            <article class="index-post">
+                <a href="{{ post.url | relative_url }}" class="card">
+                    <div class="thumb-wrapper">
+                        <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                    </div>
+                    <div class="card-title">
+                        {{ post.title }}
+                    </div>
+                </a>
+            </article>
+            {% endfor %}
+        {% else %}
+            <!-- Fallback jika paginator gagal, tampilkan site.posts biasa -->
+            {% for post in site.posts limit:12 %}
+            <article class="index-post">
+                <a href="{{ post.url | relative_url }}" class="card">
+                    <div class="thumb-wrapper">
+                        <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                    </div>
+                    <div class="card-title">
+                        {{ post.title }}
+                    </div>
+                </a>
+            </article>
+            {% endfor %}
+        {% endif %}
     </div>
 
     <!-- Panggil Pagination -->
