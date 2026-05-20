@@ -2,17 +2,54 @@
 layout: default
 title: "Live TV Malaysia"
 ---
-<h1 class="section-title">Category: Live TV Malaysia</h1>
-<div class="grid-3">
-    {% assign posts = site.posts | where: "category", "Live TV Malaysia" %}
-    {% for post in posts %}
-    <article class="index-post">
-        <a href="{{ post.url | relative_url }}" class="card">
-            <div class="thumb-wrapper">
-                <img src="{{ post.image | relative_url }}" alt="{{ post.title }}">
-            </div>
-            <div class="card-title">{{ post.title }}</div>
-        </a>
-    </article>
-    {% endfor %}
+
+<div class="main section">
+    <h1 class="section-title">Category: Live TV Malaysia</h1>
+
+    <!-- Container Grid -->
+    <div class="blog-posts grid-3" id="category-grid">
+        {% assign category_posts = site.posts | where: "category", "Live TV Malaysia" %}
+        {% for post in category_posts %}
+            <!-- Tambahkan class 'hidden-item' jika index lebih dari 12 -->
+            <article class="index-post {% if forloop.index > 12 %}hidden-item{% endif %}">
+                <a href="{{ post.url | relative_url }}" class="card">
+                    <div class="thumb-wrapper">
+                        <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+                    </div>
+                    <div class="card-title">{{ post.title }}</div>
+                </a>
+            </article>
+        {% endfor %}
+    </div>
+
+    <!-- Tombol Load More Khusus Kategori -->
+    {% if category_posts.size > 12 %}
+    <div id="blog-pager" style="text-align: center; margin: 40px 0;">
+        <button class="load-more" id="loadMoreCat" onclick="showMoreChannels()">
+            Load More Channels
+        </button>
+        <span id="noMoreCat" class="no-more">That is All</span>
+    </div>
+    {% endif %}
 </div>
+
+<script>
+function showMoreChannels() {
+    // Ambil semua item yang tersembunyi
+    const hiddenItems = document.querySelectorAll('.hidden-item');
+    
+    // Tampilkan 12 item berikutnya
+    for (let i = 0; i < 12; i++) {
+        if (hiddenItems[i]) {
+            hiddenItems[i].classList.remove('hidden-item');
+            hiddenItems[i].classList.add('post-animated', 'post-fadeInUp');
+        }
+    }
+
+    // Jika sudah tidak ada lagi yang tersembunyi, ganti tombol dengan tulisan
+    if (document.querySelectorAll('.hidden-item').length === 0) {
+        document.getElementById('loadMoreCat').style.display = 'none';
+        document.getElementById('noMoreCat').classList.add('show');
+    }
+}
+</script>
