@@ -10,7 +10,7 @@ pagination:
     
     <!-- Container Utama untuk AJAX Load More -->
     <div class="blog-posts grid-3">
-        {% for post in site.posts limit:12 %}
+        {% for post in paginator.posts %}
         <div class="index-post">
             <a href="{{ post.url }}" class="card">
                 <div class="thumb-wrapper">
