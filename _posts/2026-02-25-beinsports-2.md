@@ -6,7 +6,7 @@ description: "Experience beIN SPORTS 2 live streaming in 4K. Watch Italian Serie
 program: "beIN SPORTS 2 Live - European Football, French Ligue 1 & Italian Serie A"
 video_id: "/shaka/?id=BEINS2"
 image: "assets/img/beinsports2.webp"
-category: "Sports TV"
+category: "Live TV Sports"
 permalink: /beinsports-2/
 ---
 
