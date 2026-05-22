@@ -1,0 +1,66 @@
+---
+layout: default
+title: "Search Results"
+permalink: /search/
+---
+
+<div class="main section">
+    <h1 class="section-title">Search Results for: <span id="search-query-label"></span></h1>
+    
+    <!-- Wadah Hasil Pencarian -->
+    <div id="results-container" class="grid-3">
+        <!-- Hasil akan muncul di sini secara otomatis -->
+    </div>
+    
+    <div id="no-results" style="display:none; text-align:center; padding:50px;">
+        <i class="fa-solid fa-face-frown" style="font-size:50px; color:#ccc;"></i>
+        <p style="margin-top:20px; color:#888;">Sorry, we couldn't find any channels matching your keyword.</p>
+        <a href="/" class="load-more" style="display:inline-block; margin-top:20px; width:auto;">Back to Home</a>
+    </div>
+</div>
+
+<!-- Script Pencarian -->
+<script src="https://unpkg.com/simple-jekyll-search@latest/dest/simple-jekyll-search.min.js"></script>
+
+<script>
+    // Ambil keyword dari URL (misal: /search/?q=tv3)
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+    if (query) {
+        document.getElementById('search-query-label').innerText = query;
+    }
+
+    SimpleJekyllSearch({
+        searchInput: document.getElementById('searchInput'), // Akan kita hubungkan ke header
+        resultsContainer: document.getElementById('results-container'),
+        json: '/search.json',
+        searchResultTemplate: `
+            <article class="index-post post-animated post-fadeInUp">
+                <a href="{url}" class="card">
+                    <div class="thumb-wrapper">
+                        <img src="{image}" alt="{title}">
+                    </div>
+                    <div class="card-title">{title}</div>
+                </a>
+            </article>
+        `,
+        noResultsText: '', 
+        success: function() {
+            // Jika ada query di URL, jalankan pencarian otomatis saat halaman dimuat
+            if (query) {
+                const searchField = document.getElementById('searchInput');
+                searchField.value = query;
+                // Trigger pencarian
+                const event = new Event('input');
+                searchField.dispatchEvent(event);
+                
+                // Cek setelah 500ms jika hasil kosong
+                setTimeout(() => {
+                    if (document.getElementById('results-container').innerHTML.trim() === "") {
+                        document.getElementById('no-results').style.display = 'block';
+                    }
+                }, 500);
+            }
+        }
+    });
+</script>
