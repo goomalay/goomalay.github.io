@@ -532,3 +532,15 @@ body {
     border-top: 2px solid #f1f5f9;
     text-transform: uppercase;
 }
+
+@media (max-width: 768px) {
+    .search-input-wrapper.active {
+        width: 180px; /* Lebar yang pas di HP */
+        margin-right: 5px;
+    }
+    
+    #search-query-label {
+        color: var(--accent-green);
+        word-break: break-all;
+    }
+}
