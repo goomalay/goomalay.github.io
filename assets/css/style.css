@@ -544,3 +544,10 @@ body {
         word-break: break-all;
     }
 }
+
+.fa-tv-slash {
+    background: -webkit-linear-gradient(var(--accent-green), var(--accent-yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0.8;
+}
