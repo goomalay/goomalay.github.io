@@ -26,18 +26,20 @@
     </aside>
 
     <div class="main-content" id="mainWrapper">
-        <header class="header-top">
-            <div class="header-inner">
-                <button style="background:none; border:none; font-size:22px; cursor:pointer;" onclick="openSidebar()"><i class="fa-solid fa-bars"></i></button>
-                
-                <div class="search-box">
-                    <div class="search-input-wrapper" id="searchWrap">
-                        <input type="text" placeholder="Search channels..." id="searchInput">
-                    </div>
-                    <button style="background:none; border:none; font-size:20px; cursor:pointer;" onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
-                </div>
+<header class="header-top">
+    <div class="header-inner">
+        <button class="btn-toggle" onclick="openSidebar()"><i class="fa-solid fa-bars"></i></button>
+        
+        <div class="search-box">
+            <div class="search-input-wrapper" id="searchWrap">
+                <!-- Tambahkan onkeypress agar Enter bisa bekerja -->
+                <input type="text" placeholder="Search channels..." id="searchInput" onkeypress="handleSearch(event)">
             </div>
-        </header>
+            <!-- Tombol kaca pembesar sekarang berfungsi ganda: buka bar atau submit -->
+            <button class="btn-toggle" onclick="submitSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+    </div>
+</header>
         {% if page.url == "/" or page.layout == "post" %}
 <div class="ads-header-responsive">
     <div class="ads-wrapper-box">
@@ -141,6 +143,40 @@ $(document).ready(function() {
     });
   });
 });
+</script>
+    <script>
+    // Fungsi untuk membuka tutup bar pencarian
+    function toggleSearch() {
+        document.getElementById('searchWrap').classList.toggle('active');
+        document.getElementById('searchInput').focus();
+    }
+
+    // Fungsi jika tombol kaca pembesar diklik
+    function submitSearch() {
+        const wrap = document.getElementById('searchWrap');
+        const input = document.getElementById('searchInput');
+        
+        if (!wrap.classList.contains('active')) {
+            wrap.classList.add('active');
+            input.focus();
+        } else {
+            if (input.value.trim() !== "") {
+                window.location.href = "/search/?q=" + encodeURIComponent(input.value);
+            } else {
+                wrap.classList.remove('active');
+            }
+        }
+    }
+
+    // Fungsi jika menekan ENTER di keyboard
+    function handleSearch(e) {
+        if (e.key === 'Enter') {
+            const val = document.getElementById('searchInput').value;
+            if (val.trim() !== "") {
+                window.location.href = "/search/?q=" + encodeURIComponent(val);
+            }
+        }
+    }
 </script>
     <script type="text/javascript">var _Hasync= _Hasync|| [];
 _Hasync.push(['Histats.start', '1,4995581,4,0,0,0,00010000']);
